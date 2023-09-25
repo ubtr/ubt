@@ -1,0 +1,15 @@
+{
+  "networks": {
+    "NILE": {
+      "rpcUrl": "https://nile.trongrid.io",
+      "testnet": true,
+      "listBlockConcurrency": 3
+    },
+    "MAINNET": {
+      "rpcUrl": "https://rpc.ankr.com/premium-http/tron/c4edfff08323d5dd4c22c84f688176debec7a3ddcd6319751e8626f77a81e1b9",
+      "jsonRpcUrl": "https://rpc.ankr.com/tron_jsonrpc/c4edfff08323d5dd4c22c84f688176debec7a3ddcd6319751e8626f77a81e1b9",
+      "limitPerSec": 30
+    }
+  },
+  "defaultNetwork": "MAINNET"
+}

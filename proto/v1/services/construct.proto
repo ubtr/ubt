@@ -1,0 +1,71 @@
+syntax = "proto3";
+package ubt.services;
+
+option java_multiple_files = true;
+option go_package = "api/gen";
+
+import "commons.proto";
+import "models.proto";
+
+message CreateTransferRequest {
+  NetworkId network_id = 1;
+  string from = 2;
+  string to = 3;
+  CurrencyAmount amount = 4;
+}
+
+message TransferReceiver {
+  string to = 1;
+  CurrencyAmount amount = 2;
+}
+
+message CreateBatchTransferRequest {
+  string from = 1;  //TODO utxo
+  repeated TransferReceiver to = 2;
+}
+
+message TransactionIntent {
+  bytes id = 1;
+  bytes payload_to_sign = 2; // prepared byte payload to sign
+  string signature_type = 3; // type of the signature client must use to sign the payload
+  uint256 estimated_fee = 4; // estimated fee for the transaction TODO: drilldown by fee components and their price
+  bytes raw_data = 5;        // raw transaction data
+
+}
+
+message TransactionCombineRequest {
+  NetworkId network_id = 1;
+  TransactionIntent intent = 2;
+  repeated bytes signatures = 3;
+}
+
+message TransactionSignRequest {
+  NetworkId network_id = 1;
+  TransactionIntent intent = 2;
+  bytes private_key = 3;
+}
+
+message TransactionSendRequest {
+  NetworkId network_id = 1;
+  TransactionIntent intent = 2;
+  repeated bytes signatures = 3;
+}
+
+message SignedTransaction {
+  TransactionIntent intent = 1;
+  repeated bytes signatures = 2;
+}
+
+message TransactionSendResponse {
+  bytes id = 1;
+}
+
+/**
+  * Utilities for transaction creation, signing and sending
+  */
+service UbtConstructService {
+  rpc createTransfer(CreateTransferRequest) returns (TransactionIntent);
+  rpc combineTransaction(TransactionCombineRequest) returns (SignedTransaction);
+  rpc signTransaction(TransactionSignRequest) returns (SignedTransaction);
+  rpc send(TransactionSendRequest) returns (TransactionSendResponse);
+}

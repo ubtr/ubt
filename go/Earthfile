@@ -1,0 +1,4 @@
+VERSION 0.7
+
+build:
+  FROM DOCKERFILE ./Dockerfile

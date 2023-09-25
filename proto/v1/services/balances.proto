@@ -1,0 +1,50 @@
+syntax = "proto3";
+package ubt.services;
+
+option java_multiple_files = true;
+option go_package = "api/gen";
+
+import "commons.proto";
+import "models.proto";
+
+
+message GetBalanceRequest {
+  NetworkId network_id = 1;
+  string address = 2;
+  string currency_id = 3;
+}
+
+message BalanceResponse {
+  string address = 1;
+  CurrencyAmount amount = 2;
+  uint64 last_update = 3; // last update block number
+}
+
+message ListAccountBalancesRequest {
+  NetworkId network_id = 1;
+  string address = 2;
+  repeated string currency_ids = 3;
+}
+
+message ListAccountBalancesResponse {
+  repeated CurrencyAmount amounts = 1;
+  repeated Currency currencies = 2;
+}
+
+message ListCurrencyHoldersRequest {
+  NetworkId network_id = 1;
+  string currency_id = 2;
+}
+
+message ListCurrencyHoldersResponse {
+  map<string, uint256> balances = 1;
+}
+
+service UbtBalanceService {
+  // return account balance for specified currency
+  rpc getBalance(GetBalanceRequest) returns (BalanceResponse);
+  // list all balances for account
+  rpc listAccountBalances(ListAccountBalancesRequest) returns (ListAccountBalancesResponse);
+  // list all holders for currency
+  rpc listCurrencyHolders(ListCurrencyHoldersRequest) returns (ListCurrencyHoldersResponse);
+}

@@ -1,0 +1,22 @@
+syntax = "proto3";
+package ubt.services.ext;
+
+option java_multiple_files = true;
+option go_package = "api/gen";
+
+import "commons.proto";
+import "models.proto";
+
+message TransactionInfoRequest {
+  NetworkId network_id = 1;
+  string id = 2;
+}
+
+message TransactionInfoResponse {
+  uint256 effective_fee = 2;       // actual fee in native blockchain currency
+}
+
+service Trx {
+  // return extended transaction info for tron, contains full fee amount while standard Transaction contains only energy part
+  rpc getTransactionInfo(TransactionInfoRequest) returns (TransactionInfoResponse);
+}

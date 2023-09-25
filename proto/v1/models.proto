@@ -1,0 +1,242 @@
+syntax = "proto3";
+package ubt;
+
+option java_multiple_files = true;
+option go_package = "api/gen";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
+import "commons.proto";
+
+/**
+ * Generial currency representation. 
+ * Currency can be native blockchain currency, ERC-20 like token or ERC-1155 like token.
+ */
+ message Currency {
+  /**
+   * Unique currency ID within the network in format [contractAddress]:[tokenId].
+   * For native currency - ':'
+   * For ERC-20 like tokens - 'contractAddress:'
+   * For ERC-1155 like tokens - 'contractAddress:tokenId'
+   * For blockchain natively supported tokens (without a contract) - ':tokenId'
+   */
+  string id = 1;
+  /**
+    Short well known currency name like BTC, ETH, USDT etc.
+    Note that for contract based token it should be exact symbol from contract if specified
+  */
+  string symbol = 2;
+  uint32 decimals = 3;
+  uint64 capabilities = 4; // bit flags for token capabilities
+  CurrencyMetadata metadata = 6;
+}
+
+message CurrencyMetadata {
+  // long name of the currency
+  string name = 1;
+
+  /*
+  string address = 1;
+  string name = 2;
+  string symbol = 3;
+  uint32 decimals = 4;
+  string total_supply = 5;
+  string owner = 6;
+  string transfers_count = 7;
+  string last_updated = 8;
+  string issuances_count = 9;
+  string holders_count = 10;
+  string price = 11;
+  string market_cap = 12;
+  string first_seen = 13;
+  string last_updated_price = 14;
+  string last_updated_price_source = 15;
+  string last_updated_price_date = 16;
+  string genesis_date = 17;
+  string description = 18;
+  string website = 19;
+  string whitepaper = 20;
+  string technical_doc = 21;
+  string source_code = 22;
+  string explorer = 23;
+  string message_board = 24;
+  string chat = 25;
+  string announcement = 26;
+  string reddit = 27;
+  string twitter = 28;
+  string facebook = 29;
+  string medium = 30;
+  string telegram = 31;
+  string youtube = 32;
+  string github = 33;
+  string instagram = 34;
+  string linkedin = 35;
+  string bitcointalk = 36;
+  string steemit = 37;
+  string token_type = 38;
+  string token_usage = 39;
+  string token_platform = 40;
+  string token_features = 41;
+  string token_economics = 42;
+  string token_competition = 43;
+  string token_investors = 44;
+  string token_sale_round = 45;
+  string token_sale_supply = 46;
+  string token_sale_supply_unit = 47;
+  string token_sale_start_date = 48;
+  string token_sale_end_date = 49;
+  string token_sale_price = 50;
+  string token_sale_hard_cap = 51;
+  string token_sale_hard_cap_unit = 52;
+  string token_sale_accepted_currencies = 53;
+  string token_sale_min_investment = 54;
+  string token_sale_max_investment = 55;
+  string token_sale_kyc = 56;
+  string token_sale_whitelist = 57;
+  string token_sale_unsold_tokens = 58;
+  string token_sale_bonuses = 59;
+   */
+}
+
+/*
+ * Amount in specific currency.
+*/
+message CurrencyAmount {
+  /**
+    Value in minimal units
+  */
+  uint256 value = 1;
+  string currency_id = 2;
+}
+
+/**
+  * Blockchain network instance ID.
+  */
+message NetworkId {
+  /**
+   * Network type like bitcoin, ethereum, etc.
+   */
+  string type = 1;
+  /**
+  * Network instance name like mainnet, testnet, etc. 
+  * Instance must have same chain and genesis block over the time so instead of 'testnet' it could be 'goerli', 'sepolia' etc.
+  */
+  string network = 2;
+}
+
+/**
+  Explorer link templates for easier viewing
+*/
+message NetworkExplorerUrls {
+  string block_url = 1; // url to recommended block explorer with %s placeholder for block hash
+  string tx_url = 2; // url to recommended block explorer with %s placeholder for tx id
+  string address_url = 3; // url to view address information with %s placeholder for address
+}
+
+
+
+/**
+ * Blockchain network instance information.
+ */
+message Network {
+  NetworkId id = 1;
+  bool testnet = 3;                      // indicate if this is testnet-like instance
+  uint32 ms_per_block = 4;               // estimated block rate in the network
+  uint32 finalized_height = 5;           // height between block and tip when block is considered finalized
+  NetworkExplorerUrls explorer = 6;      // recommended explorer service urls
+  optional uint32 bip44_id = 7;          // BIP-44 network id
+  /**
+  * Supported services. CbtNetworkService must be always supported.
+  */
+  enum NetworkSupportedServices {
+    UNSPECIFIED = 0;
+    BLOCK = 1;
+    CURRENCIES = 2;
+    CONSTRUCT = 3;
+    BALANCES = 4;
+  }
+  repeated NetworkSupportedServices supported_services = 8; // supported services
+  google.protobuf.Struct metadata = 15;  // network metadata in JSON format
+}
+
+message Account {
+  string id = 1;            // address in human readable format
+  bool is_contract = 2;     // indicate if this is contract account
+  uint32 contract_type = 3; // contract type, if known
+}
+
+/*
+  Indicate reorg safety status of the block.
+*/
+enum FinalityStatus {
+  FINALITY_STATUS_UNSPECIFIED = 0;
+  FINALITY_STATUS_UNSAFE = 1; // there is a chance that block will not be included 
+  FINALITY_STATUS_SAFE = 2;
+  FINALITY_STATUS_FINALIZED = 3;
+}
+
+/*
+  Small block header with only necessary information
+*/
+message BlockHeader {
+  bytes id = 1;                                  // unique block ID, usually block hash
+  uint64 number = 2;                              // block sequential number (level/height)
+  bytes parent_id = 3;                           
+  google.protobuf.Timestamp timestamp = 4;        
+  FinalityStatus finality_status = 5;
+}
+
+message Block {
+  BlockHeader header = 1;
+
+  repeated Transaction transactions = 10;
+
+  uint256 gas_limit = 12;
+  uint256 gas_used = 13;
+}
+
+message Transaction {
+  bytes id = 1;         // unique transaction id within network;
+  bytes block_id = 2;   // block this tx belongs to
+  uint32 idx = 3;        // transaction sequence number in block
+  uint32 type = 4;       
+  string from = 5;       // account that initiated transaction;
+  string to = 6;         // transaction receiver
+  uint256 amount = 7;    // amount in native blockchain currency
+  uint256 fee = 8;       // actual fee in native blockchain currency
+
+  repeated Transfer transfers = 10;
+  repeated Operation operations = 11;
+}
+
+/**
+  Represents single transfer of any assets (in native, ERC-20 like or other token format) from one account to another.
+  Multiple transfers can be related to no operations when transfer happened just in native currency,
+  or multiple transfers can be be related to single operation in case of batch transfer calls.
+
+  For UTXO every input and output will be listed as separate transfer with empty 'from' or 'to' correspondingly.
+
+  Examples:
+    tx with non-zero amount which calls contract method of ERC-20 token to transfer generate 2 transfer records -
+      one for native currency, another for ERC-20 token transfer
+ */
+message Transfer {
+  bytes id = 1;             // id of the transfer, can be generated as tx id plus some index in transaction;
+  string from = 2;           // transfer source account; might be different than tx.from; omitted for minting or UTXO input
+  string to = 3;             // transfer destination account; might be different than tx.to; omitted for burning or UTXO output
+  CurrencyAmount amount = 4; // transfer amount; required
+  uint32 status = 5;         // transfer status; required
+
+  bytes tx_id = 10;          // transaction where this transfer happened; required
+  bytes op_id = 11;          // if transfer related to some contract operation; optional
+}
+
+/**
+  Represents operation within transactions. Usually contract calls.
+  Operations like ERC-20 transfer will be shown in both places - as operation and as transfer
+ */
+message Operation {
+  bytes id = 1;
+  Account contract = 2;
+  uint32 type = 3;
+}

@@ -1,0 +1,7 @@
+VERSION 0.7
+#FROM golang:1.15-alpine3.13
+#WORKDIR /go-workdir
+
+build:
+  FROM DOCKERFILE -f ./Dockerfile ../
+  SAVE IMAGE --push jaspeen/ubt-am:0.7.0

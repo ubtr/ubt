@@ -1,0 +1,21 @@
+{
+  "host": "localhost:50051",
+  "amHost": "localhost:50052",
+  "networks": {
+    "default": { "type": "TRX", "network": "NILE" }
+  },
+  "accounts": {
+    "main": {
+      "address": "TKLmAbR6YzEBmqAtLHYX3QrzoEiupNTLYH",
+      "pk": "d664051d2f495e17238f2e56f0d936817e4d9158cf0604cf3a479da68abf0b7f"
+    },
+    "second": {
+      "address": "TLaScULJst4NfyJJVeGS7dDgqRmMttpRAh",
+      "pk": "11b75a1807c788d548a7c3a9d4ad51c6c958d01dc02e4163fddd5aabee7f9abe"
+    }
+  },
+  "currencies": {
+    "BFT": { "id": "TSzwg1DeEaR6Df22H4JKPe3mBpVqNpSpGW:", "decimals": 6 },
+    "TRX": { "id": ":", "decimals": 6 }
+  }
+}

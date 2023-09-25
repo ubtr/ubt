@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+option go_package = "api/gen";
+package ubt.services.am;
+
+message CreateAccountRequest {
+  string network_type = 1;
+  bytes private_key = 2;    // if not specified will be generated
+  string name = 10;         // optional unique name associated with account
+}
+
+message CreateAccountResponse {
+  string address = 1;
+}
+
+message SignPayloadRequest {
+  string network_type = 1;
+  bytes data = 2;
+  string address = 3; // address or name must be specified
+  string name = 4; // if specified use it to lookup existing account by name
+  //optional bytes pk = 4; // optional private key to use
+}
+
+message SignPayloadResponse {
+  bytes signature = 1;
+}
+
+message HasAccountRequest {
+  string address = 1;
+  string name = 2;
+}
+
+message HasAccountResponse {
+  bool exists = 1;
+}
+
+message ListAccountsRequest {
+
+}
+
+message ListAccountsResponse {
+  message Account {
+    string address = 1;
+    string name = 2;
+  }
+  repeated Account accounts = 1;
+}
+
+service UbtAccountManager {
+  rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse);
+  rpc HasAccount(HasAccountRequest) returns (HasAccountResponse);
+  rpc ListAccounts(ListAccountsRequest) returns (ListAccountsResponse);
+  rpc SignPayload(SignPayloadRequest) returns (SignPayloadResponse);
+}

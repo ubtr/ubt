@@ -1,0 +1,11 @@
+{
+  "name": "@ubt",
+  "version": "0.1.0",
+  "description": "UBT js workspace parent",
+  "author": "jaspeen",
+  "license": "MIT",
+  "workspaces": ["./packages/*"],
+  "scripts": {
+    "docker": "docker build -t 'jaspeen/ubt-srv-tron:0.1.0' -f packages/srv-tron/Dockerfile ."
+  }
+}

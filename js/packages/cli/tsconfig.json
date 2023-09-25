@@ -1,0 +1,23 @@
+{
+  "extends": "@tsconfig/recommended/tsconfig.json",
+  "compilerOptions": {
+    "target": "ES2022",
+    "outDir": "dist",
+    "declaration": true,
+    "module": "ES2022",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "typeRoots": [ "node_modules/@types"],
+  },
+  "include": [
+    "**/*.ts"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "types"
+  ],
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
+  },
+}

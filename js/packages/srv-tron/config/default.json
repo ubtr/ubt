@@ -1,0 +1,17 @@
+{
+  "networks": {
+    "NILE": {
+      "rpcUrl": "https://nile.trongrid.io",
+      "jsonRpcUrl": "https://nile.trongrid.io/jsonrpc",
+      "testnet": true,
+      "limitPerSec": 30
+    },
+    "MAINNET": {
+      "rpcUrl": "https://trx.getblock.io/463707b3-9624-4b5a-9320-d92b0f1bbc33/mainnet/",
+      "jsonRpcUrl": "https://trx.getblock.io/463707b3-9624-4b5a-9320-d92b0f1bbc33/mainnet/fullnode/jsonrpc",
+      "listBlockConcurrency": 1,
+      "limitPerSec": 30
+    }
+  },
+  "defaultNetwork": "NILE"
+}

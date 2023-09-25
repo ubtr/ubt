@@ -1,0 +1,11 @@
+syntax = "proto3";
+package ubt;
+
+option go_package = "api/gen";
+
+// 128-bit unsigned integer
+message uint128 {bytes data = 1;}
+// 256-bit unsigned integer
+message uint256 {bytes data = 1;}
+// unbounded signed integer in network byte order
+message bigint {bytes data = 1;}
