@@ -1,0 +1,16 @@
+version: v1
+plugins:
+  - name: ts
+    out: src/api/proto
+    opt: long_type_bigint,server_generic
+    path: ./node_modules/@protobuf-ts/plugin/bin/protoc-gen-ts
+  # - name: js
+  #   out: src/cbt/gen
+  #   opt: import_style=commonjs,binary
+  # - name: grpc
+  #   out: src/cbt/gen
+  #   opt: grpc_js
+  #   path: grpc_tools_node_protoc_plugin
+  # - name: ts
+  #   out: src/cbt/gen
+  #   opt: grpc_js

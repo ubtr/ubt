@@ -1,0 +1,21 @@
+VERSION 0.7
+
+build:
+  FROM node:18-alpine
+  COPY . /app
+  WORKDIR /app
+  RUN npm install
+  RUN npm run generate && npm run build
+
+buf:
+  FROM bufbuild/buf:1.26.1
+  SAVE ARTIFACT /usr/local/bin/buf AS LOCAL ./buf
+
+generate:
+  FROM node:18-alpine
+  COPY . /build/
+  COPY +buf/buf /usr/local/bin/buf
+  BUILD ./proto+files
+  COPY  ./proto+files/proto /build/proto
+  RUN cd /build && npm install && npm run generate
+  SAVE ARTIFACT /build/src/api/proto AS LOCAL ./src/api/proto

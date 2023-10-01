@@ -1,0 +1,6 @@
+VERSION 0.7
+
+files:
+  FROM scratch
+  COPY v1 /proto/v1
+  SAVE ARTIFACT /proto

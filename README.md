@@ -15,7 +15,7 @@ Key aspects:
 
 See protobuf definitions in 'proto' dir for grpc services and models
 
-Inspired by [Rosetta API](https://www.rosetta-api.org/) 
+Inspired by [Rosetta API](https://www.rosetta-api.org/)
 
 
 ## Core
@@ -58,3 +58,24 @@ Parsing is bit more lenient:
 # Services
 * Balances - indexed access to balances of any address in any currency
 * Account Manager - delegate account/private keys management to external service
+
+# Build
+Uses **[Earthly](https://earthly.dev/ )** as build system.
+
+Generate from protobufs:
+```
+earthly +generate
+```
+
+Build:
+```
+earthly +build
+```
+
+Build and push packages:
+```
+earthly +publish
+```
+
+# Credits
+* [Rosetta API](https://www.rosetta-api.org/) - inspiration and some ideas
