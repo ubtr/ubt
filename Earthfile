@@ -1,5 +1,6 @@
 VERSION 0.7
 
-localgen:
-  LOCALLY
-  RUN ls
+generate:
+  BUILD ./go+generate
+  BUILD ./js+generate
+  BUILD ./java+build

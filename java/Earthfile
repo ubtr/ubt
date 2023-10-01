@@ -1,0 +1,6 @@
+VERSION 0.7
+
+build:
+  FROM gradle:8.3.0-jdk17-alpine
+  COPY . /build
+  RUN cd /build && gradle -s --no-daemon build
