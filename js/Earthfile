@@ -2,10 +2,10 @@ VERSION 0.7
 
 build:
   FROM node:18-alpine
-  COPY . /app
-  WORKDIR /app
+  COPY . /build/
+  WORKDIR /build
   RUN npm install
-  RUN npm run generate && npm run build
+  RUN npm run build
 
 buf:
   FROM bufbuild/buf:1.26.1

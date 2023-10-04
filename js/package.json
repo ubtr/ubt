@@ -1,6 +1,6 @@
 {
   "name": "@ubt/sdk",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "UBT js sdk",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
@@ -10,7 +10,8 @@
   "type": "module",
   "keywords": [
     "ubt",
-    "blockchain"
+    "blockchain",
+    "cryptocurrency"
   ],
   "author": "jaspeen",
   "license": "MIT",
