@@ -5,7 +5,8 @@ import (
 	"crypto/sha256"
 	"io"
 	"log/slog"
-	b "ubt/blockchain"
+
+	b "github.com/ubtools/ubt/go/blockchain"
 
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/shengdoushi/base58"
