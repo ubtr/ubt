@@ -25,9 +25,9 @@ export interface BlockRequest {
      */
     networkId?: NetworkId;
     /**
-     * @generated from protobuf field: string id = 2;
+     * @generated from protobuf field: bytes id = 2;
      */
-    id: string;
+    id: Uint8Array;
 }
 /**
  * @generated from protobuf message ubt.services.ListBlocksRequest
@@ -108,11 +108,11 @@ class BlockRequest$Type extends MessageType<BlockRequest> {
     constructor() {
         super("ubt.services.BlockRequest", [
             { no: 1, name: "network_id", kind: "message", T: () => NetworkId },
-            { no: 2, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "id", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
         ]);
     }
     create(value?: PartialMessage<BlockRequest>): BlockRequest {
-        const message = { id: "" };
+        const message = { id: new Uint8Array(0) };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<BlockRequest>(this, message, value);
@@ -126,8 +126,8 @@ class BlockRequest$Type extends MessageType<BlockRequest> {
                 case /* ubt.NetworkId network_id */ 1:
                     message.networkId = NetworkId.internalBinaryRead(reader, reader.uint32(), options, message.networkId);
                     break;
-                case /* string id */ 2:
-                    message.id = reader.string();
+                case /* bytes id */ 2:
+                    message.id = reader.bytes();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -144,9 +144,9 @@ class BlockRequest$Type extends MessageType<BlockRequest> {
         /* ubt.NetworkId network_id = 1; */
         if (message.networkId)
             NetworkId.internalBinaryWrite(message.networkId, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* string id = 2; */
-        if (message.id !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.id);
+        /* bytes id = 2; */
+        if (message.id.length)
+            writer.tag(2, WireType.LengthDelimited).bytes(message.id);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

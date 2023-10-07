@@ -3,10 +3,9 @@ package blockchain
 import "io"
 
 type Signer func(data []byte, pk []byte) ([]byte, error)
+type Verifier func([]byte, []byte, []byte) bool
 type KeyGenerator func(rand io.Reader) (*KeyPair, error)
-
-//type Signer interface {
-//}
+type AddressValidator func(string) bool
 
 type KeyPair struct {
 	Address    string
@@ -16,16 +15,6 @@ type KeyPair struct {
 
 func (k KeyPair) String() string {
 	return k.Address
-}
-
-type BlockchainManager interface {
-	GetSigner(string) Signer
-	GetKeyGenerator(string) KeyGenerator
-}
-
-type BlockchainManagerRegistry struct {
-	Signers       map[string]Signer
-	KeyGenerators map[string]KeyGenerator
 }
 
 var Blockchains map[string]Blockchain = make(map[string]Blockchain)
@@ -39,10 +28,12 @@ func GetBlockchain(t string) *Blockchain {
 }
 
 type Blockchain struct {
-	Type         string
-	TypeNum      uint
-	Signer       Signer
-	KeyGenerator KeyGenerator
+	Type             string
+	TypeNum          uint
+	Signer           Signer
+	Verifier         Verifier
+	KeyGenerator     KeyGenerator
+	AddressValidator AddressValidator
 }
 
 func (b *Blockchain) String() string {

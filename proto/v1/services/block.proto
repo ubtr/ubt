@@ -9,7 +9,7 @@ import "models.proto";
 
 message BlockRequest {
   NetworkId network_id = 1;
-  string id = 2;
+  bytes id = 2;
 }
 
 message ListBlocksRequest {
