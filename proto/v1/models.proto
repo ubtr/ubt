@@ -9,12 +9,12 @@ import "google/protobuf/struct.proto";
 import "commons.proto";
 
 /**
- * Generial currency representation. 
+ * Common currency representation. 
  * Currency can be native blockchain currency, ERC-20 like token or ERC-1155 like token.
  */
  message Currency {
   /**
-   * Unique currency ID within the network in format [contractAddress]:[tokenId].
+   * Unique currency ID within the blockchain in format [contractAddress]:[tokenId].
    * For native currency - ':'
    * For ERC-20 like tokens - 'contractAddress:'
    * For ERC-1155 like tokens - 'contractAddress:tokenId'
@@ -110,16 +110,16 @@ message CurrencyAmount {
 }
 
 /**
-  * Blockchain network instance ID.
+  * Blockchain instance ID.
   */
-message NetworkId {
+message ChainId {
   /**
-   * Network type like bitcoin, ethereum, etc.
+   * Network type like BTC, ETH, etc.
    */
   string type = 1;
   /**
-  * Network instance name like mainnet, testnet, etc. 
-  * Instance must have same chain and genesis block over the time so instead of 'testnet' it could be 'goerli', 'sepolia' etc.
+  * Chain instance name like mainnet, testnet, etc. 
+  * Instance must have same chain and genesis block over the time so instead of 'testnet' it should be 'goerli', 'sepolia' etc.
   */
   string network = 2;
 }
@@ -127,35 +127,33 @@ message NetworkId {
 /**
   Explorer link templates for easier viewing
 */
-message NetworkExplorerUrls {
+message ChainExplorerUrls {
   string block_url = 1; // url to recommended block explorer with %s placeholder for block hash
   string tx_url = 2; // url to recommended block explorer with %s placeholder for tx id
   string address_url = 3; // url to view address information with %s placeholder for address
 }
 
-
-
 /**
- * Blockchain network instance information.
+ * Blockchain instance information.
  */
-message Network {
-  NetworkId id = 1;
+message Chain {
+  ChainId id = 1;
   bool testnet = 3;                      // indicate if this is testnet-like instance
   uint32 ms_per_block = 4;               // estimated block rate in the network
   uint32 finalized_height = 5;           // height between block and tip when block is considered finalized
-  NetworkExplorerUrls explorer = 6;      // recommended explorer service urls
+  ChainExplorerUrls explorer = 6;      // recommended explorer service urls
   optional uint32 bip44_id = 7;          // BIP-44 network id
   /**
   * Supported services. CbtNetworkService must be always supported.
   */
-  enum NetworkSupportedServices {
+  enum ChainSupportedServices {
     UNSPECIFIED = 0;
     BLOCK = 1;
     CURRENCIES = 2;
     CONSTRUCT = 3;
     BALANCES = 4;
   }
-  repeated NetworkSupportedServices supported_services = 8; // supported services
+  repeated ChainSupportedServices supported_services = 8; // supported services
   google.protobuf.Struct metadata = 15;  // network metadata in JSON format
 }
 

@@ -8,7 +8,7 @@ import "commons.proto";
 import "models.proto";
 
 message CreateTransferRequest {
-  NetworkId network_id = 1;
+  ChainId chain_id = 1;
   string from = 2;
   string to = 3;
   CurrencyAmount amount = 4;
@@ -34,19 +34,19 @@ message TransactionIntent {
 }
 
 message TransactionCombineRequest {
-  NetworkId network_id = 1;
+  ChainId chain_id = 1;
   TransactionIntent intent = 2;
   repeated bytes signatures = 3;
 }
 
 message TransactionSignRequest {
-  NetworkId network_id = 1;
+  ChainId chain_id = 1;
   TransactionIntent intent = 2;
   bytes private_key = 3;
 }
 
 message TransactionSendRequest {
-  NetworkId network_id = 1;
+  ChainId chain_id = 1;
   TransactionIntent intent = 2;
   repeated bytes signatures = 3;
 }

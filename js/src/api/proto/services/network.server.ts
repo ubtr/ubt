@@ -2,22 +2,22 @@
 // @generated from protobuf file "services/network.proto" (package "ubt.services", syntax proto3)
 // tslint:disable
 import { RpcInputStream } from "@protobuf-ts/runtime-rpc";
-import { ListNetworksRequest } from "./network";
-import { Network } from "../models";
-import { NetworkId } from "../models";
+import { ListChainsRequest } from "./network";
+import { Chain } from "../models";
+import { ChainId } from "../models";
 import { ServerCallContext } from "@protobuf-ts/runtime-rpc";
 /**
- * @generated from protobuf service ubt.services.UbtNetworkService
+ * @generated from protobuf service ubt.services.UbtChainService
  */
-export interface IUbtNetworkService<T = ServerCallContext> {
+export interface IUbtChainService<T = ServerCallContext> {
     /**
-     * @generated from protobuf rpc: getNetwork(ubt.NetworkId) returns (ubt.Network);
+     * @generated from protobuf rpc: getChain(ubt.ChainId) returns (ubt.Chain);
      */
-    getNetwork(request: NetworkId, context: T): Promise<Network>;
+    getChain(request: ChainId, context: T): Promise<Chain>;
     /**
-     * rpc getNetworkStatus(NetworkId) returns (NetworkStatus);
+     * rpc getChainStatus(ChainId) returns (ChainStatus);
      *
-     * @generated from protobuf rpc: listNetworks(ubt.services.ListNetworksRequest) returns (stream ubt.Network);
+     * @generated from protobuf rpc: listChains(ubt.services.ListChainsRequest) returns (stream ubt.Chain);
      */
-    listNetworks(request: ListNetworksRequest, responses: RpcInputStream<Network>, context: T): Promise<void>;
+    listChains(request: ListChainsRequest, responses: RpcInputStream<Chain>, context: T): Promise<void>;
 }

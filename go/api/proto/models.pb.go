@@ -77,26 +77,26 @@ func (FinalityStatus) EnumDescriptor() ([]byte, []int) {
 
 // *
 // Supported services. CbtNetworkService must be always supported.
-type Network_NetworkSupportedServices int32
+type Chain_ChainSupportedServices int32
 
 const (
-	Network_UNSPECIFIED Network_NetworkSupportedServices = 0
-	Network_BLOCK       Network_NetworkSupportedServices = 1
-	Network_CURRENCIES  Network_NetworkSupportedServices = 2
-	Network_CONSTRUCT   Network_NetworkSupportedServices = 3
-	Network_BALANCES    Network_NetworkSupportedServices = 4
+	Chain_UNSPECIFIED Chain_ChainSupportedServices = 0
+	Chain_BLOCK       Chain_ChainSupportedServices = 1
+	Chain_CURRENCIES  Chain_ChainSupportedServices = 2
+	Chain_CONSTRUCT   Chain_ChainSupportedServices = 3
+	Chain_BALANCES    Chain_ChainSupportedServices = 4
 )
 
-// Enum value maps for Network_NetworkSupportedServices.
+// Enum value maps for Chain_ChainSupportedServices.
 var (
-	Network_NetworkSupportedServices_name = map[int32]string{
+	Chain_ChainSupportedServices_name = map[int32]string{
 		0: "UNSPECIFIED",
 		1: "BLOCK",
 		2: "CURRENCIES",
 		3: "CONSTRUCT",
 		4: "BALANCES",
 	}
-	Network_NetworkSupportedServices_value = map[string]int32{
+	Chain_ChainSupportedServices_value = map[string]int32{
 		"UNSPECIFIED": 0,
 		"BLOCK":       1,
 		"CURRENCIES":  2,
@@ -105,35 +105,35 @@ var (
 	}
 )
 
-func (x Network_NetworkSupportedServices) Enum() *Network_NetworkSupportedServices {
-	p := new(Network_NetworkSupportedServices)
+func (x Chain_ChainSupportedServices) Enum() *Chain_ChainSupportedServices {
+	p := new(Chain_ChainSupportedServices)
 	*p = x
 	return p
 }
 
-func (x Network_NetworkSupportedServices) String() string {
+func (x Chain_ChainSupportedServices) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (Network_NetworkSupportedServices) Descriptor() protoreflect.EnumDescriptor {
+func (Chain_ChainSupportedServices) Descriptor() protoreflect.EnumDescriptor {
 	return file_models_proto_enumTypes[1].Descriptor()
 }
 
-func (Network_NetworkSupportedServices) Type() protoreflect.EnumType {
+func (Chain_ChainSupportedServices) Type() protoreflect.EnumType {
 	return &file_models_proto_enumTypes[1]
 }
 
-func (x Network_NetworkSupportedServices) Number() protoreflect.EnumNumber {
+func (x Chain_ChainSupportedServices) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use Network_NetworkSupportedServices.Descriptor instead.
-func (Network_NetworkSupportedServices) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use Chain_ChainSupportedServices.Descriptor instead.
+func (Chain_ChainSupportedServices) EnumDescriptor() ([]byte, []int) {
 	return file_models_proto_rawDescGZIP(), []int{5, 0}
 }
 
 // *
-// Generial currency representation.
+// Common currency representation.
 // Currency can be native blockchain currency, ERC-20 like token or ERC-1155 like token.
 type Currency struct {
 	state         protoimpl.MessageState
@@ -141,7 +141,7 @@ type Currency struct {
 	unknownFields protoimpl.UnknownFields
 
 	// *
-	// Unique currency ID within the network in format [contractAddress]:[tokenId].
+	// Unique currency ID within the blockchain in format [contractAddress]:[tokenId].
 	// For native currency - ':'
 	// For ERC-20 like tokens - 'contractAddress:'
 	// For ERC-1155 like tokens - 'contractAddress:tokenId'
@@ -330,23 +330,23 @@ func (x *CurrencyAmount) GetCurrencyId() string {
 }
 
 // *
-// Blockchain network instance ID.
-type NetworkId struct {
+// Blockchain instance ID.
+type ChainId struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
 	// *
-	// Network type like bitcoin, ethereum, etc.
+	// Network type like BTC, ETH, etc.
 	Type string `protobuf:"bytes,1,opt,name=type,proto3" json:"type,omitempty"`
 	// *
-	// Network instance name like mainnet, testnet, etc.
-	// Instance must have same chain and genesis block over the time so instead of 'testnet' it could be 'goerli', 'sepolia' etc.
+	// Chain instance name like mainnet, testnet, etc.
+	// Instance must have same chain and genesis block over the time so instead of 'testnet' it should be 'goerli', 'sepolia' etc.
 	Network string `protobuf:"bytes,2,opt,name=network,proto3" json:"network,omitempty"`
 }
 
-func (x *NetworkId) Reset() {
-	*x = NetworkId{}
+func (x *ChainId) Reset() {
+	*x = ChainId{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_models_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -354,13 +354,13 @@ func (x *NetworkId) Reset() {
 	}
 }
 
-func (x *NetworkId) String() string {
+func (x *ChainId) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*NetworkId) ProtoMessage() {}
+func (*ChainId) ProtoMessage() {}
 
-func (x *NetworkId) ProtoReflect() protoreflect.Message {
+func (x *ChainId) ProtoReflect() protoreflect.Message {
 	mi := &file_models_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -372,19 +372,19 @@ func (x *NetworkId) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use NetworkId.ProtoReflect.Descriptor instead.
-func (*NetworkId) Descriptor() ([]byte, []int) {
+// Deprecated: Use ChainId.ProtoReflect.Descriptor instead.
+func (*ChainId) Descriptor() ([]byte, []int) {
 	return file_models_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *NetworkId) GetType() string {
+func (x *ChainId) GetType() string {
 	if x != nil {
 		return x.Type
 	}
 	return ""
 }
 
-func (x *NetworkId) GetNetwork() string {
+func (x *ChainId) GetNetwork() string {
 	if x != nil {
 		return x.Network
 	}
@@ -393,7 +393,7 @@ func (x *NetworkId) GetNetwork() string {
 
 // *
 // Explorer link templates for easier viewing
-type NetworkExplorerUrls struct {
+type ChainExplorerUrls struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -403,8 +403,8 @@ type NetworkExplorerUrls struct {
 	AddressUrl string `protobuf:"bytes,3,opt,name=address_url,json=addressUrl,proto3" json:"address_url,omitempty"` // url to view address information with %s placeholder for address
 }
 
-func (x *NetworkExplorerUrls) Reset() {
-	*x = NetworkExplorerUrls{}
+func (x *ChainExplorerUrls) Reset() {
+	*x = ChainExplorerUrls{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_models_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -412,13 +412,13 @@ func (x *NetworkExplorerUrls) Reset() {
 	}
 }
 
-func (x *NetworkExplorerUrls) String() string {
+func (x *ChainExplorerUrls) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*NetworkExplorerUrls) ProtoMessage() {}
+func (*ChainExplorerUrls) ProtoMessage() {}
 
-func (x *NetworkExplorerUrls) ProtoReflect() protoreflect.Message {
+func (x *ChainExplorerUrls) ProtoReflect() protoreflect.Message {
 	mi := &file_models_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -430,26 +430,26 @@ func (x *NetworkExplorerUrls) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use NetworkExplorerUrls.ProtoReflect.Descriptor instead.
-func (*NetworkExplorerUrls) Descriptor() ([]byte, []int) {
+// Deprecated: Use ChainExplorerUrls.ProtoReflect.Descriptor instead.
+func (*ChainExplorerUrls) Descriptor() ([]byte, []int) {
 	return file_models_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *NetworkExplorerUrls) GetBlockUrl() string {
+func (x *ChainExplorerUrls) GetBlockUrl() string {
 	if x != nil {
 		return x.BlockUrl
 	}
 	return ""
 }
 
-func (x *NetworkExplorerUrls) GetTxUrl() string {
+func (x *ChainExplorerUrls) GetTxUrl() string {
 	if x != nil {
 		return x.TxUrl
 	}
 	return ""
 }
 
-func (x *NetworkExplorerUrls) GetAddressUrl() string {
+func (x *ChainExplorerUrls) GetAddressUrl() string {
 	if x != nil {
 		return x.AddressUrl
 	}
@@ -457,24 +457,24 @@ func (x *NetworkExplorerUrls) GetAddressUrl() string {
 }
 
 // *
-// Blockchain network instance information.
-type Network struct {
+// Blockchain instance information.
+type Chain struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id                *NetworkId                         `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Testnet           bool                               `protobuf:"varint,3,opt,name=testnet,proto3" json:"testnet,omitempty"`                                                                                               // indicate if this is testnet-like instance
-	MsPerBlock        uint32                             `protobuf:"varint,4,opt,name=ms_per_block,json=msPerBlock,proto3" json:"ms_per_block,omitempty"`                                                                     // estimated block rate in the network
-	FinalizedHeight   uint32                             `protobuf:"varint,5,opt,name=finalized_height,json=finalizedHeight,proto3" json:"finalized_height,omitempty"`                                                        // height between block and tip when block is considered finalized
-	Explorer          *NetworkExplorerUrls               `protobuf:"bytes,6,opt,name=explorer,proto3" json:"explorer,omitempty"`                                                                                              // recommended explorer service urls
-	Bip44Id           *uint32                            `protobuf:"varint,7,opt,name=bip44_id,json=bip44Id,proto3,oneof" json:"bip44_id,omitempty"`                                                                          // BIP-44 network id
-	SupportedServices []Network_NetworkSupportedServices `protobuf:"varint,8,rep,packed,name=supported_services,json=supportedServices,proto3,enum=ubt.Network_NetworkSupportedServices" json:"supported_services,omitempty"` // supported services
-	Metadata          *structpb.Struct                   `protobuf:"bytes,15,opt,name=metadata,proto3" json:"metadata,omitempty"`                                                                                             // network metadata in JSON format
+	Id                *ChainId                       `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Testnet           bool                           `protobuf:"varint,3,opt,name=testnet,proto3" json:"testnet,omitempty"`                                                                                           // indicate if this is testnet-like instance
+	MsPerBlock        uint32                         `protobuf:"varint,4,opt,name=ms_per_block,json=msPerBlock,proto3" json:"ms_per_block,omitempty"`                                                                 // estimated block rate in the network
+	FinalizedHeight   uint32                         `protobuf:"varint,5,opt,name=finalized_height,json=finalizedHeight,proto3" json:"finalized_height,omitempty"`                                                    // height between block and tip when block is considered finalized
+	Explorer          *ChainExplorerUrls             `protobuf:"bytes,6,opt,name=explorer,proto3" json:"explorer,omitempty"`                                                                                          // recommended explorer service urls
+	Bip44Id           *uint32                        `protobuf:"varint,7,opt,name=bip44_id,json=bip44Id,proto3,oneof" json:"bip44_id,omitempty"`                                                                      // BIP-44 network id
+	SupportedServices []Chain_ChainSupportedServices `protobuf:"varint,8,rep,packed,name=supported_services,json=supportedServices,proto3,enum=ubt.Chain_ChainSupportedServices" json:"supported_services,omitempty"` // supported services
+	Metadata          *structpb.Struct               `protobuf:"bytes,15,opt,name=metadata,proto3" json:"metadata,omitempty"`                                                                                         // network metadata in JSON format
 }
 
-func (x *Network) Reset() {
-	*x = Network{}
+func (x *Chain) Reset() {
+	*x = Chain{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_models_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -482,13 +482,13 @@ func (x *Network) Reset() {
 	}
 }
 
-func (x *Network) String() string {
+func (x *Chain) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Network) ProtoMessage() {}
+func (*Chain) ProtoMessage() {}
 
-func (x *Network) ProtoReflect() protoreflect.Message {
+func (x *Chain) ProtoReflect() protoreflect.Message {
 	mi := &file_models_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -500,61 +500,61 @@ func (x *Network) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Network.ProtoReflect.Descriptor instead.
-func (*Network) Descriptor() ([]byte, []int) {
+// Deprecated: Use Chain.ProtoReflect.Descriptor instead.
+func (*Chain) Descriptor() ([]byte, []int) {
 	return file_models_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *Network) GetId() *NetworkId {
+func (x *Chain) GetId() *ChainId {
 	if x != nil {
 		return x.Id
 	}
 	return nil
 }
 
-func (x *Network) GetTestnet() bool {
+func (x *Chain) GetTestnet() bool {
 	if x != nil {
 		return x.Testnet
 	}
 	return false
 }
 
-func (x *Network) GetMsPerBlock() uint32 {
+func (x *Chain) GetMsPerBlock() uint32 {
 	if x != nil {
 		return x.MsPerBlock
 	}
 	return 0
 }
 
-func (x *Network) GetFinalizedHeight() uint32 {
+func (x *Chain) GetFinalizedHeight() uint32 {
 	if x != nil {
 		return x.FinalizedHeight
 	}
 	return 0
 }
 
-func (x *Network) GetExplorer() *NetworkExplorerUrls {
+func (x *Chain) GetExplorer() *ChainExplorerUrls {
 	if x != nil {
 		return x.Explorer
 	}
 	return nil
 }
 
-func (x *Network) GetBip44Id() uint32 {
+func (x *Chain) GetBip44Id() uint32 {
 	if x != nil && x.Bip44Id != nil {
 		return *x.Bip44Id
 	}
 	return 0
 }
 
-func (x *Network) GetSupportedServices() []Network_NetworkSupportedServices {
+func (x *Chain) GetSupportedServices() []Chain_ChainSupportedServices {
 	if x != nil {
 		return x.SupportedServices
 	}
 	return nil
 }
 
-func (x *Network) GetMetadata() *structpb.Struct {
+func (x *Chain) GetMetadata() *structpb.Struct {
 	if x != nil {
 		return x.Metadata
 	}
@@ -1092,41 +1092,40 @@ var file_models_proto_rawDesc = []byte{
 	0x28, 0x0b, 0x32, 0x0c, 0x2e, 0x75, 0x62, 0x74, 0x2e, 0x75, 0x69, 0x6e, 0x74, 0x32, 0x35, 0x36,
 	0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x1f, 0x0a, 0x0b, 0x63, 0x75, 0x72, 0x72, 0x65,
 	0x6e, 0x63, 0x79, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x63, 0x75,
-	0x72, 0x72, 0x65, 0x6e, 0x63, 0x79, 0x49, 0x64, 0x22, 0x39, 0x0a, 0x09, 0x4e, 0x65, 0x74, 0x77,
-	0x6f, 0x72, 0x6b, 0x49, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6e, 0x65, 0x74,
-	0x77, 0x6f, 0x72, 0x6b, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6e, 0x65, 0x74, 0x77,
-	0x6f, 0x72, 0x6b, 0x22, 0x6a, 0x0a, 0x13, 0x4e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x45, 0x78,
-	0x70, 0x6c, 0x6f, 0x72, 0x65, 0x72, 0x55, 0x72, 0x6c, 0x73, 0x12, 0x1b, 0x0a, 0x09, 0x62, 0x6c,
-	0x6f, 0x63, 0x6b, 0x5f, 0x75, 0x72, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x62,
-	0x6c, 0x6f, 0x63, 0x6b, 0x55, 0x72, 0x6c, 0x12, 0x15, 0x0a, 0x06, 0x74, 0x78, 0x5f, 0x75, 0x72,
-	0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x74, 0x78, 0x55, 0x72, 0x6c, 0x12, 0x1f,
-	0x0a, 0x0b, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x5f, 0x75, 0x72, 0x6c, 0x18, 0x03, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x0a, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x55, 0x72, 0x6c, 0x22,
-	0xe3, 0x03, 0x0a, 0x07, 0x4e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x12, 0x1e, 0x0a, 0x02, 0x69,
-	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0e, 0x2e, 0x75, 0x62, 0x74, 0x2e, 0x4e, 0x65,
-	0x74, 0x77, 0x6f, 0x72, 0x6b, 0x49, 0x64, 0x52, 0x02, 0x69, 0x64, 0x12, 0x18, 0x0a, 0x07, 0x74,
-	0x65, 0x73, 0x74, 0x6e, 0x65, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x74, 0x65,
-	0x73, 0x74, 0x6e, 0x65, 0x74, 0x12, 0x20, 0x0a, 0x0c, 0x6d, 0x73, 0x5f, 0x70, 0x65, 0x72, 0x5f,
-	0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x0a, 0x6d, 0x73, 0x50,
-	0x65, 0x72, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x12, 0x29, 0x0a, 0x10, 0x66, 0x69, 0x6e, 0x61, 0x6c,
-	0x69, 0x7a, 0x65, 0x64, 0x5f, 0x68, 0x65, 0x69, 0x67, 0x68, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28,
-	0x0d, 0x52, 0x0f, 0x66, 0x69, 0x6e, 0x61, 0x6c, 0x69, 0x7a, 0x65, 0x64, 0x48, 0x65, 0x69, 0x67,
-	0x68, 0x74, 0x12, 0x34, 0x0a, 0x08, 0x65, 0x78, 0x70, 0x6c, 0x6f, 0x72, 0x65, 0x72, 0x18, 0x06,
-	0x20, 0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x75, 0x62, 0x74, 0x2e, 0x4e, 0x65, 0x74, 0x77, 0x6f,
-	0x72, 0x6b, 0x45, 0x78, 0x70, 0x6c, 0x6f, 0x72, 0x65, 0x72, 0x55, 0x72, 0x6c, 0x73, 0x52, 0x08,
-	0x65, 0x78, 0x70, 0x6c, 0x6f, 0x72, 0x65, 0x72, 0x12, 0x1e, 0x0a, 0x08, 0x62, 0x69, 0x70, 0x34,
-	0x34, 0x5f, 0x69, 0x64, 0x18, 0x07, 0x20, 0x01, 0x28, 0x0d, 0x48, 0x00, 0x52, 0x07, 0x62, 0x69,
-	0x70, 0x34, 0x34, 0x49, 0x64, 0x88, 0x01, 0x01, 0x12, 0x54, 0x0a, 0x12, 0x73, 0x75, 0x70, 0x70,
-	0x6f, 0x72, 0x74, 0x65, 0x64, 0x5f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73, 0x18, 0x08,
-	0x20, 0x03, 0x28, 0x0e, 0x32, 0x25, 0x2e, 0x75, 0x62, 0x74, 0x2e, 0x4e, 0x65, 0x74, 0x77, 0x6f,
-	0x72, 0x6b, 0x2e, 0x4e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x53, 0x75, 0x70, 0x70, 0x6f, 0x72,
-	0x74, 0x65, 0x64, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73, 0x52, 0x11, 0x73, 0x75, 0x70,
-	0x70, 0x6f, 0x72, 0x74, 0x65, 0x64, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73, 0x12, 0x33,
-	0x0a, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x0f, 0x20, 0x01, 0x28, 0x0b,
-	0x32, 0x17, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62,
-	0x75, 0x66, 0x2e, 0x53, 0x74, 0x72, 0x75, 0x63, 0x74, 0x52, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64,
-	0x61, 0x74, 0x61, 0x22, 0x63, 0x0a, 0x18, 0x4e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x53, 0x75,
+	0x72, 0x72, 0x65, 0x6e, 0x63, 0x79, 0x49, 0x64, 0x22, 0x37, 0x0a, 0x07, 0x43, 0x68, 0x61, 0x69,
+	0x6e, 0x49, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6e, 0x65, 0x74, 0x77, 0x6f,
+	0x72, 0x6b, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6e, 0x65, 0x74, 0x77, 0x6f, 0x72,
+	0x6b, 0x22, 0x68, 0x0a, 0x11, 0x43, 0x68, 0x61, 0x69, 0x6e, 0x45, 0x78, 0x70, 0x6c, 0x6f, 0x72,
+	0x65, 0x72, 0x55, 0x72, 0x6c, 0x73, 0x12, 0x1b, 0x0a, 0x09, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x5f,
+	0x75, 0x72, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x62, 0x6c, 0x6f, 0x63, 0x6b,
+	0x55, 0x72, 0x6c, 0x12, 0x15, 0x0a, 0x06, 0x74, 0x78, 0x5f, 0x75, 0x72, 0x6c, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x05, 0x74, 0x78, 0x55, 0x72, 0x6c, 0x12, 0x1f, 0x0a, 0x0b, 0x61, 0x64,
+	0x64, 0x72, 0x65, 0x73, 0x73, 0x5f, 0x75, 0x72, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x0a, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x55, 0x72, 0x6c, 0x22, 0xd7, 0x03, 0x0a, 0x05,
+	0x43, 0x68, 0x61, 0x69, 0x6e, 0x12, 0x1c, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x0c, 0x2e, 0x75, 0x62, 0x74, 0x2e, 0x43, 0x68, 0x61, 0x69, 0x6e, 0x49, 0x64, 0x52,
+	0x02, 0x69, 0x64, 0x12, 0x18, 0x0a, 0x07, 0x74, 0x65, 0x73, 0x74, 0x6e, 0x65, 0x74, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x74, 0x65, 0x73, 0x74, 0x6e, 0x65, 0x74, 0x12, 0x20, 0x0a,
+	0x0c, 0x6d, 0x73, 0x5f, 0x70, 0x65, 0x72, 0x5f, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x18, 0x04, 0x20,
+	0x01, 0x28, 0x0d, 0x52, 0x0a, 0x6d, 0x73, 0x50, 0x65, 0x72, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x12,
+	0x29, 0x0a, 0x10, 0x66, 0x69, 0x6e, 0x61, 0x6c, 0x69, 0x7a, 0x65, 0x64, 0x5f, 0x68, 0x65, 0x69,
+	0x67, 0x68, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x0f, 0x66, 0x69, 0x6e, 0x61, 0x6c,
+	0x69, 0x7a, 0x65, 0x64, 0x48, 0x65, 0x69, 0x67, 0x68, 0x74, 0x12, 0x32, 0x0a, 0x08, 0x65, 0x78,
+	0x70, 0x6c, 0x6f, 0x72, 0x65, 0x72, 0x18, 0x06, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x75,
+	0x62, 0x74, 0x2e, 0x43, 0x68, 0x61, 0x69, 0x6e, 0x45, 0x78, 0x70, 0x6c, 0x6f, 0x72, 0x65, 0x72,
+	0x55, 0x72, 0x6c, 0x73, 0x52, 0x08, 0x65, 0x78, 0x70, 0x6c, 0x6f, 0x72, 0x65, 0x72, 0x12, 0x1e,
+	0x0a, 0x08, 0x62, 0x69, 0x70, 0x34, 0x34, 0x5f, 0x69, 0x64, 0x18, 0x07, 0x20, 0x01, 0x28, 0x0d,
+	0x48, 0x00, 0x52, 0x07, 0x62, 0x69, 0x70, 0x34, 0x34, 0x49, 0x64, 0x88, 0x01, 0x01, 0x12, 0x50,
+	0x0a, 0x12, 0x73, 0x75, 0x70, 0x70, 0x6f, 0x72, 0x74, 0x65, 0x64, 0x5f, 0x73, 0x65, 0x72, 0x76,
+	0x69, 0x63, 0x65, 0x73, 0x18, 0x08, 0x20, 0x03, 0x28, 0x0e, 0x32, 0x21, 0x2e, 0x75, 0x62, 0x74,
+	0x2e, 0x43, 0x68, 0x61, 0x69, 0x6e, 0x2e, 0x43, 0x68, 0x61, 0x69, 0x6e, 0x53, 0x75, 0x70, 0x70,
+	0x6f, 0x72, 0x74, 0x65, 0x64, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73, 0x52, 0x11, 0x73,
+	0x75, 0x70, 0x70, 0x6f, 0x72, 0x74, 0x65, 0x64, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73,
+	0x12, 0x33, 0x0a, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x0f, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x17, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x62, 0x75, 0x66, 0x2e, 0x53, 0x74, 0x72, 0x75, 0x63, 0x74, 0x52, 0x08, 0x6d, 0x65, 0x74,
+	0x61, 0x64, 0x61, 0x74, 0x61, 0x22, 0x61, 0x0a, 0x16, 0x43, 0x68, 0x61, 0x69, 0x6e, 0x53, 0x75,
 	0x70, 0x70, 0x6f, 0x72, 0x74, 0x65, 0x64, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x73, 0x12,
 	0x0f, 0x0a, 0x0b, 0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x00,
 	0x12, 0x09, 0x0a, 0x05, 0x42, 0x4c, 0x4f, 0x43, 0x4b, 0x10, 0x01, 0x12, 0x0e, 0x0a, 0x0a, 0x43,
@@ -1232,31 +1231,31 @@ func file_models_proto_rawDescGZIP() []byte {
 var file_models_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_models_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_models_proto_goTypes = []interface{}{
-	(FinalityStatus)(0),                   // 0: ubt.FinalityStatus
-	(Network_NetworkSupportedServices)(0), // 1: ubt.Network.NetworkSupportedServices
-	(*Currency)(nil),                      // 2: ubt.Currency
-	(*CurrencyMetadata)(nil),              // 3: ubt.CurrencyMetadata
-	(*CurrencyAmount)(nil),                // 4: ubt.CurrencyAmount
-	(*NetworkId)(nil),                     // 5: ubt.NetworkId
-	(*NetworkExplorerUrls)(nil),           // 6: ubt.NetworkExplorerUrls
-	(*Network)(nil),                       // 7: ubt.Network
-	(*Account)(nil),                       // 8: ubt.Account
-	(*BlockHeader)(nil),                   // 9: ubt.BlockHeader
-	(*Block)(nil),                         // 10: ubt.Block
-	(*Transaction)(nil),                   // 11: ubt.Transaction
-	(*Transfer)(nil),                      // 12: ubt.Transfer
-	(*Operation)(nil),                     // 13: ubt.Operation
-	(*Uint256)(nil),                       // 14: ubt.uint256
-	(*structpb.Struct)(nil),               // 15: google.protobuf.Struct
-	(*timestamppb.Timestamp)(nil),         // 16: google.protobuf.Timestamp
+	(FinalityStatus)(0),               // 0: ubt.FinalityStatus
+	(Chain_ChainSupportedServices)(0), // 1: ubt.Chain.ChainSupportedServices
+	(*Currency)(nil),                  // 2: ubt.Currency
+	(*CurrencyMetadata)(nil),          // 3: ubt.CurrencyMetadata
+	(*CurrencyAmount)(nil),            // 4: ubt.CurrencyAmount
+	(*ChainId)(nil),                   // 5: ubt.ChainId
+	(*ChainExplorerUrls)(nil),         // 6: ubt.ChainExplorerUrls
+	(*Chain)(nil),                     // 7: ubt.Chain
+	(*Account)(nil),                   // 8: ubt.Account
+	(*BlockHeader)(nil),               // 9: ubt.BlockHeader
+	(*Block)(nil),                     // 10: ubt.Block
+	(*Transaction)(nil),               // 11: ubt.Transaction
+	(*Transfer)(nil),                  // 12: ubt.Transfer
+	(*Operation)(nil),                 // 13: ubt.Operation
+	(*Uint256)(nil),                   // 14: ubt.uint256
+	(*structpb.Struct)(nil),           // 15: google.protobuf.Struct
+	(*timestamppb.Timestamp)(nil),     // 16: google.protobuf.Timestamp
 }
 var file_models_proto_depIdxs = []int32{
 	3,  // 0: ubt.Currency.metadata:type_name -> ubt.CurrencyMetadata
 	14, // 1: ubt.CurrencyAmount.value:type_name -> ubt.uint256
-	5,  // 2: ubt.Network.id:type_name -> ubt.NetworkId
-	6,  // 3: ubt.Network.explorer:type_name -> ubt.NetworkExplorerUrls
-	1,  // 4: ubt.Network.supported_services:type_name -> ubt.Network.NetworkSupportedServices
-	15, // 5: ubt.Network.metadata:type_name -> google.protobuf.Struct
+	5,  // 2: ubt.Chain.id:type_name -> ubt.ChainId
+	6,  // 3: ubt.Chain.explorer:type_name -> ubt.ChainExplorerUrls
+	1,  // 4: ubt.Chain.supported_services:type_name -> ubt.Chain.ChainSupportedServices
+	15, // 5: ubt.Chain.metadata:type_name -> google.protobuf.Struct
 	16, // 6: ubt.BlockHeader.timestamp:type_name -> google.protobuf.Timestamp
 	0,  // 7: ubt.BlockHeader.finality_status:type_name -> ubt.FinalityStatus
 	9,  // 8: ubt.Block.header:type_name -> ubt.BlockHeader
@@ -1320,7 +1319,7 @@ func file_models_proto_init() {
 			}
 		}
 		file_models_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*NetworkId); i {
+			switch v := v.(*ChainId); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1332,7 +1331,7 @@ func file_models_proto_init() {
 			}
 		}
 		file_models_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*NetworkExplorerUrls); i {
+			switch v := v.(*ChainExplorerUrls); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1344,7 +1343,7 @@ func file_models_proto_init() {
 			}
 		}
 		file_models_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Network); i {
+			switch v := v.(*Chain); i {
 			case 0:
 				return &v.state
 			case 1:

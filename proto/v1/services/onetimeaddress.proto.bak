@@ -17,8 +17,8 @@ message CollectValueRequest {
 }
 
 service OneTimeAddress {
-  rpc getMainAddress(NetworkId) returns (Address) {}
-  rpc generateAddress(NetworkId) returns (Address) {}
+  rpc getMainAddress(ChainId) returns (Address) {}
+  rpc generateAddress(ChainId) returns (Address) {}
   // transfer specified currencies to the main address
   rpc collectValue(CollectValueRequest) returns(Value) {}
   rpc batchCollectValue(BatchCollectValueRequest)

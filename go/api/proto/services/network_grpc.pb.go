@@ -20,42 +20,42 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	UbtNetworkService_GetNetwork_FullMethodName   = "/ubt.services.UbtNetworkService/getNetwork"
-	UbtNetworkService_ListNetworks_FullMethodName = "/ubt.services.UbtNetworkService/listNetworks"
+	UbtChainService_GetChain_FullMethodName   = "/ubt.services.UbtChainService/getChain"
+	UbtChainService_ListChains_FullMethodName = "/ubt.services.UbtChainService/listChains"
 )
 
-// UbtNetworkServiceClient is the client API for UbtNetworkService service.
+// UbtChainServiceClient is the client API for UbtChainService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type UbtNetworkServiceClient interface {
-	GetNetwork(ctx context.Context, in *proto.NetworkId, opts ...grpc.CallOption) (*proto.Network, error)
-	// rpc getNetworkStatus(NetworkId) returns (NetworkStatus);
-	ListNetworks(ctx context.Context, in *ListNetworksRequest, opts ...grpc.CallOption) (UbtNetworkService_ListNetworksClient, error)
+type UbtChainServiceClient interface {
+	GetChain(ctx context.Context, in *proto.ChainId, opts ...grpc.CallOption) (*proto.Chain, error)
+	// rpc getChainStatus(ChainId) returns (ChainStatus);
+	ListChains(ctx context.Context, in *ListChainsRequest, opts ...grpc.CallOption) (UbtChainService_ListChainsClient, error)
 }
 
-type ubtNetworkServiceClient struct {
+type ubtChainServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewUbtNetworkServiceClient(cc grpc.ClientConnInterface) UbtNetworkServiceClient {
-	return &ubtNetworkServiceClient{cc}
+func NewUbtChainServiceClient(cc grpc.ClientConnInterface) UbtChainServiceClient {
+	return &ubtChainServiceClient{cc}
 }
 
-func (c *ubtNetworkServiceClient) GetNetwork(ctx context.Context, in *proto.NetworkId, opts ...grpc.CallOption) (*proto.Network, error) {
-	out := new(proto.Network)
-	err := c.cc.Invoke(ctx, UbtNetworkService_GetNetwork_FullMethodName, in, out, opts...)
+func (c *ubtChainServiceClient) GetChain(ctx context.Context, in *proto.ChainId, opts ...grpc.CallOption) (*proto.Chain, error) {
+	out := new(proto.Chain)
+	err := c.cc.Invoke(ctx, UbtChainService_GetChain_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *ubtNetworkServiceClient) ListNetworks(ctx context.Context, in *ListNetworksRequest, opts ...grpc.CallOption) (UbtNetworkService_ListNetworksClient, error) {
-	stream, err := c.cc.NewStream(ctx, &UbtNetworkService_ServiceDesc.Streams[0], UbtNetworkService_ListNetworks_FullMethodName, opts...)
+func (c *ubtChainServiceClient) ListChains(ctx context.Context, in *ListChainsRequest, opts ...grpc.CallOption) (UbtChainService_ListChainsClient, error) {
+	stream, err := c.cc.NewStream(ctx, &UbtChainService_ServiceDesc.Streams[0], UbtChainService_ListChains_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &ubtNetworkServiceListNetworksClient{stream}
+	x := &ubtChainServiceListChainsClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -65,111 +65,111 @@ func (c *ubtNetworkServiceClient) ListNetworks(ctx context.Context, in *ListNetw
 	return x, nil
 }
 
-type UbtNetworkService_ListNetworksClient interface {
-	Recv() (*proto.Network, error)
+type UbtChainService_ListChainsClient interface {
+	Recv() (*proto.Chain, error)
 	grpc.ClientStream
 }
 
-type ubtNetworkServiceListNetworksClient struct {
+type ubtChainServiceListChainsClient struct {
 	grpc.ClientStream
 }
 
-func (x *ubtNetworkServiceListNetworksClient) Recv() (*proto.Network, error) {
-	m := new(proto.Network)
+func (x *ubtChainServiceListChainsClient) Recv() (*proto.Chain, error) {
+	m := new(proto.Chain)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-// UbtNetworkServiceServer is the server API for UbtNetworkService service.
-// All implementations must embed UnimplementedUbtNetworkServiceServer
+// UbtChainServiceServer is the server API for UbtChainService service.
+// All implementations must embed UnimplementedUbtChainServiceServer
 // for forward compatibility
-type UbtNetworkServiceServer interface {
-	GetNetwork(context.Context, *proto.NetworkId) (*proto.Network, error)
-	// rpc getNetworkStatus(NetworkId) returns (NetworkStatus);
-	ListNetworks(*ListNetworksRequest, UbtNetworkService_ListNetworksServer) error
-	mustEmbedUnimplementedUbtNetworkServiceServer()
+type UbtChainServiceServer interface {
+	GetChain(context.Context, *proto.ChainId) (*proto.Chain, error)
+	// rpc getChainStatus(ChainId) returns (ChainStatus);
+	ListChains(*ListChainsRequest, UbtChainService_ListChainsServer) error
+	mustEmbedUnimplementedUbtChainServiceServer()
 }
 
-// UnimplementedUbtNetworkServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedUbtNetworkServiceServer struct {
+// UnimplementedUbtChainServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedUbtChainServiceServer struct {
 }
 
-func (UnimplementedUbtNetworkServiceServer) GetNetwork(context.Context, *proto.NetworkId) (*proto.Network, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetNetwork not implemented")
+func (UnimplementedUbtChainServiceServer) GetChain(context.Context, *proto.ChainId) (*proto.Chain, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetChain not implemented")
 }
-func (UnimplementedUbtNetworkServiceServer) ListNetworks(*ListNetworksRequest, UbtNetworkService_ListNetworksServer) error {
-	return status.Errorf(codes.Unimplemented, "method ListNetworks not implemented")
+func (UnimplementedUbtChainServiceServer) ListChains(*ListChainsRequest, UbtChainService_ListChainsServer) error {
+	return status.Errorf(codes.Unimplemented, "method ListChains not implemented")
 }
-func (UnimplementedUbtNetworkServiceServer) mustEmbedUnimplementedUbtNetworkServiceServer() {}
+func (UnimplementedUbtChainServiceServer) mustEmbedUnimplementedUbtChainServiceServer() {}
 
-// UnsafeUbtNetworkServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to UbtNetworkServiceServer will
+// UnsafeUbtChainServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to UbtChainServiceServer will
 // result in compilation errors.
-type UnsafeUbtNetworkServiceServer interface {
-	mustEmbedUnimplementedUbtNetworkServiceServer()
+type UnsafeUbtChainServiceServer interface {
+	mustEmbedUnimplementedUbtChainServiceServer()
 }
 
-func RegisterUbtNetworkServiceServer(s grpc.ServiceRegistrar, srv UbtNetworkServiceServer) {
-	s.RegisterService(&UbtNetworkService_ServiceDesc, srv)
+func RegisterUbtChainServiceServer(s grpc.ServiceRegistrar, srv UbtChainServiceServer) {
+	s.RegisterService(&UbtChainService_ServiceDesc, srv)
 }
 
-func _UbtNetworkService_GetNetwork_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(proto.NetworkId)
+func _UbtChainService_GetChain_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(proto.ChainId)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UbtNetworkServiceServer).GetNetwork(ctx, in)
+		return srv.(UbtChainServiceServer).GetChain(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: UbtNetworkService_GetNetwork_FullMethodName,
+		FullMethod: UbtChainService_GetChain_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UbtNetworkServiceServer).GetNetwork(ctx, req.(*proto.NetworkId))
+		return srv.(UbtChainServiceServer).GetChain(ctx, req.(*proto.ChainId))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UbtNetworkService_ListNetworks_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(ListNetworksRequest)
+func _UbtChainService_ListChains_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(ListChainsRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(UbtNetworkServiceServer).ListNetworks(m, &ubtNetworkServiceListNetworksServer{stream})
+	return srv.(UbtChainServiceServer).ListChains(m, &ubtChainServiceListChainsServer{stream})
 }
 
-type UbtNetworkService_ListNetworksServer interface {
-	Send(*proto.Network) error
+type UbtChainService_ListChainsServer interface {
+	Send(*proto.Chain) error
 	grpc.ServerStream
 }
 
-type ubtNetworkServiceListNetworksServer struct {
+type ubtChainServiceListChainsServer struct {
 	grpc.ServerStream
 }
 
-func (x *ubtNetworkServiceListNetworksServer) Send(m *proto.Network) error {
+func (x *ubtChainServiceListChainsServer) Send(m *proto.Chain) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-// UbtNetworkService_ServiceDesc is the grpc.ServiceDesc for UbtNetworkService service.
+// UbtChainService_ServiceDesc is the grpc.ServiceDesc for UbtChainService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var UbtNetworkService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "ubt.services.UbtNetworkService",
-	HandlerType: (*UbtNetworkServiceServer)(nil),
+var UbtChainService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "ubt.services.UbtChainService",
+	HandlerType: (*UbtChainServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "getNetwork",
-			Handler:    _UbtNetworkService_GetNetwork_Handler,
+			MethodName: "getChain",
+			Handler:    _UbtChainService_GetChain_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "listNetworks",
-			Handler:       _UbtNetworkService_ListNetworks_Handler,
+			StreamName:    "listChains",
+			Handler:       _UbtChainService_ListChains_Handler,
 			ServerStreams: true,
 		},
 	},

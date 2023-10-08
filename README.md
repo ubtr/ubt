@@ -26,7 +26,7 @@ Core functionality is what should be implemented by any blockchain to be compati
 
 ## Core model
 
-### Blockchain ID
+### Chain ID
 ```
 (chain-type)[:chain-network]
 ```

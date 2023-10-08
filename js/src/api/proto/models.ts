@@ -16,7 +16,7 @@ import { Struct } from "./google/protobuf/struct";
 import { uint256 } from "./commons";
 /**
  * *
- * Generial currency representation.
+ * Common currency representation.
  * Currency can be native blockchain currency, ERC-20 like token or ERC-1155 like token.
  *
  * @generated from protobuf message ubt.Currency
@@ -24,7 +24,7 @@ import { uint256 } from "./commons";
 export interface Currency {
     /**
      * *
-     * Unique currency ID within the network in format [contractAddress]:[tokenId].
+     * Unique currency ID within the blockchain in format [contractAddress]:[tokenId].
      * For native currency - ':'
      * For ERC-20 like tokens - 'contractAddress:'
      * For ERC-1155 like tokens - 'contractAddress:tokenId'
@@ -86,22 +86,22 @@ export interface CurrencyAmount {
 }
 /**
  * *
- * Blockchain network instance ID.
+ * Blockchain instance ID.
  *
- * @generated from protobuf message ubt.NetworkId
+ * @generated from protobuf message ubt.ChainId
  */
-export interface NetworkId {
+export interface ChainId {
     /**
      * *
-     * Network type like bitcoin, ethereum, etc.
+     * Network type like BTC, ETH, etc.
      *
      * @generated from protobuf field: string type = 1;
      */
     type: string;
     /**
      * *
-     * Network instance name like mainnet, testnet, etc.
-     * Instance must have same chain and genesis block over the time so instead of 'testnet' it could be 'goerli', 'sepolia' etc.
+     * Chain instance name like mainnet, testnet, etc.
+     * Instance must have same chain and genesis block over the time so instead of 'testnet' it should be 'goerli', 'sepolia' etc.
      *
      * @generated from protobuf field: string network = 2;
      */
@@ -111,9 +111,9 @@ export interface NetworkId {
  * *
  * Explorer link templates for easier viewing
  *
- * @generated from protobuf message ubt.NetworkExplorerUrls
+ * @generated from protobuf message ubt.ChainExplorerUrls
  */
-export interface NetworkExplorerUrls {
+export interface ChainExplorerUrls {
     /**
      * @generated from protobuf field: string block_url = 1;
      */
@@ -129,15 +129,15 @@ export interface NetworkExplorerUrls {
 }
 /**
  * *
- * Blockchain network instance information.
+ * Blockchain instance information.
  *
- * @generated from protobuf message ubt.Network
+ * @generated from protobuf message ubt.Chain
  */
-export interface Network {
+export interface Chain {
     /**
-     * @generated from protobuf field: ubt.NetworkId id = 1;
+     * @generated from protobuf field: ubt.ChainId id = 1;
      */
-    id?: NetworkId;
+    id?: ChainId;
     /**
      * @generated from protobuf field: bool testnet = 3;
      */
@@ -151,17 +151,17 @@ export interface Network {
      */
     finalizedHeight: number; // height between block and tip when block is considered finalized
     /**
-     * @generated from protobuf field: ubt.NetworkExplorerUrls explorer = 6;
+     * @generated from protobuf field: ubt.ChainExplorerUrls explorer = 6;
      */
-    explorer?: NetworkExplorerUrls; // recommended explorer service urls
+    explorer?: ChainExplorerUrls; // recommended explorer service urls
     /**
      * @generated from protobuf field: optional uint32 bip44_id = 7;
      */
     bip44Id?: number; // BIP-44 network id
     /**
-     * @generated from protobuf field: repeated ubt.Network.NetworkSupportedServices supported_services = 8;
+     * @generated from protobuf field: repeated ubt.Chain.ChainSupportedServices supported_services = 8;
      */
-    supportedServices: Network_NetworkSupportedServices[]; // supported services
+    supportedServices: Chain_ChainSupportedServices[]; // supported services
     /**
      * @generated from protobuf field: google.protobuf.Struct metadata = 15;
      */
@@ -171,9 +171,9 @@ export interface Network {
  * *
  * Supported services. CbtNetworkService must be always supported.
  *
- * @generated from protobuf enum ubt.Network.NetworkSupportedServices
+ * @generated from protobuf enum ubt.Chain.ChainSupportedServices
  */
-export enum Network_NetworkSupportedServices {
+export enum Chain_ChainSupportedServices {
     /**
      * @generated from protobuf enum value: UNSPECIFIED = 0;
      */
@@ -574,21 +574,21 @@ class CurrencyAmount$Type extends MessageType<CurrencyAmount> {
  */
 export const CurrencyAmount = new CurrencyAmount$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class NetworkId$Type extends MessageType<NetworkId> {
+class ChainId$Type extends MessageType<ChainId> {
     constructor() {
-        super("ubt.NetworkId", [
+        super("ubt.ChainId", [
             { no: 1, name: "type", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "network", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<NetworkId>): NetworkId {
+    create(value?: PartialMessage<ChainId>): ChainId {
         const message = { type: "", network: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<NetworkId>(this, message, value);
+            reflectionMergePartial<ChainId>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: NetworkId): NetworkId {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChainId): ChainId {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -610,7 +610,7 @@ class NetworkId$Type extends MessageType<NetworkId> {
         }
         return message;
     }
-    internalBinaryWrite(message: NetworkId, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: ChainId, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string type = 1; */
         if (message.type !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.type);
@@ -624,26 +624,26 @@ class NetworkId$Type extends MessageType<NetworkId> {
     }
 }
 /**
- * @generated MessageType for protobuf message ubt.NetworkId
+ * @generated MessageType for protobuf message ubt.ChainId
  */
-export const NetworkId = new NetworkId$Type();
+export const ChainId = new ChainId$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class NetworkExplorerUrls$Type extends MessageType<NetworkExplorerUrls> {
+class ChainExplorerUrls$Type extends MessageType<ChainExplorerUrls> {
     constructor() {
-        super("ubt.NetworkExplorerUrls", [
+        super("ubt.ChainExplorerUrls", [
             { no: 1, name: "block_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "tx_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "address_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<NetworkExplorerUrls>): NetworkExplorerUrls {
+    create(value?: PartialMessage<ChainExplorerUrls>): ChainExplorerUrls {
         const message = { blockUrl: "", txUrl: "", addressUrl: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<NetworkExplorerUrls>(this, message, value);
+            reflectionMergePartial<ChainExplorerUrls>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: NetworkExplorerUrls): NetworkExplorerUrls {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChainExplorerUrls): ChainExplorerUrls {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -668,7 +668,7 @@ class NetworkExplorerUrls$Type extends MessageType<NetworkExplorerUrls> {
         }
         return message;
     }
-    internalBinaryWrite(message: NetworkExplorerUrls, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: ChainExplorerUrls, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string block_url = 1; */
         if (message.blockUrl !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.blockUrl);
@@ -685,37 +685,37 @@ class NetworkExplorerUrls$Type extends MessageType<NetworkExplorerUrls> {
     }
 }
 /**
- * @generated MessageType for protobuf message ubt.NetworkExplorerUrls
+ * @generated MessageType for protobuf message ubt.ChainExplorerUrls
  */
-export const NetworkExplorerUrls = new NetworkExplorerUrls$Type();
+export const ChainExplorerUrls = new ChainExplorerUrls$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class Network$Type extends MessageType<Network> {
+class Chain$Type extends MessageType<Chain> {
     constructor() {
-        super("ubt.Network", [
-            { no: 1, name: "id", kind: "message", T: () => NetworkId },
+        super("ubt.Chain", [
+            { no: 1, name: "id", kind: "message", T: () => ChainId },
             { no: 3, name: "testnet", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 4, name: "ms_per_block", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
             { no: 5, name: "finalized_height", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 6, name: "explorer", kind: "message", T: () => NetworkExplorerUrls },
+            { no: 6, name: "explorer", kind: "message", T: () => ChainExplorerUrls },
             { no: 7, name: "bip44_id", kind: "scalar", opt: true, T: 13 /*ScalarType.UINT32*/ },
-            { no: 8, name: "supported_services", kind: "enum", repeat: 1 /*RepeatType.PACKED*/, T: () => ["ubt.Network.NetworkSupportedServices", Network_NetworkSupportedServices] },
+            { no: 8, name: "supported_services", kind: "enum", repeat: 1 /*RepeatType.PACKED*/, T: () => ["ubt.Chain.ChainSupportedServices", Chain_ChainSupportedServices] },
             { no: 15, name: "metadata", kind: "message", T: () => Struct }
         ]);
     }
-    create(value?: PartialMessage<Network>): Network {
+    create(value?: PartialMessage<Chain>): Chain {
         const message = { testnet: false, msPerBlock: 0, finalizedHeight: 0, supportedServices: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<Network>(this, message, value);
+            reflectionMergePartial<Chain>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Network): Network {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Chain): Chain {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* ubt.NetworkId id */ 1:
-                    message.id = NetworkId.internalBinaryRead(reader, reader.uint32(), options, message.id);
+                case /* ubt.ChainId id */ 1:
+                    message.id = ChainId.internalBinaryRead(reader, reader.uint32(), options, message.id);
                     break;
                 case /* bool testnet */ 3:
                     message.testnet = reader.bool();
@@ -726,13 +726,13 @@ class Network$Type extends MessageType<Network> {
                 case /* uint32 finalized_height */ 5:
                     message.finalizedHeight = reader.uint32();
                     break;
-                case /* ubt.NetworkExplorerUrls explorer */ 6:
-                    message.explorer = NetworkExplorerUrls.internalBinaryRead(reader, reader.uint32(), options, message.explorer);
+                case /* ubt.ChainExplorerUrls explorer */ 6:
+                    message.explorer = ChainExplorerUrls.internalBinaryRead(reader, reader.uint32(), options, message.explorer);
                     break;
                 case /* optional uint32 bip44_id */ 7:
                     message.bip44Id = reader.uint32();
                     break;
-                case /* repeated ubt.Network.NetworkSupportedServices supported_services */ 8:
+                case /* repeated ubt.Chain.ChainSupportedServices supported_services */ 8:
                     if (wireType === WireType.LengthDelimited)
                         for (let e = reader.int32() + reader.pos; reader.pos < e;)
                             message.supportedServices.push(reader.int32());
@@ -753,10 +753,10 @@ class Network$Type extends MessageType<Network> {
         }
         return message;
     }
-    internalBinaryWrite(message: Network, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* ubt.NetworkId id = 1; */
+    internalBinaryWrite(message: Chain, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* ubt.ChainId id = 1; */
         if (message.id)
-            NetworkId.internalBinaryWrite(message.id, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            ChainId.internalBinaryWrite(message.id, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* bool testnet = 3; */
         if (message.testnet !== false)
             writer.tag(3, WireType.Varint).bool(message.testnet);
@@ -766,13 +766,13 @@ class Network$Type extends MessageType<Network> {
         /* uint32 finalized_height = 5; */
         if (message.finalizedHeight !== 0)
             writer.tag(5, WireType.Varint).uint32(message.finalizedHeight);
-        /* ubt.NetworkExplorerUrls explorer = 6; */
+        /* ubt.ChainExplorerUrls explorer = 6; */
         if (message.explorer)
-            NetworkExplorerUrls.internalBinaryWrite(message.explorer, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+            ChainExplorerUrls.internalBinaryWrite(message.explorer, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
         /* optional uint32 bip44_id = 7; */
         if (message.bip44Id !== undefined)
             writer.tag(7, WireType.Varint).uint32(message.bip44Id);
-        /* repeated ubt.Network.NetworkSupportedServices supported_services = 8; */
+        /* repeated ubt.Chain.ChainSupportedServices supported_services = 8; */
         if (message.supportedServices.length) {
             writer.tag(8, WireType.LengthDelimited).fork();
             for (let i = 0; i < message.supportedServices.length; i++)
@@ -789,9 +789,9 @@ class Network$Type extends MessageType<Network> {
     }
 }
 /**
- * @generated MessageType for protobuf message ubt.Network
+ * @generated MessageType for protobuf message ubt.Chain
  */
-export const Network = new Network$Type();
+export const Chain = new Chain$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Account$Type extends MessageType<Account> {
     constructor() {

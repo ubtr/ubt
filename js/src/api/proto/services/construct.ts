@@ -14,15 +14,15 @@ import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
 import { uint256 } from "../commons";
 import { CurrencyAmount } from "../models";
-import { NetworkId } from "../models";
+import { ChainId } from "../models";
 /**
  * @generated from protobuf message ubt.services.CreateTransferRequest
  */
 export interface CreateTransferRequest {
     /**
-     * @generated from protobuf field: ubt.NetworkId network_id = 1;
+     * @generated from protobuf field: ubt.ChainId chain_id = 1;
      */
-    networkId?: NetworkId;
+    chainId?: ChainId;
     /**
      * @generated from protobuf field: string from = 2;
      */
@@ -92,9 +92,9 @@ export interface TransactionIntent {
  */
 export interface TransactionCombineRequest {
     /**
-     * @generated from protobuf field: ubt.NetworkId network_id = 1;
+     * @generated from protobuf field: ubt.ChainId chain_id = 1;
      */
-    networkId?: NetworkId;
+    chainId?: ChainId;
     /**
      * @generated from protobuf field: ubt.services.TransactionIntent intent = 2;
      */
@@ -109,9 +109,9 @@ export interface TransactionCombineRequest {
  */
 export interface TransactionSignRequest {
     /**
-     * @generated from protobuf field: ubt.NetworkId network_id = 1;
+     * @generated from protobuf field: ubt.ChainId chain_id = 1;
      */
-    networkId?: NetworkId;
+    chainId?: ChainId;
     /**
      * @generated from protobuf field: ubt.services.TransactionIntent intent = 2;
      */
@@ -126,9 +126,9 @@ export interface TransactionSignRequest {
  */
 export interface TransactionSendRequest {
     /**
-     * @generated from protobuf field: ubt.NetworkId network_id = 1;
+     * @generated from protobuf field: ubt.ChainId chain_id = 1;
      */
-    networkId?: NetworkId;
+    chainId?: ChainId;
     /**
      * @generated from protobuf field: ubt.services.TransactionIntent intent = 2;
      */
@@ -164,7 +164,7 @@ export interface TransactionSendResponse {
 class CreateTransferRequest$Type extends MessageType<CreateTransferRequest> {
     constructor() {
         super("ubt.services.CreateTransferRequest", [
-            { no: 1, name: "network_id", kind: "message", T: () => NetworkId },
+            { no: 1, name: "chain_id", kind: "message", T: () => ChainId },
             { no: 2, name: "from", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "to", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "amount", kind: "message", T: () => CurrencyAmount }
@@ -182,8 +182,8 @@ class CreateTransferRequest$Type extends MessageType<CreateTransferRequest> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* ubt.NetworkId network_id */ 1:
-                    message.networkId = NetworkId.internalBinaryRead(reader, reader.uint32(), options, message.networkId);
+                case /* ubt.ChainId chain_id */ 1:
+                    message.chainId = ChainId.internalBinaryRead(reader, reader.uint32(), options, message.chainId);
                     break;
                 case /* string from */ 2:
                     message.from = reader.string();
@@ -206,9 +206,9 @@ class CreateTransferRequest$Type extends MessageType<CreateTransferRequest> {
         return message;
     }
     internalBinaryWrite(message: CreateTransferRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* ubt.NetworkId network_id = 1; */
-        if (message.networkId)
-            NetworkId.internalBinaryWrite(message.networkId, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* ubt.ChainId chain_id = 1; */
+        if (message.chainId)
+            ChainId.internalBinaryWrite(message.chainId, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* string from = 2; */
         if (message.from !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.from);
@@ -415,7 +415,7 @@ export const TransactionIntent = new TransactionIntent$Type();
 class TransactionCombineRequest$Type extends MessageType<TransactionCombineRequest> {
     constructor() {
         super("ubt.services.TransactionCombineRequest", [
-            { no: 1, name: "network_id", kind: "message", T: () => NetworkId },
+            { no: 1, name: "chain_id", kind: "message", T: () => ChainId },
             { no: 2, name: "intent", kind: "message", T: () => TransactionIntent },
             { no: 3, name: "signatures", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 12 /*ScalarType.BYTES*/ }
         ]);
@@ -432,8 +432,8 @@ class TransactionCombineRequest$Type extends MessageType<TransactionCombineReque
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* ubt.NetworkId network_id */ 1:
-                    message.networkId = NetworkId.internalBinaryRead(reader, reader.uint32(), options, message.networkId);
+                case /* ubt.ChainId chain_id */ 1:
+                    message.chainId = ChainId.internalBinaryRead(reader, reader.uint32(), options, message.chainId);
                     break;
                 case /* ubt.services.TransactionIntent intent */ 2:
                     message.intent = TransactionIntent.internalBinaryRead(reader, reader.uint32(), options, message.intent);
@@ -453,9 +453,9 @@ class TransactionCombineRequest$Type extends MessageType<TransactionCombineReque
         return message;
     }
     internalBinaryWrite(message: TransactionCombineRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* ubt.NetworkId network_id = 1; */
-        if (message.networkId)
-            NetworkId.internalBinaryWrite(message.networkId, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* ubt.ChainId chain_id = 1; */
+        if (message.chainId)
+            ChainId.internalBinaryWrite(message.chainId, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* ubt.services.TransactionIntent intent = 2; */
         if (message.intent)
             TransactionIntent.internalBinaryWrite(message.intent, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
@@ -476,7 +476,7 @@ export const TransactionCombineRequest = new TransactionCombineRequest$Type();
 class TransactionSignRequest$Type extends MessageType<TransactionSignRequest> {
     constructor() {
         super("ubt.services.TransactionSignRequest", [
-            { no: 1, name: "network_id", kind: "message", T: () => NetworkId },
+            { no: 1, name: "chain_id", kind: "message", T: () => ChainId },
             { no: 2, name: "intent", kind: "message", T: () => TransactionIntent },
             { no: 3, name: "private_key", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
         ]);
@@ -493,8 +493,8 @@ class TransactionSignRequest$Type extends MessageType<TransactionSignRequest> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* ubt.NetworkId network_id */ 1:
-                    message.networkId = NetworkId.internalBinaryRead(reader, reader.uint32(), options, message.networkId);
+                case /* ubt.ChainId chain_id */ 1:
+                    message.chainId = ChainId.internalBinaryRead(reader, reader.uint32(), options, message.chainId);
                     break;
                 case /* ubt.services.TransactionIntent intent */ 2:
                     message.intent = TransactionIntent.internalBinaryRead(reader, reader.uint32(), options, message.intent);
@@ -514,9 +514,9 @@ class TransactionSignRequest$Type extends MessageType<TransactionSignRequest> {
         return message;
     }
     internalBinaryWrite(message: TransactionSignRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* ubt.NetworkId network_id = 1; */
-        if (message.networkId)
-            NetworkId.internalBinaryWrite(message.networkId, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* ubt.ChainId chain_id = 1; */
+        if (message.chainId)
+            ChainId.internalBinaryWrite(message.chainId, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* ubt.services.TransactionIntent intent = 2; */
         if (message.intent)
             TransactionIntent.internalBinaryWrite(message.intent, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
@@ -537,7 +537,7 @@ export const TransactionSignRequest = new TransactionSignRequest$Type();
 class TransactionSendRequest$Type extends MessageType<TransactionSendRequest> {
     constructor() {
         super("ubt.services.TransactionSendRequest", [
-            { no: 1, name: "network_id", kind: "message", T: () => NetworkId },
+            { no: 1, name: "chain_id", kind: "message", T: () => ChainId },
             { no: 2, name: "intent", kind: "message", T: () => TransactionIntent },
             { no: 3, name: "signatures", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 12 /*ScalarType.BYTES*/ }
         ]);
@@ -554,8 +554,8 @@ class TransactionSendRequest$Type extends MessageType<TransactionSendRequest> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* ubt.NetworkId network_id */ 1:
-                    message.networkId = NetworkId.internalBinaryRead(reader, reader.uint32(), options, message.networkId);
+                case /* ubt.ChainId chain_id */ 1:
+                    message.chainId = ChainId.internalBinaryRead(reader, reader.uint32(), options, message.chainId);
                     break;
                 case /* ubt.services.TransactionIntent intent */ 2:
                     message.intent = TransactionIntent.internalBinaryRead(reader, reader.uint32(), options, message.intent);
@@ -575,9 +575,9 @@ class TransactionSendRequest$Type extends MessageType<TransactionSendRequest> {
         return message;
     }
     internalBinaryWrite(message: TransactionSendRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* ubt.NetworkId network_id = 1; */
-        if (message.networkId)
-            NetworkId.internalBinaryWrite(message.networkId, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* ubt.ChainId chain_id = 1; */
+        if (message.chainId)
+            ChainId.internalBinaryWrite(message.chainId, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* ubt.services.TransactionIntent intent = 2; */
         if (message.intent)
             TransactionIntent.internalBinaryWrite(message.intent, writer.tag(2, WireType.LengthDelimited).fork(), options).join();

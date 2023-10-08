@@ -15,15 +15,15 @@ import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
 import { FinalityStatus } from "../models";
-import { NetworkId } from "../models";
+import { ChainId } from "../models";
 /**
  * @generated from protobuf message ubt.services.BlockRequest
  */
 export interface BlockRequest {
     /**
-     * @generated from protobuf field: ubt.NetworkId network_id = 1;
+     * @generated from protobuf field: ubt.ChainId chain_id = 1;
      */
-    networkId?: NetworkId;
+    chainId?: ChainId;
     /**
      * @generated from protobuf field: bytes id = 2;
      */
@@ -34,9 +34,9 @@ export interface BlockRequest {
  */
 export interface ListBlocksRequest {
     /**
-     * @generated from protobuf field: ubt.NetworkId network_id = 1;
+     * @generated from protobuf field: ubt.ChainId chain_id = 1;
      */
-    networkId?: NetworkId;
+    chainId?: ChainId;
     /**
      * @generated from protobuf field: uint64 start_number = 2;
      */
@@ -82,9 +82,9 @@ export enum ListBlocksRequest_IncludeFlags {
  */
 export interface GetAccountRequest {
     /**
-     * @generated from protobuf field: ubt.NetworkId network_id = 1;
+     * @generated from protobuf field: ubt.ChainId chain_id = 1;
      */
-    networkId?: NetworkId;
+    chainId?: ChainId;
     /**
      * @generated from protobuf field: string address = 2;
      */
@@ -95,9 +95,9 @@ export interface GetAccountRequest {
  */
 export interface DeriveAccountRequest {
     /**
-     * @generated from protobuf field: ubt.NetworkId network_id = 1;
+     * @generated from protobuf field: ubt.ChainId chain_id = 1;
      */
-    networkId?: NetworkId;
+    chainId?: ChainId;
     /**
      * @generated from protobuf field: string public_key = 2;
      */
@@ -107,7 +107,7 @@ export interface DeriveAccountRequest {
 class BlockRequest$Type extends MessageType<BlockRequest> {
     constructor() {
         super("ubt.services.BlockRequest", [
-            { no: 1, name: "network_id", kind: "message", T: () => NetworkId },
+            { no: 1, name: "chain_id", kind: "message", T: () => ChainId },
             { no: 2, name: "id", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
         ]);
     }
@@ -123,8 +123,8 @@ class BlockRequest$Type extends MessageType<BlockRequest> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* ubt.NetworkId network_id */ 1:
-                    message.networkId = NetworkId.internalBinaryRead(reader, reader.uint32(), options, message.networkId);
+                case /* ubt.ChainId chain_id */ 1:
+                    message.chainId = ChainId.internalBinaryRead(reader, reader.uint32(), options, message.chainId);
                     break;
                 case /* bytes id */ 2:
                     message.id = reader.bytes();
@@ -141,9 +141,9 @@ class BlockRequest$Type extends MessageType<BlockRequest> {
         return message;
     }
     internalBinaryWrite(message: BlockRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* ubt.NetworkId network_id = 1; */
-        if (message.networkId)
-            NetworkId.internalBinaryWrite(message.networkId, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* ubt.ChainId chain_id = 1; */
+        if (message.chainId)
+            ChainId.internalBinaryWrite(message.chainId, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* bytes id = 2; */
         if (message.id.length)
             writer.tag(2, WireType.LengthDelimited).bytes(message.id);
@@ -161,7 +161,7 @@ export const BlockRequest = new BlockRequest$Type();
 class ListBlocksRequest$Type extends MessageType<ListBlocksRequest> {
     constructor() {
         super("ubt.services.ListBlocksRequest", [
-            { no: 1, name: "network_id", kind: "message", T: () => NetworkId },
+            { no: 1, name: "chain_id", kind: "message", T: () => ChainId },
             { no: 2, name: "start_number", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 0 /*LongType.BIGINT*/ },
             { no: 3, name: "end_number", kind: "scalar", opt: true, T: 4 /*ScalarType.UINT64*/, L: 0 /*LongType.BIGINT*/ },
             { no: 4, name: "includes", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
@@ -180,8 +180,8 @@ class ListBlocksRequest$Type extends MessageType<ListBlocksRequest> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* ubt.NetworkId network_id */ 1:
-                    message.networkId = NetworkId.internalBinaryRead(reader, reader.uint32(), options, message.networkId);
+                case /* ubt.ChainId chain_id */ 1:
+                    message.chainId = ChainId.internalBinaryRead(reader, reader.uint32(), options, message.chainId);
                     break;
                 case /* uint64 start_number */ 2:
                     message.startNumber = reader.uint64().toBigInt();
@@ -207,9 +207,9 @@ class ListBlocksRequest$Type extends MessageType<ListBlocksRequest> {
         return message;
     }
     internalBinaryWrite(message: ListBlocksRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* ubt.NetworkId network_id = 1; */
-        if (message.networkId)
-            NetworkId.internalBinaryWrite(message.networkId, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* ubt.ChainId chain_id = 1; */
+        if (message.chainId)
+            ChainId.internalBinaryWrite(message.chainId, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* uint64 start_number = 2; */
         if (message.startNumber !== 0n)
             writer.tag(2, WireType.Varint).uint64(message.startNumber);
@@ -236,7 +236,7 @@ export const ListBlocksRequest = new ListBlocksRequest$Type();
 class GetAccountRequest$Type extends MessageType<GetAccountRequest> {
     constructor() {
         super("ubt.services.GetAccountRequest", [
-            { no: 1, name: "network_id", kind: "message", T: () => NetworkId },
+            { no: 1, name: "chain_id", kind: "message", T: () => ChainId },
             { no: 2, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
@@ -252,8 +252,8 @@ class GetAccountRequest$Type extends MessageType<GetAccountRequest> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* ubt.NetworkId network_id */ 1:
-                    message.networkId = NetworkId.internalBinaryRead(reader, reader.uint32(), options, message.networkId);
+                case /* ubt.ChainId chain_id */ 1:
+                    message.chainId = ChainId.internalBinaryRead(reader, reader.uint32(), options, message.chainId);
                     break;
                 case /* string address */ 2:
                     message.address = reader.string();
@@ -270,9 +270,9 @@ class GetAccountRequest$Type extends MessageType<GetAccountRequest> {
         return message;
     }
     internalBinaryWrite(message: GetAccountRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* ubt.NetworkId network_id = 1; */
-        if (message.networkId)
-            NetworkId.internalBinaryWrite(message.networkId, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* ubt.ChainId chain_id = 1; */
+        if (message.chainId)
+            ChainId.internalBinaryWrite(message.chainId, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* string address = 2; */
         if (message.address !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.address);
@@ -290,7 +290,7 @@ export const GetAccountRequest = new GetAccountRequest$Type();
 class DeriveAccountRequest$Type extends MessageType<DeriveAccountRequest> {
     constructor() {
         super("ubt.services.DeriveAccountRequest", [
-            { no: 1, name: "network_id", kind: "message", T: () => NetworkId },
+            { no: 1, name: "chain_id", kind: "message", T: () => ChainId },
             { no: 2, name: "public_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
@@ -306,8 +306,8 @@ class DeriveAccountRequest$Type extends MessageType<DeriveAccountRequest> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* ubt.NetworkId network_id */ 1:
-                    message.networkId = NetworkId.internalBinaryRead(reader, reader.uint32(), options, message.networkId);
+                case /* ubt.ChainId chain_id */ 1:
+                    message.chainId = ChainId.internalBinaryRead(reader, reader.uint32(), options, message.chainId);
                     break;
                 case /* string public_key */ 2:
                     message.publicKey = reader.string();
@@ -324,9 +324,9 @@ class DeriveAccountRequest$Type extends MessageType<DeriveAccountRequest> {
         return message;
     }
     internalBinaryWrite(message: DeriveAccountRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* ubt.NetworkId network_id = 1; */
-        if (message.networkId)
-            NetworkId.internalBinaryWrite(message.networkId, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* ubt.ChainId chain_id = 1; */
+        if (message.chainId)
+            ChainId.internalBinaryWrite(message.chainId, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* string public_key = 2; */
         if (message.publicKey !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.publicKey);

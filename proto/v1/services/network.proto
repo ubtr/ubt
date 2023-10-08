@@ -6,17 +6,17 @@ option go_package = "api/gen";
 
 import "models.proto";
 
-message NetworkStatus {
+message ChainStatus {
   bool ready = 1;
   Block head = 2;
 }
 
-message ListNetworksRequest {
+message ListChainsRequest {
   optional string type = 1; // tron, ethereum, etc..
 }
 
-service UbtNetworkService {
-  rpc getNetwork(NetworkId) returns (Network);
-  //rpc getNetworkStatus(NetworkId) returns (NetworkStatus);
-  rpc listNetworks(ListNetworksRequest) returns (stream Network);
+service UbtChainService {
+  rpc getChain(ChainId) returns (Chain);
+  //rpc getChainStatus(ChainId) returns (ChainStatus);
+  rpc listChains(ListChainsRequest) returns (stream Chain);
 }

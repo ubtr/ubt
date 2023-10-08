@@ -3,52 +3,52 @@
 // tslint:disable
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
-import { UbtNetworkService } from "./network";
-import type { ListNetworksRequest } from "./network";
+import { UbtChainService } from "./network";
+import type { ListChainsRequest } from "./network";
 import type { ServerStreamingCall } from "@protobuf-ts/runtime-rpc";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
-import type { Network } from "../models";
-import type { NetworkId } from "../models";
+import type { Chain } from "../models";
+import type { ChainId } from "../models";
 import type { UnaryCall } from "@protobuf-ts/runtime-rpc";
 import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
 /**
- * @generated from protobuf service ubt.services.UbtNetworkService
+ * @generated from protobuf service ubt.services.UbtChainService
  */
-export interface IUbtNetworkServiceClient {
+export interface IUbtChainServiceClient {
     /**
-     * @generated from protobuf rpc: getNetwork(ubt.NetworkId) returns (ubt.Network);
+     * @generated from protobuf rpc: getChain(ubt.ChainId) returns (ubt.Chain);
      */
-    getNetwork(input: NetworkId, options?: RpcOptions): UnaryCall<NetworkId, Network>;
+    getChain(input: ChainId, options?: RpcOptions): UnaryCall<ChainId, Chain>;
     /**
-     * rpc getNetworkStatus(NetworkId) returns (NetworkStatus);
+     * rpc getChainStatus(ChainId) returns (ChainStatus);
      *
-     * @generated from protobuf rpc: listNetworks(ubt.services.ListNetworksRequest) returns (stream ubt.Network);
+     * @generated from protobuf rpc: listChains(ubt.services.ListChainsRequest) returns (stream ubt.Chain);
      */
-    listNetworks(input: ListNetworksRequest, options?: RpcOptions): ServerStreamingCall<ListNetworksRequest, Network>;
+    listChains(input: ListChainsRequest, options?: RpcOptions): ServerStreamingCall<ListChainsRequest, Chain>;
 }
 /**
- * @generated from protobuf service ubt.services.UbtNetworkService
+ * @generated from protobuf service ubt.services.UbtChainService
  */
-export class UbtNetworkServiceClient implements IUbtNetworkServiceClient, ServiceInfo {
-    typeName = UbtNetworkService.typeName;
-    methods = UbtNetworkService.methods;
-    options = UbtNetworkService.options;
+export class UbtChainServiceClient implements IUbtChainServiceClient, ServiceInfo {
+    typeName = UbtChainService.typeName;
+    methods = UbtChainService.methods;
+    options = UbtChainService.options;
     constructor(private readonly _transport: RpcTransport) {
     }
     /**
-     * @generated from protobuf rpc: getNetwork(ubt.NetworkId) returns (ubt.Network);
+     * @generated from protobuf rpc: getChain(ubt.ChainId) returns (ubt.Chain);
      */
-    getNetwork(input: NetworkId, options?: RpcOptions): UnaryCall<NetworkId, Network> {
+    getChain(input: ChainId, options?: RpcOptions): UnaryCall<ChainId, Chain> {
         const method = this.methods[0], opt = this._transport.mergeOptions(options);
-        return stackIntercept<NetworkId, Network>("unary", this._transport, method, opt, input);
+        return stackIntercept<ChainId, Chain>("unary", this._transport, method, opt, input);
     }
     /**
-     * rpc getNetworkStatus(NetworkId) returns (NetworkStatus);
+     * rpc getChainStatus(ChainId) returns (ChainStatus);
      *
-     * @generated from protobuf rpc: listNetworks(ubt.services.ListNetworksRequest) returns (stream ubt.Network);
+     * @generated from protobuf rpc: listChains(ubt.services.ListChainsRequest) returns (stream ubt.Chain);
      */
-    listNetworks(input: ListNetworksRequest, options?: RpcOptions): ServerStreamingCall<ListNetworksRequest, Network> {
+    listChains(input: ListChainsRequest, options?: RpcOptions): ServerStreamingCall<ListChainsRequest, Chain> {
         const method = this.methods[1], opt = this._transport.mergeOptions(options);
-        return stackIntercept<ListNetworksRequest, Network>("serverStreaming", this._transport, method, opt, input);
+        return stackIntercept<ListChainsRequest, Chain>("serverStreaming", this._transport, method, opt, input);
     }
 }

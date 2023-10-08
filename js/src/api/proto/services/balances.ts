@@ -15,15 +15,15 @@ import { MessageType } from "@protobuf-ts/runtime";
 import { uint256 } from "../commons";
 import { Currency } from "../models";
 import { CurrencyAmount } from "../models";
-import { NetworkId } from "../models";
+import { ChainId } from "../models";
 /**
  * @generated from protobuf message ubt.services.GetBalanceRequest
  */
 export interface GetBalanceRequest {
     /**
-     * @generated from protobuf field: ubt.NetworkId network_id = 1;
+     * @generated from protobuf field: ubt.ChainId chain_id = 1;
      */
-    networkId?: NetworkId;
+    chainId?: ChainId;
     /**
      * @generated from protobuf field: string address = 2;
      */
@@ -55,9 +55,9 @@ export interface BalanceResponse {
  */
 export interface ListAccountBalancesRequest {
     /**
-     * @generated from protobuf field: ubt.NetworkId network_id = 1;
+     * @generated from protobuf field: ubt.ChainId chain_id = 1;
      */
-    networkId?: NetworkId;
+    chainId?: ChainId;
     /**
      * @generated from protobuf field: string address = 2;
      */
@@ -85,9 +85,9 @@ export interface ListAccountBalancesResponse {
  */
 export interface ListCurrencyHoldersRequest {
     /**
-     * @generated from protobuf field: ubt.NetworkId network_id = 1;
+     * @generated from protobuf field: ubt.ChainId chain_id = 1;
      */
-    networkId?: NetworkId;
+    chainId?: ChainId;
     /**
      * @generated from protobuf field: string currency_id = 2;
      */
@@ -108,7 +108,7 @@ export interface ListCurrencyHoldersResponse {
 class GetBalanceRequest$Type extends MessageType<GetBalanceRequest> {
     constructor() {
         super("ubt.services.GetBalanceRequest", [
-            { no: 1, name: "network_id", kind: "message", T: () => NetworkId },
+            { no: 1, name: "chain_id", kind: "message", T: () => ChainId },
             { no: 2, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "currency_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
@@ -125,8 +125,8 @@ class GetBalanceRequest$Type extends MessageType<GetBalanceRequest> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* ubt.NetworkId network_id */ 1:
-                    message.networkId = NetworkId.internalBinaryRead(reader, reader.uint32(), options, message.networkId);
+                case /* ubt.ChainId chain_id */ 1:
+                    message.chainId = ChainId.internalBinaryRead(reader, reader.uint32(), options, message.chainId);
                     break;
                 case /* string address */ 2:
                     message.address = reader.string();
@@ -146,9 +146,9 @@ class GetBalanceRequest$Type extends MessageType<GetBalanceRequest> {
         return message;
     }
     internalBinaryWrite(message: GetBalanceRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* ubt.NetworkId network_id = 1; */
-        if (message.networkId)
-            NetworkId.internalBinaryWrite(message.networkId, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* ubt.ChainId chain_id = 1; */
+        if (message.chainId)
+            ChainId.internalBinaryWrite(message.chainId, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* string address = 2; */
         if (message.address !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.address);
@@ -230,7 +230,7 @@ export const BalanceResponse = new BalanceResponse$Type();
 class ListAccountBalancesRequest$Type extends MessageType<ListAccountBalancesRequest> {
     constructor() {
         super("ubt.services.ListAccountBalancesRequest", [
-            { no: 1, name: "network_id", kind: "message", T: () => NetworkId },
+            { no: 1, name: "chain_id", kind: "message", T: () => ChainId },
             { no: 2, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "currency_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
@@ -247,8 +247,8 @@ class ListAccountBalancesRequest$Type extends MessageType<ListAccountBalancesReq
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* ubt.NetworkId network_id */ 1:
-                    message.networkId = NetworkId.internalBinaryRead(reader, reader.uint32(), options, message.networkId);
+                case /* ubt.ChainId chain_id */ 1:
+                    message.chainId = ChainId.internalBinaryRead(reader, reader.uint32(), options, message.chainId);
                     break;
                 case /* string address */ 2:
                     message.address = reader.string();
@@ -268,9 +268,9 @@ class ListAccountBalancesRequest$Type extends MessageType<ListAccountBalancesReq
         return message;
     }
     internalBinaryWrite(message: ListAccountBalancesRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* ubt.NetworkId network_id = 1; */
-        if (message.networkId)
-            NetworkId.internalBinaryWrite(message.networkId, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* ubt.ChainId chain_id = 1; */
+        if (message.chainId)
+            ChainId.internalBinaryWrite(message.chainId, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* string address = 2; */
         if (message.address !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.address);
@@ -345,7 +345,7 @@ export const ListAccountBalancesResponse = new ListAccountBalancesResponse$Type(
 class ListCurrencyHoldersRequest$Type extends MessageType<ListCurrencyHoldersRequest> {
     constructor() {
         super("ubt.services.ListCurrencyHoldersRequest", [
-            { no: 1, name: "network_id", kind: "message", T: () => NetworkId },
+            { no: 1, name: "chain_id", kind: "message", T: () => ChainId },
             { no: 2, name: "currency_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
@@ -361,8 +361,8 @@ class ListCurrencyHoldersRequest$Type extends MessageType<ListCurrencyHoldersReq
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* ubt.NetworkId network_id */ 1:
-                    message.networkId = NetworkId.internalBinaryRead(reader, reader.uint32(), options, message.networkId);
+                case /* ubt.ChainId chain_id */ 1:
+                    message.chainId = ChainId.internalBinaryRead(reader, reader.uint32(), options, message.chainId);
                     break;
                 case /* string currency_id */ 2:
                     message.currencyId = reader.string();
@@ -379,9 +379,9 @@ class ListCurrencyHoldersRequest$Type extends MessageType<ListCurrencyHoldersReq
         return message;
     }
     internalBinaryWrite(message: ListCurrencyHoldersRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* ubt.NetworkId network_id = 1; */
-        if (message.networkId)
-            NetworkId.internalBinaryWrite(message.networkId, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* ubt.ChainId chain_id = 1; */
+        if (message.chainId)
+            ChainId.internalBinaryWrite(message.chainId, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* string currency_id = 2; */
         if (message.currencyId !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.currencyId);

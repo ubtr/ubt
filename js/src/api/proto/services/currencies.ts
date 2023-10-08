@@ -13,15 +13,15 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
-import { NetworkId } from "../models";
+import { ChainId } from "../models";
 /**
  * @generated from protobuf message ubt.services.GetCurrencyRequest
  */
 export interface GetCurrencyRequest {
     /**
-     * @generated from protobuf field: ubt.NetworkId network_id = 1;
+     * @generated from protobuf field: ubt.ChainId chain_id = 1;
      */
-    networkId?: NetworkId;
+    chainId?: ChainId;
     /**
      * @generated from protobuf field: string id = 2;
      */
@@ -31,7 +31,7 @@ export interface GetCurrencyRequest {
 class GetCurrencyRequest$Type extends MessageType<GetCurrencyRequest> {
     constructor() {
         super("ubt.services.GetCurrencyRequest", [
-            { no: 1, name: "network_id", kind: "message", T: () => NetworkId },
+            { no: 1, name: "chain_id", kind: "message", T: () => ChainId },
             { no: 2, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
@@ -47,8 +47,8 @@ class GetCurrencyRequest$Type extends MessageType<GetCurrencyRequest> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* ubt.NetworkId network_id */ 1:
-                    message.networkId = NetworkId.internalBinaryRead(reader, reader.uint32(), options, message.networkId);
+                case /* ubt.ChainId chain_id */ 1:
+                    message.chainId = ChainId.internalBinaryRead(reader, reader.uint32(), options, message.chainId);
                     break;
                 case /* string id */ 2:
                     message.id = reader.string();
@@ -65,9 +65,9 @@ class GetCurrencyRequest$Type extends MessageType<GetCurrencyRequest> {
         return message;
     }
     internalBinaryWrite(message: GetCurrencyRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* ubt.NetworkId network_id = 1; */
-        if (message.networkId)
-            NetworkId.internalBinaryWrite(message.networkId, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* ubt.ChainId chain_id = 1; */
+        if (message.chainId)
+            ChainId.internalBinaryWrite(message.chainId, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* string id = 2; */
         if (message.id !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.id);
