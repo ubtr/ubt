@@ -15,7 +15,7 @@ message BlockRequest {
 message ListBlocksRequest {
   ChainId chain_id = 1;
   uint64 start_number = 2;
-  optional uint64 end_number = 3;
+  optional uint64 count = 3;
 
   enum IncludeFlags {
     HEADER = 0;          // include only block header
@@ -24,7 +24,7 @@ message ListBlocksRequest {
   }
   uint32 includes = 4;   // 1 - transactions, 2 - receipts, 4 - operations
 
-  FinalityStatus finality_status = 5;    // return only blocks with specified finalization status or greater
+  FinalityStatus finality_status = 5;    // return only blocks with that or greater finalization status
 }
 
 message GetAccountRequest {

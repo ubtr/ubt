@@ -42,9 +42,9 @@ export interface ListBlocksRequest {
      */
     startNumber: bigint;
     /**
-     * @generated from protobuf field: optional uint64 end_number = 3;
+     * @generated from protobuf field: optional uint64 count = 3;
      */
-    endNumber?: bigint;
+    count?: bigint;
     /**
      * @generated from protobuf field: uint32 includes = 4;
      */
@@ -52,7 +52,7 @@ export interface ListBlocksRequest {
     /**
      * @generated from protobuf field: ubt.FinalityStatus finality_status = 5;
      */
-    finalityStatus: FinalityStatus; // return only blocks with specified finalization status or greater
+    finalityStatus: FinalityStatus; // return only blocks with that or greater finalization status
 }
 /**
  * @generated from protobuf enum ubt.services.ListBlocksRequest.IncludeFlags
@@ -163,7 +163,7 @@ class ListBlocksRequest$Type extends MessageType<ListBlocksRequest> {
         super("ubt.services.ListBlocksRequest", [
             { no: 1, name: "chain_id", kind: "message", T: () => ChainId },
             { no: 2, name: "start_number", kind: "scalar", T: 4 /*ScalarType.UINT64*/, L: 0 /*LongType.BIGINT*/ },
-            { no: 3, name: "end_number", kind: "scalar", opt: true, T: 4 /*ScalarType.UINT64*/, L: 0 /*LongType.BIGINT*/ },
+            { no: 3, name: "count", kind: "scalar", opt: true, T: 4 /*ScalarType.UINT64*/, L: 0 /*LongType.BIGINT*/ },
             { no: 4, name: "includes", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
             { no: 5, name: "finality_status", kind: "enum", T: () => ["ubt.FinalityStatus", FinalityStatus, "FINALITY_STATUS_"] }
         ]);
@@ -186,8 +186,8 @@ class ListBlocksRequest$Type extends MessageType<ListBlocksRequest> {
                 case /* uint64 start_number */ 2:
                     message.startNumber = reader.uint64().toBigInt();
                     break;
-                case /* optional uint64 end_number */ 3:
-                    message.endNumber = reader.uint64().toBigInt();
+                case /* optional uint64 count */ 3:
+                    message.count = reader.uint64().toBigInt();
                     break;
                 case /* uint32 includes */ 4:
                     message.includes = reader.uint32();
@@ -213,9 +213,9 @@ class ListBlocksRequest$Type extends MessageType<ListBlocksRequest> {
         /* uint64 start_number = 2; */
         if (message.startNumber !== 0n)
             writer.tag(2, WireType.Varint).uint64(message.startNumber);
-        /* optional uint64 end_number = 3; */
-        if (message.endNumber !== undefined)
-            writer.tag(3, WireType.Varint).uint64(message.endNumber);
+        /* optional uint64 count = 3; */
+        if (message.count !== undefined)
+            writer.tag(3, WireType.Varint).uint64(message.count);
         /* uint32 includes = 4; */
         if (message.includes !== 0)
             writer.tag(4, WireType.Varint).uint32(message.includes);
