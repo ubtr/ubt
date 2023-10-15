@@ -20,7 +20,11 @@ export namespace uint256utils {
   }
 
   export function toBigInt(v: uint256): bigint {
-    return BigInt(hexutils.fromBytes(v.data, true));
+    if (v && v.data && v.data.length > 0) {
+      return BigInt(hexutils.fromBytes(v.data, true));
+    } else {
+      return BigInt(0);
+    }
   }
 
   export function fromHexString(hexStr: string): uint256 {
