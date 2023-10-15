@@ -1,6 +1,7 @@
 package tests
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/ethereum/go-ethereum/crypto"
@@ -28,12 +29,16 @@ var testBlockchainAddresses = map[string]string{
 }
 
 func runTestAddressFromPublicKey(b blockchain.Blockchain, t *testing.T) {
-	k, err := b.KeyGenerator(staticRandom)
+	k, err := b.GenerateAccount(staticRandom)
 	if err != nil {
 		t.Errorf("expected no error, got %s", err)
 	}
 
-	if b.AddressValidator(k.Address) != true {
+	t.Logf("Address: %s\n", k.Address)
+	t.Logf("Public Key: %s\n", fmt.Sprintf("%x", k.PublicKey))
+	t.Logf("Private Key: %s\n", fmt.Sprintf("%x", k.PrivateKey))
+
+	if b.ValidateAddress(k.Address) != true {
 		t.Errorf("expected address to be valid, got invalid")
 	}
 	if k.Address != testBlockchainAddresses[b.Type] {
@@ -57,14 +62,14 @@ func TestKeyGeneration(t *testing.T) {
 }
 
 func runTestSignVerify(b blockchain.Blockchain, t *testing.T) {
-	k, err := b.KeyGenerator(staticRandom)
+	k, err := b.GenerateAccount(staticRandom)
 	if err != nil {
 		t.Errorf("expected no error, got %s", err)
 	}
 
 	data := []byte("hello world")
 	dataHash := crypto.Keccak256Hash(data).Bytes()
-	sig, err := b.Signer(dataHash, k.PrivateKey)
+	sig, err := b.Sign(dataHash, k.PrivateKey)
 	if err != nil {
 		t.Errorf("expected no error, got %s", err)
 	}
@@ -73,7 +78,7 @@ func runTestSignVerify(b blockchain.Blockchain, t *testing.T) {
 		t.Errorf("expected signature length of 65, got %d", len(sig))
 	}
 
-	ok := b.Verifier(dataHash, sig, k.PublicKey)
+	ok := b.Verify(dataHash, sig, k.PublicKey)
 	if !ok {
 		t.Errorf("expected signature to be valid, got invalid")
 	}

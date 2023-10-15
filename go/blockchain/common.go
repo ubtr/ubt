@@ -2,10 +2,11 @@ package blockchain
 
 import "io"
 
-type Signer func(data []byte, pk []byte) ([]byte, error)
-type Verifier func([]byte, []byte, []byte) bool
+type Signer func(data []byte, privateKey []byte) ([]byte, error)
+type Verifier func(data []byte, signature []byte, publicKey []byte) bool
 type KeyGenerator func(rand io.Reader) (*KeyPair, error)
-type AddressValidator func(string) bool
+type AddressValidator func(addr string) bool
+type AddressFromKeys func(publicKey []byte, privateKey []byte) (string, error)
 
 type KeyPair struct {
 	Address    string
@@ -28,12 +29,13 @@ func GetBlockchain(t string) *Blockchain {
 }
 
 type Blockchain struct {
-	Type             string
-	TypeNum          uint
-	Signer           Signer
-	Verifier         Verifier
-	KeyGenerator     KeyGenerator
-	AddressValidator AddressValidator
+	Type            string
+	TypeNum         uint
+	Sign            Signer
+	Verify          Verifier
+	GenerateAccount KeyGenerator
+	ValidateAddress AddressValidator
+	RecoverAddress  AddressFromKeys
 }
 
 func (b *Blockchain) String() string {

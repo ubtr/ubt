@@ -2,6 +2,7 @@ package trx
 
 import (
 	"crypto/sha256"
+	"errors"
 	"io"
 
 	b "github.com/ubtools/ubt/go/blockchain"
@@ -30,6 +31,19 @@ func (a Address) String() string {
 	inputCheck = append(inputCheck, h1[:4]...)
 
 	return base58.Encode(inputCheck, base58.BitcoinAlphabet)
+}
+
+func RecoverAddress(publicKey []byte, privateKey []byte) (address string, err error) {
+	if publicKey == nil {
+		if privateKey == nil {
+			return "", errors.New("publicKey and privateKey cannot both be nil")
+		}
+		publicKey, err = eth.PublicKeyFromPrivateKey(privateKey)
+		if err != nil {
+			return
+		}
+	}
+	return AddressFromPublicKey(publicKey).String(), nil
 }
 
 func AddressFromPublicKey(publicKey []byte) Address {
@@ -77,13 +91,16 @@ func ValidateAddress(address string) bool {
 	return true
 }
 
+var Instance = b.Blockchain{
+	Type:            CODE_STR,
+	TypeNum:         CODE_NUM,
+	GenerateAccount: TronRandomKey,
+	ValidateAddress: ValidateAddress,
+	RecoverAddress:  eth.RecoverAddress,
+	Sign:            eth.SignData,
+	Verify:          eth.VerifyData,
+}
+
 func init() {
-	b.Blockchains[CODE_STR] = b.Blockchain{
-		Type:             CODE_STR,
-		TypeNum:          CODE_NUM,
-		KeyGenerator:     TronRandomKey,
-		AddressValidator: ValidateAddress,
-		Signer:           eth.SignData,
-		Verifier:         eth.VerifyData,
-	}
+	b.Blockchains[CODE_STR] = Instance
 }

@@ -8,15 +8,12 @@ import (
 const CODE_STR = "BNB"
 const CODE_NUM = 714
 
-var Instance = blockchain.Blockchain{
-	Type:             CODE_STR,
-	TypeNum:          CODE_NUM,
-	KeyGenerator:     eth.Instance.KeyGenerator,
-	AddressValidator: eth.Instance.AddressValidator,
-	Signer:           eth.Instance.Signer,
-	Verifier:         eth.Instance.Verifier,
-}
+var Instance blockchain.Blockchain
 
 func init() {
+	Instance = blockchain.Blockchain(eth.Instance)
+	Instance.Type = CODE_STR
+	Instance.TypeNum = CODE_NUM
+
 	blockchain.Blockchains[CODE_STR] = Instance
 }
