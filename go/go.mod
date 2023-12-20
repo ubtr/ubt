@@ -1,4 +1,4 @@
-module github.com/ubtools/ubt/go
+module github.com/ubtr/ubt/go
 
 require (
 	github.com/ethereum/go-ethereum v1.13.2

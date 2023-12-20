@@ -1,14 +1,14 @@
 {
   "name": "@ubtr/sdk",
-  "version": "0.0.6",
-  "description": "UBT js sdk",
-  "main": "dist/index.js",
-  "module": "./dist/index.mjs",
+  "version": "0.0.7",
+  "description": "UBT JS sdk",
+  "main": "dist/index.cjs",
+  "module": "./dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     }
   },
