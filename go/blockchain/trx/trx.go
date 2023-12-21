@@ -5,8 +5,8 @@ import (
 	"errors"
 	"io"
 
-	b "github.com/ubtools/ubt/go/blockchain"
-	"github.com/ubtools/ubt/go/blockchain/eth"
+	b "github.com/ubtr/ubt/go/blockchain"
+	"github.com/ubtr/ubt/go/blockchain/eth"
 
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/shengdoushi/base58"

@@ -1,8 +1,8 @@
 package bnb
 
 import (
-	"github.com/ubtools/ubt/go/blockchain"
-	"github.com/ubtools/ubt/go/blockchain/eth"
+	"github.com/ubtr/ubt/go/blockchain"
+	"github.com/ubtr/ubt/go/blockchain/eth"
 )
 
 const CODE_STR = "BNB"

@@ -2,7 +2,7 @@ version: v1
 managed:
   enabled: true
   go_package_prefix:
-    default: github.com/ubtools/ubt/go/api/proto
+    default: github.com/ubtr/ubt/go/api/proto
 plugins:
   # Use protoc-gen-go at v1.31.0
   - plugin: buf.build/protocolbuffers/go:v1.31.0

@@ -5,10 +5,10 @@ import (
 	"testing"
 
 	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/ubtools/ubt/go/blockchain"
-	_ "github.com/ubtools/ubt/go/blockchain/bnb"
-	_ "github.com/ubtools/ubt/go/blockchain/eth"
-	_ "github.com/ubtools/ubt/go/blockchain/trx"
+	"github.com/ubtr/ubt/go/blockchain"
+	_ "github.com/ubtr/ubt/go/blockchain/bnb"
+	_ "github.com/ubtr/ubt/go/blockchain/eth"
+	_ "github.com/ubtr/ubt/go/blockchain/trx"
 )
 
 var staticRandom = &staticRandomReader{}

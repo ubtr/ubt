@@ -6,7 +6,7 @@ import (
 	"errors"
 	"io"
 
-	b "github.com/ubtools/ubt/go/blockchain"
+	b "github.com/ubtr/ubt/go/blockchain"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
