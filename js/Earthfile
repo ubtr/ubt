@@ -23,12 +23,14 @@ build:
 
 publish:
   ARG EARTHLY_PUSH
-  ARG EARTHLY_TARGET_TAG
+  ARG version
   FROM node:18-alpine
   COPY . /build/
   WORKDIR /build
   RUN npm install
-  RUN export VERSION=${EARTHLY_TARGET_TAG}; npm run prepare-publish && echo $VERSION
+  RUN export VERSION=${version}; npm run prepare-publish && echo $VERSION
   IF [ "$EARTHLY_PUSH" = "true" ]
     RUN npm run clean-publish
+  ELSE
+    RUN cd dist && npm pack
   END

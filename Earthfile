@@ -10,4 +10,5 @@ build:
   BUILD ./java+build
 
 publish:
-  BUILD ./js+publish
+  ARG version
+  BUILD ./js+publish --version ${version}
