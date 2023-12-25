@@ -1,3 +1,5 @@
+![CI](https://github.com/ubtr/ubt-go/actions/workflows/ci.yml/badge.svg)
+
 # Unified blockchain transfers API
 
 *Currently experimental and not stable*
