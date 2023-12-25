@@ -1,6 +1,6 @@
 {
   "name": "@ubtr/sdk",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "UBT JS sdk",
   "main": "dist/index.cjs",
   "module": "./dist/index.js",
