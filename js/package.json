@@ -26,8 +26,8 @@
     "test": "jest --passWithNoTests",
     "generate": "buf generate",
     "buf": "buf",
-    "prepare-publish": "npm run build && shx cp package.json dist && shx cp README.md dist && shx cp LICENSE dist; shx sed -i 's/dist\\/index/index/g' dist/package.json && sed -i 's/\"version\": \"0.0.0\"/\"version\": \"'\"$VERSION\"'\"/g' dist/package.json",
-    "clean-publish": "npm run prepare-publish && cd dist && npm publish --access public && cd .."
+    "prepare-publish": "npm run build && shx cp package.json dist && shx cp README.md dist && shx cp LICENSE dist; shx cp .npmrc dist; shx sed -i 's/dist\\/index/index/g' dist/package.json && sed -i 's/\"version\": \"0.0.0\"/\"version\": \"'\"$VERSION\"'\"/g' dist/package.json",
+    "clean-publish": "cd dist && npm publish --access public && cd .."
   },
   "dependencies": {
     "@protobuf-ts/runtime-rpc": "^2.9.0"
