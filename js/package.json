@@ -23,7 +23,7 @@
   "scripts": {
     "clean": "rm -rf ./dist",
     "build": "tsup src/index.ts --format cjs,esm --dts --clean --minify",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "generate": "buf generate",
     "buf": "buf",
     "prepare-publish": "npm run build && shx cp package.json dist && shx cp README.md dist && shx cp LICENSE dist; shx sed -i 's/dist\\/index/index/g' dist/package.json && sed -i 's/\"version\": \"0.0.0\"/\"version\": \"'\"$VERSION\"'\"/g' dist/package.json",
