@@ -34,4 +34,4 @@ jobs:
     - name: Earthly version
       run: earthly --version
     - name: Run build
-      run: earthly --ci +publish
+      run: earthly --ci --push +publish
