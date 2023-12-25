@@ -28,9 +28,9 @@ jobs:
     - name: Gen npmrc
       working-directory: ./js
       run: |
-        echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
-        echo "registry=https://registry.npmjs.org/" >> ~/.npmrc
-        echo "always-auth=true" >> ~/.npmrc
+        echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+        echo "registry=https://registry.npmjs.org/" >> .npmrc
+        echo "always-auth=true" >> .npmrc
     - name: Earthly version
       run: earthly --version
     - name: Run build
