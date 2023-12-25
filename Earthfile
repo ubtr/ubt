@@ -10,5 +10,8 @@ build:
   BUILD ./java+build
 
 publish:
-  ARG version
+  ARG EARTHLY_TARGET_TAG
+  FROM alpine:3.18
+  ARG version=$(echo -n ${EARTHLY_TARGET_TAG} | sed 's/v\(.*\)/\1/')
+  RUN echo "Publishing version ${version}"
   BUILD ./js+publish --version ${version}
