@@ -12,22 +12,27 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+// 
+// Account Manager basically provide a box which stores private keys and allows to sign payloads using them
+// Accounts are identified by address and optionally by name
+// Name can be formatted as a path to allow for nested namespaces which then can be used to filter accounts
+
 /**
  * @generated from protobuf message ubt.services.am.CreateAccountRequest
  */
 export interface CreateAccountRequest {
     /**
-     * @generated from protobuf field: string network_type = 1;
+     * @generated from protobuf field: string chain_type = 1;
      */
-    networkType: string;
+    chainType: string;
     /**
      * @generated from protobuf field: bytes private_key = 2;
      */
-    privateKey: Uint8Array; // if not specified will be generated
+    privateKey: Uint8Array; // if not specified will be generated based on network type
     /**
-     * @generated from protobuf field: string name = 10;
+     * @generated from protobuf field: string name = 3;
      */
-    name: string; // optional unique name associated with account
+    name: string; // optional unique name associated with account. Can be separated by / to make nested namespaces
 }
 /**
  * @generated from protobuf message ubt.services.am.CreateAccountResponse
@@ -43,9 +48,9 @@ export interface CreateAccountResponse {
  */
 export interface SignPayloadRequest {
     /**
-     * @generated from protobuf field: string network_type = 1;
+     * @generated from protobuf field: string chain_type = 1;
      */
-    networkType: string;
+    chainType: string;
     /**
      * @generated from protobuf field: bytes data = 2;
      */
@@ -69,9 +74,22 @@ export interface SignPayloadResponse {
     signature: Uint8Array;
 }
 /**
- * @generated from protobuf message ubt.services.am.HasAccountRequest
+ * @generated from protobuf message ubt.services.am.GetAccountRequest
  */
-export interface HasAccountRequest {
+export interface GetAccountRequest {
+    /**
+     * @generated from protobuf field: string address = 1;
+     */
+    address: string; // lookup by address
+    /**
+     * @generated from protobuf field: string name = 2;
+     */
+    name: string; // lookup by name
+}
+/**
+ * @generated from protobuf message ubt.services.am.GetAccountResponse
+ */
+export interface GetAccountResponse {
     /**
      * @generated from protobuf field: string address = 1;
      */
@@ -82,18 +100,13 @@ export interface HasAccountRequest {
     name: string;
 }
 /**
- * @generated from protobuf message ubt.services.am.HasAccountResponse
- */
-export interface HasAccountResponse {
-    /**
-     * @generated from protobuf field: bool exists = 1;
-     */
-    exists: boolean;
-}
-/**
  * @generated from protobuf message ubt.services.am.ListAccountsRequest
  */
 export interface ListAccountsRequest {
+    /**
+     * @generated from protobuf field: string name_filter = 1;
+     */
+    nameFilter: string; // return only accounts with name starting with this name
 }
 /**
  * @generated from protobuf message ubt.services.am.ListAccountsResponse
@@ -121,13 +134,13 @@ export interface ListAccountsResponse_Account {
 class CreateAccountRequest$Type extends MessageType<CreateAccountRequest> {
     constructor() {
         super("ubt.services.am.CreateAccountRequest", [
-            { no: 1, name: "network_type", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "chain_type", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "private_key", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
-            { no: 10, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<CreateAccountRequest>): CreateAccountRequest {
-        const message = { networkType: "", privateKey: new Uint8Array(0), name: "" };
+        const message = { chainType: "", privateKey: new Uint8Array(0), name: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<CreateAccountRequest>(this, message, value);
@@ -138,13 +151,13 @@ class CreateAccountRequest$Type extends MessageType<CreateAccountRequest> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string network_type */ 1:
-                    message.networkType = reader.string();
+                case /* string chain_type */ 1:
+                    message.chainType = reader.string();
                     break;
                 case /* bytes private_key */ 2:
                     message.privateKey = reader.bytes();
                     break;
-                case /* string name */ 10:
+                case /* string name */ 3:
                     message.name = reader.string();
                     break;
                 default:
@@ -159,15 +172,15 @@ class CreateAccountRequest$Type extends MessageType<CreateAccountRequest> {
         return message;
     }
     internalBinaryWrite(message: CreateAccountRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string network_type = 1; */
-        if (message.networkType !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.networkType);
+        /* string chain_type = 1; */
+        if (message.chainType !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.chainType);
         /* bytes private_key = 2; */
         if (message.privateKey.length)
             writer.tag(2, WireType.LengthDelimited).bytes(message.privateKey);
-        /* string name = 10; */
+        /* string name = 3; */
         if (message.name !== "")
-            writer.tag(10, WireType.LengthDelimited).string(message.name);
+            writer.tag(3, WireType.LengthDelimited).string(message.name);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -229,14 +242,14 @@ export const CreateAccountResponse = new CreateAccountResponse$Type();
 class SignPayloadRequest$Type extends MessageType<SignPayloadRequest> {
     constructor() {
         super("ubt.services.am.SignPayloadRequest", [
-            { no: 1, name: "network_type", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "chain_type", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "data", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
             { no: 3, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<SignPayloadRequest>): SignPayloadRequest {
-        const message = { networkType: "", data: new Uint8Array(0), address: "", name: "" };
+        const message = { chainType: "", data: new Uint8Array(0), address: "", name: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<SignPayloadRequest>(this, message, value);
@@ -247,8 +260,8 @@ class SignPayloadRequest$Type extends MessageType<SignPayloadRequest> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string network_type */ 1:
-                    message.networkType = reader.string();
+                case /* string chain_type */ 1:
+                    message.chainType = reader.string();
                     break;
                 case /* bytes data */ 2:
                     message.data = reader.bytes();
@@ -271,9 +284,9 @@ class SignPayloadRequest$Type extends MessageType<SignPayloadRequest> {
         return message;
     }
     internalBinaryWrite(message: SignPayloadRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string network_type = 1; */
-        if (message.networkType !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.networkType);
+        /* string chain_type = 1; */
+        if (message.chainType !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.chainType);
         /* bytes data = 2; */
         if (message.data.length)
             writer.tag(2, WireType.LengthDelimited).bytes(message.data);
@@ -341,21 +354,21 @@ class SignPayloadResponse$Type extends MessageType<SignPayloadResponse> {
  */
 export const SignPayloadResponse = new SignPayloadResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class HasAccountRequest$Type extends MessageType<HasAccountRequest> {
+class GetAccountRequest$Type extends MessageType<GetAccountRequest> {
     constructor() {
-        super("ubt.services.am.HasAccountRequest", [
+        super("ubt.services.am.GetAccountRequest", [
             { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<HasAccountRequest>): HasAccountRequest {
+    create(value?: PartialMessage<GetAccountRequest>): GetAccountRequest {
         const message = { address: "", name: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<HasAccountRequest>(this, message, value);
+            reflectionMergePartial<GetAccountRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HasAccountRequest): HasAccountRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetAccountRequest): GetAccountRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -377,7 +390,7 @@ class HasAccountRequest$Type extends MessageType<HasAccountRequest> {
         }
         return message;
     }
-    internalBinaryWrite(message: HasAccountRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: GetAccountRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string address = 1; */
         if (message.address !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.address);
@@ -391,30 +404,34 @@ class HasAccountRequest$Type extends MessageType<HasAccountRequest> {
     }
 }
 /**
- * @generated MessageType for protobuf message ubt.services.am.HasAccountRequest
+ * @generated MessageType for protobuf message ubt.services.am.GetAccountRequest
  */
-export const HasAccountRequest = new HasAccountRequest$Type();
+export const GetAccountRequest = new GetAccountRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class HasAccountResponse$Type extends MessageType<HasAccountResponse> {
+class GetAccountResponse$Type extends MessageType<GetAccountResponse> {
     constructor() {
-        super("ubt.services.am.HasAccountResponse", [
-            { no: 1, name: "exists", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        super("ubt.services.am.GetAccountResponse", [
+            { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<HasAccountResponse>): HasAccountResponse {
-        const message = { exists: false };
+    create(value?: PartialMessage<GetAccountResponse>): GetAccountResponse {
+        const message = { address: "", name: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<HasAccountResponse>(this, message, value);
+            reflectionMergePartial<GetAccountResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: HasAccountResponse): HasAccountResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetAccountResponse): GetAccountResponse {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* bool exists */ 1:
-                    message.exists = reader.bool();
+                case /* string address */ 1:
+                    message.address = reader.string();
+                    break;
+                case /* string name */ 2:
+                    message.name = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -427,10 +444,13 @@ class HasAccountResponse$Type extends MessageType<HasAccountResponse> {
         }
         return message;
     }
-    internalBinaryWrite(message: HasAccountResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* bool exists = 1; */
-        if (message.exists !== false)
-            writer.tag(1, WireType.Varint).bool(message.exists);
+    internalBinaryWrite(message: GetAccountResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string address = 1; */
+        if (message.address !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.address);
+        /* string name = 2; */
+        if (message.name !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.name);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -438,25 +458,46 @@ class HasAccountResponse$Type extends MessageType<HasAccountResponse> {
     }
 }
 /**
- * @generated MessageType for protobuf message ubt.services.am.HasAccountResponse
+ * @generated MessageType for protobuf message ubt.services.am.GetAccountResponse
  */
-export const HasAccountResponse = new HasAccountResponse$Type();
+export const GetAccountResponse = new GetAccountResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ListAccountsRequest$Type extends MessageType<ListAccountsRequest> {
     constructor() {
-        super("ubt.services.am.ListAccountsRequest", []);
+        super("ubt.services.am.ListAccountsRequest", [
+            { no: 1, name: "name_filter", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
     }
     create(value?: PartialMessage<ListAccountsRequest>): ListAccountsRequest {
-        const message = {};
+        const message = { nameFilter: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ListAccountsRequest>(this, message, value);
         return message;
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ListAccountsRequest): ListAccountsRequest {
-        return target ?? this.create();
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string name_filter */ 1:
+                    message.nameFilter = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
     }
     internalBinaryWrite(message: ListAccountsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string name_filter = 1; */
+        if (message.nameFilter !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.nameFilter);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -573,7 +614,7 @@ export const ListAccountsResponse_Account = new ListAccountsResponse_Account$Typ
  */
 export const UbtAccountManager = new ServiceType("ubt.services.am.UbtAccountManager", [
     { name: "CreateAccount", options: {}, I: CreateAccountRequest, O: CreateAccountResponse },
-    { name: "HasAccount", options: {}, I: HasAccountRequest, O: HasAccountResponse },
+    { name: "GetAccount", options: {}, I: GetAccountRequest, O: GetAccountResponse },
     { name: "ListAccounts", options: {}, I: ListAccountsRequest, O: ListAccountsResponse },
     { name: "SignPayload", options: {}, I: SignPayloadRequest, O: SignPayloadResponse }
 ]);

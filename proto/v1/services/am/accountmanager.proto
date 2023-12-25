@@ -3,10 +3,16 @@ syntax = "proto3";
 option go_package = "api/gen";
 package ubt.services.am;
 
+/*
+  Account Manager basically provide a box which stores private keys and allows to sign payloads using them
+  Accounts are identified by address and optionally by name
+  Name can be formatted as a path to allow for nested namespaces which then can be used to filter accounts
+*/
+
 message CreateAccountRequest {
-  string network_type = 1;
-  bytes private_key = 2;    // if not specified will be generated
-  string name = 10;         // optional unique name associated with account
+  string chain_type = 1;
+  bytes  private_key = 2;   // if not specified will be generated based on network type
+  string name = 3;          // optional unique name associated with account. Can be separated by / to make nested namespaces
 }
 
 message CreateAccountResponse {
@@ -14,28 +20,28 @@ message CreateAccountResponse {
 }
 
 message SignPayloadRequest {
-  string network_type = 1;
+  string chain_type = 1;
   bytes data = 2;
   string address = 3; // address or name must be specified
   string name = 4; // if specified use it to lookup existing account by name
-  //optional bytes pk = 4; // optional private key to use
 }
 
 message SignPayloadResponse {
   bytes signature = 1;
 }
 
-message HasAccountRequest {
+message GetAccountRequest {
+  string address = 1; // lookup by address
+  string name = 2;   // lookup by name
+}
+
+message GetAccountResponse {
   string address = 1;
   string name = 2;
 }
 
-message HasAccountResponse {
-  bool exists = 1;
-}
-
 message ListAccountsRequest {
-
+  string name_filter = 1; // return only accounts with name starting with this name
 }
 
 message ListAccountsResponse {
@@ -47,8 +53,9 @@ message ListAccountsResponse {
 }
 
 service UbtAccountManager {
+  // Create new account
   rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse);
-  rpc HasAccount(HasAccountRequest) returns (HasAccountResponse);
+  rpc GetAccount(GetAccountRequest) returns (GetAccountResponse);
   rpc ListAccounts(ListAccountsRequest) returns (ListAccountsResponse);
   rpc SignPayload(SignPayloadRequest) returns (SignPayloadResponse);
 }

@@ -20,7 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	UbtAccountManager_CreateAccount_FullMethodName = "/ubt.services.am.UbtAccountManager/CreateAccount"
-	UbtAccountManager_HasAccount_FullMethodName    = "/ubt.services.am.UbtAccountManager/HasAccount"
+	UbtAccountManager_GetAccount_FullMethodName    = "/ubt.services.am.UbtAccountManager/GetAccount"
 	UbtAccountManager_ListAccounts_FullMethodName  = "/ubt.services.am.UbtAccountManager/ListAccounts"
 	UbtAccountManager_SignPayload_FullMethodName   = "/ubt.services.am.UbtAccountManager/SignPayload"
 )
@@ -29,8 +29,9 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UbtAccountManagerClient interface {
+	// Create new account
 	CreateAccount(ctx context.Context, in *CreateAccountRequest, opts ...grpc.CallOption) (*CreateAccountResponse, error)
-	HasAccount(ctx context.Context, in *HasAccountRequest, opts ...grpc.CallOption) (*HasAccountResponse, error)
+	GetAccount(ctx context.Context, in *GetAccountRequest, opts ...grpc.CallOption) (*GetAccountResponse, error)
 	ListAccounts(ctx context.Context, in *ListAccountsRequest, opts ...grpc.CallOption) (*ListAccountsResponse, error)
 	SignPayload(ctx context.Context, in *SignPayloadRequest, opts ...grpc.CallOption) (*SignPayloadResponse, error)
 }
@@ -52,9 +53,9 @@ func (c *ubtAccountManagerClient) CreateAccount(ctx context.Context, in *CreateA
 	return out, nil
 }
 
-func (c *ubtAccountManagerClient) HasAccount(ctx context.Context, in *HasAccountRequest, opts ...grpc.CallOption) (*HasAccountResponse, error) {
-	out := new(HasAccountResponse)
-	err := c.cc.Invoke(ctx, UbtAccountManager_HasAccount_FullMethodName, in, out, opts...)
+func (c *ubtAccountManagerClient) GetAccount(ctx context.Context, in *GetAccountRequest, opts ...grpc.CallOption) (*GetAccountResponse, error) {
+	out := new(GetAccountResponse)
+	err := c.cc.Invoke(ctx, UbtAccountManager_GetAccount_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -83,8 +84,9 @@ func (c *ubtAccountManagerClient) SignPayload(ctx context.Context, in *SignPaylo
 // All implementations must embed UnimplementedUbtAccountManagerServer
 // for forward compatibility
 type UbtAccountManagerServer interface {
+	// Create new account
 	CreateAccount(context.Context, *CreateAccountRequest) (*CreateAccountResponse, error)
-	HasAccount(context.Context, *HasAccountRequest) (*HasAccountResponse, error)
+	GetAccount(context.Context, *GetAccountRequest) (*GetAccountResponse, error)
 	ListAccounts(context.Context, *ListAccountsRequest) (*ListAccountsResponse, error)
 	SignPayload(context.Context, *SignPayloadRequest) (*SignPayloadResponse, error)
 	mustEmbedUnimplementedUbtAccountManagerServer()
@@ -97,8 +99,8 @@ type UnimplementedUbtAccountManagerServer struct {
 func (UnimplementedUbtAccountManagerServer) CreateAccount(context.Context, *CreateAccountRequest) (*CreateAccountResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAccount not implemented")
 }
-func (UnimplementedUbtAccountManagerServer) HasAccount(context.Context, *HasAccountRequest) (*HasAccountResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method HasAccount not implemented")
+func (UnimplementedUbtAccountManagerServer) GetAccount(context.Context, *GetAccountRequest) (*GetAccountResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAccount not implemented")
 }
 func (UnimplementedUbtAccountManagerServer) ListAccounts(context.Context, *ListAccountsRequest) (*ListAccountsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAccounts not implemented")
@@ -137,20 +139,20 @@ func _UbtAccountManager_CreateAccount_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UbtAccountManager_HasAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HasAccountRequest)
+func _UbtAccountManager_GetAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAccountRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UbtAccountManagerServer).HasAccount(ctx, in)
+		return srv.(UbtAccountManagerServer).GetAccount(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: UbtAccountManager_HasAccount_FullMethodName,
+		FullMethod: UbtAccountManager_GetAccount_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UbtAccountManagerServer).HasAccount(ctx, req.(*HasAccountRequest))
+		return srv.(UbtAccountManagerServer).GetAccount(ctx, req.(*GetAccountRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -203,8 +205,8 @@ var UbtAccountManager_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _UbtAccountManager_CreateAccount_Handler,
 		},
 		{
-			MethodName: "HasAccount",
-			Handler:    _UbtAccountManager_HasAccount_Handler,
+			MethodName: "GetAccount",
+			Handler:    _UbtAccountManager_GetAccount_Handler,
 		},
 		{
 			MethodName: "ListAccounts",

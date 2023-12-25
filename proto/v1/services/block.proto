@@ -34,7 +34,8 @@ message GetAccountRequest {
 
 message DeriveAccountRequest {
   ChainId chain_id = 1;
-  string public_key = 2;
+  bytes public_key = 2;
+  string derivation_path = 3;
 }
 
 /**
