@@ -11,10 +11,8 @@ generate:
 
 
 build:
-  FROM bufbuild/buf:1.26.1
-  BUILD ./proto+files
-  COPY  ./proto+files/proto /build/proto
-  COPY ./buf.gen.yaml /build/buf.gen.yaml
-  COPY ./buf.work.yaml /build/buf.work.yaml
-  RUN cd /build && buf generate
-  SAVE ARTIFACT /build/api/proto AS LOCAL ./api/proto
+  FROM golang:1.21-alpine3.18
+  COPY . /build
+  WORKDIR /build
+  RUN go build ./...
+  RUN go test ./...

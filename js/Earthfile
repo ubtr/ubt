@@ -1,12 +1,5 @@
 VERSION 0.7
 
-build:
-  FROM node:18-alpine
-  COPY . /build/
-  WORKDIR /build
-  RUN npm install
-  RUN npm run build
-
 buf:
   FROM bufbuild/buf:1.26.1
   SAVE ARTIFACT /usr/local/bin/buf AS LOCAL ./buf
@@ -19,3 +12,23 @@ generate:
   COPY  ./proto+files/proto /build/proto
   RUN cd /build && npm install && npm run generate
   SAVE ARTIFACT /build/src/api/proto AS LOCAL ./src/api/proto
+
+build:
+  FROM node:18-alpine
+  COPY . /build/
+  WORKDIR /build
+  RUN npm install
+  RUN npm run build
+  RUN npm run test
+
+publish:
+  ARG EARTHLY_PUSH
+  ARG EARTHLY_TARGET_TAG
+  FROM node:18-alpine
+  COPY . /build/
+  WORKDIR /build
+  RUN npm install
+  RUN export VERSION=${EARTHLY_TARGET_TAG}; npm run prepare-publish && echo $VERSION
+  IF [ "$EARTHLY_PUSH" = "true" ]
+    RUN npm run clean-publish
+  END

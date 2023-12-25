@@ -8,3 +8,6 @@ build:
   BUILD ./go+build
   BUILD ./js+build
   BUILD ./java+build
+
+publish:
+  BUILD ./js+publish
