@@ -1,6 +1,6 @@
 {
   "name": "@ubtr/sdk",
-  "version": "0.0.8",
+  "version": "0.0.0",
   "description": "UBT JS sdk",
   "main": "dist/index.cjs",
   "module": "./dist/index.js",
@@ -26,7 +26,7 @@
     "test": "jest",
     "generate": "buf generate",
     "buf": "buf",
-    "prepare-publish": "npm run build && shx cp package.json dist && shx cp README.md dist && shx cp ../LICENSE dist && shx sed -i 's/dist\\/index/index/g' dist/package.json",
+    "prepare-publish": "npm run build && shx cp package.json dist && shx cp README.md dist && shx cp ../LICENSE dist && shx sed -i 's/dist\\/index/index/g' dist/package.json && sed -i 's/\"version\": \"0.0.0\"/\"version\": \"'\"$VERSION\"'\"/g' dist/package.json",
     "clean-publish": "npm run prepare-publish && cd dist && npm publish --access public && cd .."
   },
   "dependencies": {
