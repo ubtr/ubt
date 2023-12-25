@@ -31,7 +31,7 @@ const (
 type UbtAccountManagerClient interface {
 	// Create new account
 	CreateAccount(ctx context.Context, in *CreateAccountRequest, opts ...grpc.CallOption) (*CreateAccountResponse, error)
-	GetAccount(ctx context.Context, in *GetAccountRequest, opts ...grpc.CallOption) (*GetAccountResponse, error)
+	GetAccount(ctx context.Context, in *GetStoredAccountRequest, opts ...grpc.CallOption) (*GetStoredAccountResponse, error)
 	ListAccounts(ctx context.Context, in *ListAccountsRequest, opts ...grpc.CallOption) (*ListAccountsResponse, error)
 	SignPayload(ctx context.Context, in *SignPayloadRequest, opts ...grpc.CallOption) (*SignPayloadResponse, error)
 }
@@ -53,8 +53,8 @@ func (c *ubtAccountManagerClient) CreateAccount(ctx context.Context, in *CreateA
 	return out, nil
 }
 
-func (c *ubtAccountManagerClient) GetAccount(ctx context.Context, in *GetAccountRequest, opts ...grpc.CallOption) (*GetAccountResponse, error) {
-	out := new(GetAccountResponse)
+func (c *ubtAccountManagerClient) GetAccount(ctx context.Context, in *GetStoredAccountRequest, opts ...grpc.CallOption) (*GetStoredAccountResponse, error) {
+	out := new(GetStoredAccountResponse)
 	err := c.cc.Invoke(ctx, UbtAccountManager_GetAccount_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -86,7 +86,7 @@ func (c *ubtAccountManagerClient) SignPayload(ctx context.Context, in *SignPaylo
 type UbtAccountManagerServer interface {
 	// Create new account
 	CreateAccount(context.Context, *CreateAccountRequest) (*CreateAccountResponse, error)
-	GetAccount(context.Context, *GetAccountRequest) (*GetAccountResponse, error)
+	GetAccount(context.Context, *GetStoredAccountRequest) (*GetStoredAccountResponse, error)
 	ListAccounts(context.Context, *ListAccountsRequest) (*ListAccountsResponse, error)
 	SignPayload(context.Context, *SignPayloadRequest) (*SignPayloadResponse, error)
 	mustEmbedUnimplementedUbtAccountManagerServer()
@@ -99,7 +99,7 @@ type UnimplementedUbtAccountManagerServer struct {
 func (UnimplementedUbtAccountManagerServer) CreateAccount(context.Context, *CreateAccountRequest) (*CreateAccountResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAccount not implemented")
 }
-func (UnimplementedUbtAccountManagerServer) GetAccount(context.Context, *GetAccountRequest) (*GetAccountResponse, error) {
+func (UnimplementedUbtAccountManagerServer) GetAccount(context.Context, *GetStoredAccountRequest) (*GetStoredAccountResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAccount not implemented")
 }
 func (UnimplementedUbtAccountManagerServer) ListAccounts(context.Context, *ListAccountsRequest) (*ListAccountsResponse, error) {
@@ -140,7 +140,7 @@ func _UbtAccountManager_CreateAccount_Handler(srv interface{}, ctx context.Conte
 }
 
 func _UbtAccountManager_GetAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetAccountRequest)
+	in := new(GetStoredAccountRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -152,7 +152,7 @@ func _UbtAccountManager_GetAccount_Handler(srv interface{}, ctx context.Context,
 		FullMethod: UbtAccountManager_GetAccount_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UbtAccountManagerServer).GetAccount(ctx, req.(*GetAccountRequest))
+		return srv.(UbtAccountManagerServer).GetAccount(ctx, req.(*GetStoredAccountRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

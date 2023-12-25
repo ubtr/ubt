@@ -74,9 +74,9 @@ export interface SignPayloadResponse {
     signature: Uint8Array;
 }
 /**
- * @generated from protobuf message ubt.services.am.GetAccountRequest
+ * @generated from protobuf message ubt.services.am.GetStoredAccountRequest
  */
-export interface GetAccountRequest {
+export interface GetStoredAccountRequest {
     /**
      * @generated from protobuf field: string address = 1;
      */
@@ -87,9 +87,9 @@ export interface GetAccountRequest {
     name: string; // lookup by name
 }
 /**
- * @generated from protobuf message ubt.services.am.GetAccountResponse
+ * @generated from protobuf message ubt.services.am.GetStoredAccountResponse
  */
-export interface GetAccountResponse {
+export interface GetStoredAccountResponse {
     /**
      * @generated from protobuf field: string address = 1;
      */
@@ -354,21 +354,21 @@ class SignPayloadResponse$Type extends MessageType<SignPayloadResponse> {
  */
 export const SignPayloadResponse = new SignPayloadResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class GetAccountRequest$Type extends MessageType<GetAccountRequest> {
+class GetStoredAccountRequest$Type extends MessageType<GetStoredAccountRequest> {
     constructor() {
-        super("ubt.services.am.GetAccountRequest", [
+        super("ubt.services.am.GetStoredAccountRequest", [
             { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<GetAccountRequest>): GetAccountRequest {
+    create(value?: PartialMessage<GetStoredAccountRequest>): GetStoredAccountRequest {
         const message = { address: "", name: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<GetAccountRequest>(this, message, value);
+            reflectionMergePartial<GetStoredAccountRequest>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetAccountRequest): GetAccountRequest {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetStoredAccountRequest): GetStoredAccountRequest {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -390,7 +390,7 @@ class GetAccountRequest$Type extends MessageType<GetAccountRequest> {
         }
         return message;
     }
-    internalBinaryWrite(message: GetAccountRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: GetStoredAccountRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string address = 1; */
         if (message.address !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.address);
@@ -404,25 +404,25 @@ class GetAccountRequest$Type extends MessageType<GetAccountRequest> {
     }
 }
 /**
- * @generated MessageType for protobuf message ubt.services.am.GetAccountRequest
+ * @generated MessageType for protobuf message ubt.services.am.GetStoredAccountRequest
  */
-export const GetAccountRequest = new GetAccountRequest$Type();
+export const GetStoredAccountRequest = new GetStoredAccountRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class GetAccountResponse$Type extends MessageType<GetAccountResponse> {
+class GetStoredAccountResponse$Type extends MessageType<GetStoredAccountResponse> {
     constructor() {
-        super("ubt.services.am.GetAccountResponse", [
+        super("ubt.services.am.GetStoredAccountResponse", [
             { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<GetAccountResponse>): GetAccountResponse {
+    create(value?: PartialMessage<GetStoredAccountResponse>): GetStoredAccountResponse {
         const message = { address: "", name: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<GetAccountResponse>(this, message, value);
+            reflectionMergePartial<GetStoredAccountResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetAccountResponse): GetAccountResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetStoredAccountResponse): GetStoredAccountResponse {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -444,7 +444,7 @@ class GetAccountResponse$Type extends MessageType<GetAccountResponse> {
         }
         return message;
     }
-    internalBinaryWrite(message: GetAccountResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: GetStoredAccountResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string address = 1; */
         if (message.address !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.address);
@@ -458,9 +458,9 @@ class GetAccountResponse$Type extends MessageType<GetAccountResponse> {
     }
 }
 /**
- * @generated MessageType for protobuf message ubt.services.am.GetAccountResponse
+ * @generated MessageType for protobuf message ubt.services.am.GetStoredAccountResponse
  */
-export const GetAccountResponse = new GetAccountResponse$Type();
+export const GetStoredAccountResponse = new GetStoredAccountResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ListAccountsRequest$Type extends MessageType<ListAccountsRequest> {
     constructor() {
@@ -614,7 +614,7 @@ export const ListAccountsResponse_Account = new ListAccountsResponse_Account$Typ
  */
 export const UbtAccountManager = new ServiceType("ubt.services.am.UbtAccountManager", [
     { name: "CreateAccount", options: {}, I: CreateAccountRequest, O: CreateAccountResponse },
-    { name: "GetAccount", options: {}, I: GetAccountRequest, O: GetAccountResponse },
+    { name: "GetAccount", options: {}, I: GetStoredAccountRequest, O: GetStoredAccountResponse },
     { name: "ListAccounts", options: {}, I: ListAccountsRequest, O: ListAccountsResponse },
     { name: "SignPayload", options: {}, I: SignPayloadRequest, O: SignPayloadResponse }
 ]);

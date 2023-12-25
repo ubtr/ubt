@@ -8,8 +8,8 @@ import type { SignPayloadResponse } from "./accountmanager";
 import type { SignPayloadRequest } from "./accountmanager";
 import type { ListAccountsResponse } from "./accountmanager";
 import type { ListAccountsRequest } from "./accountmanager";
-import type { GetAccountResponse } from "./accountmanager";
-import type { GetAccountRequest } from "./accountmanager";
+import type { GetStoredAccountResponse } from "./accountmanager";
+import type { GetStoredAccountRequest } from "./accountmanager";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
 import type { CreateAccountResponse } from "./accountmanager";
 import type { CreateAccountRequest } from "./accountmanager";
@@ -26,9 +26,9 @@ export interface IUbtAccountManagerClient {
      */
     createAccount(input: CreateAccountRequest, options?: RpcOptions): UnaryCall<CreateAccountRequest, CreateAccountResponse>;
     /**
-     * @generated from protobuf rpc: GetAccount(ubt.services.am.GetAccountRequest) returns (ubt.services.am.GetAccountResponse);
+     * @generated from protobuf rpc: GetAccount(ubt.services.am.GetStoredAccountRequest) returns (ubt.services.am.GetStoredAccountResponse);
      */
-    getAccount(input: GetAccountRequest, options?: RpcOptions): UnaryCall<GetAccountRequest, GetAccountResponse>;
+    getAccount(input: GetStoredAccountRequest, options?: RpcOptions): UnaryCall<GetStoredAccountRequest, GetStoredAccountResponse>;
     /**
      * @generated from protobuf rpc: ListAccounts(ubt.services.am.ListAccountsRequest) returns (ubt.services.am.ListAccountsResponse);
      */
@@ -57,11 +57,11 @@ export class UbtAccountManagerClient implements IUbtAccountManagerClient, Servic
         return stackIntercept<CreateAccountRequest, CreateAccountResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: GetAccount(ubt.services.am.GetAccountRequest) returns (ubt.services.am.GetAccountResponse);
+     * @generated from protobuf rpc: GetAccount(ubt.services.am.GetStoredAccountRequest) returns (ubt.services.am.GetStoredAccountResponse);
      */
-    getAccount(input: GetAccountRequest, options?: RpcOptions): UnaryCall<GetAccountRequest, GetAccountResponse> {
+    getAccount(input: GetStoredAccountRequest, options?: RpcOptions): UnaryCall<GetStoredAccountRequest, GetStoredAccountResponse> {
         const method = this.methods[1], opt = this._transport.mergeOptions(options);
-        return stackIntercept<GetAccountRequest, GetAccountResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<GetStoredAccountRequest, GetStoredAccountResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: ListAccounts(ubt.services.am.ListAccountsRequest) returns (ubt.services.am.ListAccountsResponse);

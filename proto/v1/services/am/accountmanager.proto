@@ -30,12 +30,12 @@ message SignPayloadResponse {
   bytes signature = 1;
 }
 
-message GetAccountRequest {
+message GetStoredAccountRequest {
   string address = 1; // lookup by address
   string name = 2;   // lookup by name
 }
 
-message GetAccountResponse {
+message GetStoredAccountResponse {
   string address = 1;
   string name = 2;
 }
@@ -55,7 +55,7 @@ message ListAccountsResponse {
 service UbtAccountManager {
   // Create new account
   rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse);
-  rpc GetAccount(GetAccountRequest) returns (GetAccountResponse);
+  rpc GetAccount(GetStoredAccountRequest) returns (GetStoredAccountResponse);
   rpc ListAccounts(ListAccountsRequest) returns (ListAccountsResponse);
   rpc SignPayload(SignPayloadRequest) returns (SignPayloadResponse);
 }

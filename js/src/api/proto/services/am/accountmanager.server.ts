@@ -5,8 +5,8 @@ import { SignPayloadResponse } from "./accountmanager";
 import { SignPayloadRequest } from "./accountmanager";
 import { ListAccountsResponse } from "./accountmanager";
 import { ListAccountsRequest } from "./accountmanager";
-import { GetAccountResponse } from "./accountmanager";
-import { GetAccountRequest } from "./accountmanager";
+import { GetStoredAccountResponse } from "./accountmanager";
+import { GetStoredAccountRequest } from "./accountmanager";
 import { CreateAccountResponse } from "./accountmanager";
 import { CreateAccountRequest } from "./accountmanager";
 import { ServerCallContext } from "@protobuf-ts/runtime-rpc";
@@ -21,9 +21,9 @@ export interface IUbtAccountManager<T = ServerCallContext> {
      */
     createAccount(request: CreateAccountRequest, context: T): Promise<CreateAccountResponse>;
     /**
-     * @generated from protobuf rpc: GetAccount(ubt.services.am.GetAccountRequest) returns (ubt.services.am.GetAccountResponse);
+     * @generated from protobuf rpc: GetAccount(ubt.services.am.GetStoredAccountRequest) returns (ubt.services.am.GetStoredAccountResponse);
      */
-    getAccount(request: GetAccountRequest, context: T): Promise<GetAccountResponse>;
+    getAccount(request: GetStoredAccountRequest, context: T): Promise<GetStoredAccountResponse>;
     /**
      * @generated from protobuf rpc: ListAccounts(ubt.services.am.ListAccountsRequest) returns (ubt.services.am.ListAccountsResponse);
      */
