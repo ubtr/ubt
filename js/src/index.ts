@@ -1,4 +1,6 @@
 export * from "./utils";
+export * from "./api/proto/google/protobuf/timestamp";
+export * from "./api/proto/google/protobuf/struct";
 export * from "./api/proto/commons";
 export * from "./api/proto/models";
 export * from "./api/proto/services/network";

@@ -41,12 +41,12 @@ message DeriveAccountRequest {
  * Simple access to block and block information. In most cases does not require any indexing/storage to implement
  */
 service UbtBlockService {
-  //  Fetch block by ID
+  // Fetch block by ID
   rpc getBlock(BlockRequest) returns (Block);
-  // List blocks in range
+  // List blocks in range. If count is not specified, returns all blocks starting from start_number
   rpc listBlocks(ListBlocksRequest) returns (stream Block);
-  // get account
+  // Get blockchain account
   rpc getAccount(GetAccountRequest) returns (Account);
-  // return account/address by public key
+  // Recorver account/address by public key
   rpc deriveAccount(DeriveAccountRequest) returns (Account);
 }

@@ -53,9 +53,18 @@ message ListAccountsResponse {
 }
 
 service UbtAccountManager {
-  // Create new account
+  // Creates a new random account or import existing private key
   rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse);
+
+  // Retrieves an existing account.
+  // The request can specify either an address or a name for lookup.
   rpc GetAccount(GetStoredAccountRequest) returns (GetStoredAccountResponse);
+
+  // Lists all accounts that match the provided name filter.
+  // The name filter is used to return only accounts with names starting with the specified string.
   rpc ListAccounts(ListAccountsRequest) returns (ListAccountsResponse);
+
+  // Signs an arbitrary payload with the specified account.
+  // The response contains the signature.
   rpc SignPayload(SignPayloadRequest) returns (SignPayloadResponse);
 }
