@@ -1,6 +1,24 @@
 VERSION 0.7
 
 build:
-  FROM gradle:8.3.0-jdk17-alpine
+  FROM gradle:8.5.0-jdk17-alpine
   COPY . /build
   RUN cd /build && gradle -s --no-daemon build
+
+publish:
+  ARG dryrun=true
+  ARG version
+
+  ARG NEXUS_USERNAME
+  ARG NEXUS_PASSWORD
+  ARG GPG_PASSPHRASE
+  ARG GPG_SECRET_KEY
+
+  FROM gradle:8.5.0-jdk17-alpine
+  COPY . /build
+  WORKDIR /build
+  IF [ "$dryrun" == "false" ]
+    RUN gradle -s --no-daemon -Pversion=${version} publish closeAndReleaseStagingRepository -PgpgKey="${GPG_SECRET_KEY}" -PgpgPassphrase="${GPG_PASSPHRASE}" -PnexusUsername="${NEXUS_USERNAME}" -PnexusPassword="${NEXUS_PASSWORD}"
+  ELSE
+    RUN gradle -s --no-daemon -Pversion=${version} --dry-run publish closeAndReleaseStagingRepository -PgpgKey="${GPG_SECRET_KEY}" -PgpgPassphrase="${GPG_PASSPHRASE}"
+  END
