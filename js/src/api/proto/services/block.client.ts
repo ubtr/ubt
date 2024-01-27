@@ -22,25 +22,25 @@ import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
  */
 export interface IUbtBlockServiceClient {
     /**
-     *  Fetch block by ID
+     * Fetch block by ID
      *
      * @generated from protobuf rpc: getBlock(ubt.services.BlockRequest) returns (ubt.Block);
      */
     getBlock(input: BlockRequest, options?: RpcOptions): UnaryCall<BlockRequest, Block>;
     /**
-     * List blocks in range
+     * List blocks in range. If count is not specified, returns all blocks starting from start_number
      *
      * @generated from protobuf rpc: listBlocks(ubt.services.ListBlocksRequest) returns (stream ubt.Block);
      */
     listBlocks(input: ListBlocksRequest, options?: RpcOptions): ServerStreamingCall<ListBlocksRequest, Block>;
     /**
-     * get account
+     * Get blockchain account
      *
      * @generated from protobuf rpc: getAccount(ubt.services.GetAccountRequest) returns (ubt.Account);
      */
     getAccount(input: GetAccountRequest, options?: RpcOptions): UnaryCall<GetAccountRequest, Account>;
     /**
-     * return account/address by public key
+     * Recorver account/address by public key
      *
      * @generated from protobuf rpc: deriveAccount(ubt.services.DeriveAccountRequest) returns (ubt.Account);
      */
@@ -59,7 +59,7 @@ export class UbtBlockServiceClient implements IUbtBlockServiceClient, ServiceInf
     constructor(private readonly _transport: RpcTransport) {
     }
     /**
-     *  Fetch block by ID
+     * Fetch block by ID
      *
      * @generated from protobuf rpc: getBlock(ubt.services.BlockRequest) returns (ubt.Block);
      */
@@ -68,7 +68,7 @@ export class UbtBlockServiceClient implements IUbtBlockServiceClient, ServiceInf
         return stackIntercept<BlockRequest, Block>("unary", this._transport, method, opt, input);
     }
     /**
-     * List blocks in range
+     * List blocks in range. If count is not specified, returns all blocks starting from start_number
      *
      * @generated from protobuf rpc: listBlocks(ubt.services.ListBlocksRequest) returns (stream ubt.Block);
      */
@@ -77,7 +77,7 @@ export class UbtBlockServiceClient implements IUbtBlockServiceClient, ServiceInf
         return stackIntercept<ListBlocksRequest, Block>("serverStreaming", this._transport, method, opt, input);
     }
     /**
-     * get account
+     * Get blockchain account
      *
      * @generated from protobuf rpc: getAccount(ubt.services.GetAccountRequest) returns (ubt.Account);
      */
@@ -86,7 +86,7 @@ export class UbtBlockServiceClient implements IUbtBlockServiceClient, ServiceInf
         return stackIntercept<GetAccountRequest, Account>("unary", this._transport, method, opt, input);
     }
     /**
-     * return account/address by public key
+     * Recorver account/address by public key
      *
      * @generated from protobuf rpc: deriveAccount(ubt.services.DeriveAccountRequest) returns (ubt.Account);
      */

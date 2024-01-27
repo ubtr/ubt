@@ -20,20 +20,29 @@ import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
  */
 export interface IUbtAccountManagerClient {
     /**
-     * Create new account
+     * Creates a new random account or import existing private key
      *
      * @generated from protobuf rpc: CreateAccount(ubt.services.am.CreateAccountRequest) returns (ubt.services.am.CreateAccountResponse);
      */
     createAccount(input: CreateAccountRequest, options?: RpcOptions): UnaryCall<CreateAccountRequest, CreateAccountResponse>;
     /**
+     * Retrieves an existing account.
+     * The request can specify either an address or a name for lookup.
+     *
      * @generated from protobuf rpc: GetAccount(ubt.services.am.GetStoredAccountRequest) returns (ubt.services.am.GetStoredAccountResponse);
      */
     getAccount(input: GetStoredAccountRequest, options?: RpcOptions): UnaryCall<GetStoredAccountRequest, GetStoredAccountResponse>;
     /**
+     * Lists all accounts that match the provided name filter.
+     * The name filter is used to return only accounts with names starting with the specified string.
+     *
      * @generated from protobuf rpc: ListAccounts(ubt.services.am.ListAccountsRequest) returns (ubt.services.am.ListAccountsResponse);
      */
     listAccounts(input: ListAccountsRequest, options?: RpcOptions): UnaryCall<ListAccountsRequest, ListAccountsResponse>;
     /**
+     * Signs an arbitrary payload with the specified account.
+     * The response contains the signature.
+     *
      * @generated from protobuf rpc: SignPayload(ubt.services.am.SignPayloadRequest) returns (ubt.services.am.SignPayloadResponse);
      */
     signPayload(input: SignPayloadRequest, options?: RpcOptions): UnaryCall<SignPayloadRequest, SignPayloadResponse>;
@@ -48,7 +57,7 @@ export class UbtAccountManagerClient implements IUbtAccountManagerClient, Servic
     constructor(private readonly _transport: RpcTransport) {
     }
     /**
-     * Create new account
+     * Creates a new random account or import existing private key
      *
      * @generated from protobuf rpc: CreateAccount(ubt.services.am.CreateAccountRequest) returns (ubt.services.am.CreateAccountResponse);
      */
@@ -57,6 +66,9 @@ export class UbtAccountManagerClient implements IUbtAccountManagerClient, Servic
         return stackIntercept<CreateAccountRequest, CreateAccountResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * Retrieves an existing account.
+     * The request can specify either an address or a name for lookup.
+     *
      * @generated from protobuf rpc: GetAccount(ubt.services.am.GetStoredAccountRequest) returns (ubt.services.am.GetStoredAccountResponse);
      */
     getAccount(input: GetStoredAccountRequest, options?: RpcOptions): UnaryCall<GetStoredAccountRequest, GetStoredAccountResponse> {
@@ -64,6 +76,9 @@ export class UbtAccountManagerClient implements IUbtAccountManagerClient, Servic
         return stackIntercept<GetStoredAccountRequest, GetStoredAccountResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * Lists all accounts that match the provided name filter.
+     * The name filter is used to return only accounts with names starting with the specified string.
+     *
      * @generated from protobuf rpc: ListAccounts(ubt.services.am.ListAccountsRequest) returns (ubt.services.am.ListAccountsResponse);
      */
     listAccounts(input: ListAccountsRequest, options?: RpcOptions): UnaryCall<ListAccountsRequest, ListAccountsResponse> {
@@ -71,6 +86,9 @@ export class UbtAccountManagerClient implements IUbtAccountManagerClient, Servic
         return stackIntercept<ListAccountsRequest, ListAccountsResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * Signs an arbitrary payload with the specified account.
+     * The response contains the signature.
+     *
      * @generated from protobuf rpc: SignPayload(ubt.services.am.SignPayloadRequest) returns (ubt.services.am.SignPayloadResponse);
      */
     signPayload(input: SignPayloadRequest, options?: RpcOptions): UnaryCall<SignPayloadRequest, SignPayloadResponse> {

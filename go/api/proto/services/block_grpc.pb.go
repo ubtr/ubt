@@ -32,11 +32,11 @@ const (
 type UbtBlockServiceClient interface {
 	// Fetch block by ID
 	GetBlock(ctx context.Context, in *BlockRequest, opts ...grpc.CallOption) (*proto.Block, error)
-	// List blocks in range
+	// List blocks in range. If count is not specified, returns all blocks starting from start_number
 	ListBlocks(ctx context.Context, in *ListBlocksRequest, opts ...grpc.CallOption) (UbtBlockService_ListBlocksClient, error)
-	// get account
+	// Get blockchain account
 	GetAccount(ctx context.Context, in *GetAccountRequest, opts ...grpc.CallOption) (*proto.Account, error)
-	// return account/address by public key
+	// Recorver account/address by public key
 	DeriveAccount(ctx context.Context, in *DeriveAccountRequest, opts ...grpc.CallOption) (*proto.Account, error)
 }
 
@@ -113,11 +113,11 @@ func (c *ubtBlockServiceClient) DeriveAccount(ctx context.Context, in *DeriveAcc
 type UbtBlockServiceServer interface {
 	// Fetch block by ID
 	GetBlock(context.Context, *BlockRequest) (*proto.Block, error)
-	// List blocks in range
+	// List blocks in range. If count is not specified, returns all blocks starting from start_number
 	ListBlocks(*ListBlocksRequest, UbtBlockService_ListBlocksServer) error
-	// get account
+	// Get blockchain account
 	GetAccount(context.Context, *GetAccountRequest) (*proto.Account, error)
-	// return account/address by public key
+	// Recorver account/address by public key
 	DeriveAccount(context.Context, *DeriveAccountRequest) (*proto.Account, error)
 	mustEmbedUnimplementedUbtBlockServiceServer()
 }

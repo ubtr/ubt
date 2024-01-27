@@ -8,22 +8,25 @@ package ubt.services.am;
   Accounts are identified by address and optionally by name
   Name can be formatted as a path to allow for nested namespaces which then can be used to filter accounts
 */
-
 message CreateAccountRequest {
   string chain_type = 1;
-  bytes  private_key = 2;   // if not specified will be generated based on network type
-  string name = 3;          // optional unique name associated with account. Can be separated by / to make nested namespaces
+  bytes  private_key = 2;   // if not specified will be generated randomly based on chain type
+  // Optional unique name associated with account. 
+  // Can be separated by / to make nested namespaces like "bob/eth/invoices/1"
+  string name = 3;          
 }
 
 message CreateAccountResponse {
-  string address = 1;
+  string address = 1;       // address of the created account
+  string name = 2;           
+  bytes public_key = 3;
 }
 
 message SignPayloadRequest {
   string chain_type = 1;
-  bytes data = 2;
-  string address = 3; // address or name must be specified
-  string name = 4; // if specified use it to lookup existing account by name
+  bytes data = 2;        // data to sign
+  string address = 3;    // address or name must be specified
+  string name = 4;       // if specified use it to lookup existing account by name
 }
 
 message SignPayloadResponse {
@@ -31,17 +34,18 @@ message SignPayloadResponse {
 }
 
 message GetStoredAccountRequest {
-  string address = 1; // lookup by address
-  string name = 2;   // lookup by name
+  string address = 1; // lookup by address; will lookup by address if both address and name are specified
+  string name = 2;    // lookup by name
 }
 
 message GetStoredAccountResponse {
   string address = 1;
   string name = 2;
+  bytes public_key = 3;  // may be empty depending on implementation and chain type
 }
 
 message ListAccountsRequest {
-  string name_filter = 1; // return only accounts with name starting with this name
+  string name_filter = 1; // starts with filter. e.g "bob" will return "bob/eth/1" and "bob/eth/2"
 }
 
 message ListAccountsResponse {

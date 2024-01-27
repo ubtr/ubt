@@ -17,25 +17,25 @@ import { ServerCallContext } from "@protobuf-ts/runtime-rpc";
  */
 export interface IUbtBlockService<T = ServerCallContext> {
     /**
-     *  Fetch block by ID
+     * Fetch block by ID
      *
      * @generated from protobuf rpc: getBlock(ubt.services.BlockRequest) returns (ubt.Block);
      */
     getBlock(request: BlockRequest, context: T): Promise<Block>;
     /**
-     * List blocks in range
+     * List blocks in range. If count is not specified, returns all blocks starting from start_number
      *
      * @generated from protobuf rpc: listBlocks(ubt.services.ListBlocksRequest) returns (stream ubt.Block);
      */
     listBlocks(request: ListBlocksRequest, responses: RpcInputStream<Block>, context: T): Promise<void>;
     /**
-     * get account
+     * Get blockchain account
      *
      * @generated from protobuf rpc: getAccount(ubt.services.GetAccountRequest) returns (ubt.Account);
      */
     getAccount(request: GetAccountRequest, context: T): Promise<Account>;
     /**
-     * return account/address by public key
+     * Recorver account/address by public key
      *
      * @generated from protobuf rpc: deriveAccount(ubt.services.DeriveAccountRequest) returns (ubt.Account);
      */

@@ -12,12 +12,12 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
-// 
-// Account Manager basically provide a box which stores private keys and allows to sign payloads using them
-// Accounts are identified by address and optionally by name
-// Name can be formatted as a path to allow for nested namespaces which then can be used to filter accounts
-
 /**
+ *
+ * Account Manager basically provide a box which stores private keys and allows to sign payloads using them
+ * Accounts are identified by address and optionally by name
+ * Name can be formatted as a path to allow for nested namespaces which then can be used to filter accounts
+ *
  * @generated from protobuf message ubt.services.am.CreateAccountRequest
  */
 export interface CreateAccountRequest {
@@ -28,11 +28,14 @@ export interface CreateAccountRequest {
     /**
      * @generated from protobuf field: bytes private_key = 2;
      */
-    privateKey: Uint8Array; // if not specified will be generated based on network type
+    privateKey: Uint8Array; // if not specified will be generated randomly based on chain type
     /**
+     * Optional unique name associated with account.
+     * Can be separated by / to make nested namespaces like "bob/eth/invoices/1"
+     *
      * @generated from protobuf field: string name = 3;
      */
-    name: string; // optional unique name associated with account. Can be separated by / to make nested namespaces
+    name: string;
 }
 /**
  * @generated from protobuf message ubt.services.am.CreateAccountResponse
@@ -41,7 +44,15 @@ export interface CreateAccountResponse {
     /**
      * @generated from protobuf field: string address = 1;
      */
-    address: string;
+    address: string; // address of the created account
+    /**
+     * @generated from protobuf field: string name = 2;
+     */
+    name: string;
+    /**
+     * @generated from protobuf field: bytes public_key = 3;
+     */
+    publicKey: Uint8Array;
 }
 /**
  * @generated from protobuf message ubt.services.am.SignPayloadRequest
@@ -54,7 +65,7 @@ export interface SignPayloadRequest {
     /**
      * @generated from protobuf field: bytes data = 2;
      */
-    data: Uint8Array;
+    data: Uint8Array; // data to sign
     /**
      * @generated from protobuf field: string address = 3;
      */
@@ -80,7 +91,7 @@ export interface GetStoredAccountRequest {
     /**
      * @generated from protobuf field: string address = 1;
      */
-    address: string; // lookup by address
+    address: string; // lookup by address; will lookup by address if both address and name are specified
     /**
      * @generated from protobuf field: string name = 2;
      */
@@ -98,6 +109,10 @@ export interface GetStoredAccountResponse {
      * @generated from protobuf field: string name = 2;
      */
     name: string;
+    /**
+     * @generated from protobuf field: bytes public_key = 3;
+     */
+    publicKey: Uint8Array; // may be empty depending on implementation and chain type
 }
 /**
  * @generated from protobuf message ubt.services.am.ListAccountsRequest
@@ -106,7 +121,7 @@ export interface ListAccountsRequest {
     /**
      * @generated from protobuf field: string name_filter = 1;
      */
-    nameFilter: string; // return only accounts with name starting with this name
+    nameFilter: string; // starts with filter. e.g "bob" will return "bob/eth/1" and "bob/eth/2"
 }
 /**
  * @generated from protobuf message ubt.services.am.ListAccountsResponse
@@ -195,11 +210,13 @@ export const CreateAccountRequest = new CreateAccountRequest$Type();
 class CreateAccountResponse$Type extends MessageType<CreateAccountResponse> {
     constructor() {
         super("ubt.services.am.CreateAccountResponse", [
-            { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "public_key", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
         ]);
     }
     create(value?: PartialMessage<CreateAccountResponse>): CreateAccountResponse {
-        const message = { address: "" };
+        const message = { address: "", name: "", publicKey: new Uint8Array(0) };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<CreateAccountResponse>(this, message, value);
@@ -212,6 +229,12 @@ class CreateAccountResponse$Type extends MessageType<CreateAccountResponse> {
             switch (fieldNo) {
                 case /* string address */ 1:
                     message.address = reader.string();
+                    break;
+                case /* string name */ 2:
+                    message.name = reader.string();
+                    break;
+                case /* bytes public_key */ 3:
+                    message.publicKey = reader.bytes();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -228,6 +251,12 @@ class CreateAccountResponse$Type extends MessageType<CreateAccountResponse> {
         /* string address = 1; */
         if (message.address !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.address);
+        /* string name = 2; */
+        if (message.name !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.name);
+        /* bytes public_key = 3; */
+        if (message.publicKey.length)
+            writer.tag(3, WireType.LengthDelimited).bytes(message.publicKey);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -412,11 +441,12 @@ class GetStoredAccountResponse$Type extends MessageType<GetStoredAccountResponse
     constructor() {
         super("ubt.services.am.GetStoredAccountResponse", [
             { no: 1, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "public_key", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
         ]);
     }
     create(value?: PartialMessage<GetStoredAccountResponse>): GetStoredAccountResponse {
-        const message = { address: "", name: "" };
+        const message = { address: "", name: "", publicKey: new Uint8Array(0) };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<GetStoredAccountResponse>(this, message, value);
@@ -432,6 +462,9 @@ class GetStoredAccountResponse$Type extends MessageType<GetStoredAccountResponse
                     break;
                 case /* string name */ 2:
                     message.name = reader.string();
+                    break;
+                case /* bytes public_key */ 3:
+                    message.publicKey = reader.bytes();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -451,6 +484,9 @@ class GetStoredAccountResponse$Type extends MessageType<GetStoredAccountResponse
         /* string name = 2; */
         if (message.name !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.name);
+        /* bytes public_key = 3; */
+        if (message.publicKey.length)
+            writer.tag(3, WireType.LengthDelimited).bytes(message.publicKey);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

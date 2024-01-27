@@ -15,20 +15,29 @@ import { ServerCallContext } from "@protobuf-ts/runtime-rpc";
  */
 export interface IUbtAccountManager<T = ServerCallContext> {
     /**
-     * Create new account
+     * Creates a new random account or import existing private key
      *
      * @generated from protobuf rpc: CreateAccount(ubt.services.am.CreateAccountRequest) returns (ubt.services.am.CreateAccountResponse);
      */
     createAccount(request: CreateAccountRequest, context: T): Promise<CreateAccountResponse>;
     /**
+     * Retrieves an existing account.
+     * The request can specify either an address or a name for lookup.
+     *
      * @generated from protobuf rpc: GetAccount(ubt.services.am.GetStoredAccountRequest) returns (ubt.services.am.GetStoredAccountResponse);
      */
     getAccount(request: GetStoredAccountRequest, context: T): Promise<GetStoredAccountResponse>;
     /**
+     * Lists all accounts that match the provided name filter.
+     * The name filter is used to return only accounts with names starting with the specified string.
+     *
      * @generated from protobuf rpc: ListAccounts(ubt.services.am.ListAccountsRequest) returns (ubt.services.am.ListAccountsResponse);
      */
     listAccounts(request: ListAccountsRequest, context: T): Promise<ListAccountsResponse>;
     /**
+     * Signs an arbitrary payload with the specified account.
+     * The response contains the signature.
+     *
      * @generated from protobuf rpc: SignPayload(ubt.services.am.SignPayloadRequest) returns (ubt.services.am.SignPayloadResponse);
      */
     signPayload(request: SignPayloadRequest, context: T): Promise<SignPayloadResponse>;

@@ -64,6 +64,10 @@ export interface CurrencyMetadata {
      * @generated from protobuf field: string name = 1;
      */
     name: string;
+    /**
+     * @generated from protobuf field: string icon_url = 2;
+     */
+    iconUrl: string;
 }
 /**
  *
@@ -117,15 +121,15 @@ export interface ChainExplorerUrls {
     /**
      * @generated from protobuf field: string block_url = 1;
      */
-    blockUrl: string; // url to recommended block explorer with %s placeholder for block hash
+    blockUrl: string; // url to recommended block explorer with '{}' placeholder for block hash
     /**
      * @generated from protobuf field: string tx_url = 2;
      */
-    txUrl: string; // url to recommended block explorer with %s placeholder for tx id
+    txUrl: string; // url to recommended block explorer with '{}' placeholder for tx id
     /**
      * @generated from protobuf field: string address_url = 3;
      */
-    addressUrl: string; // url to view address information with %s placeholder for address
+    addressUrl: string; // url to view address information with '{}' placeholder for address
 }
 /**
  * *
@@ -204,13 +208,30 @@ export interface Account {
      */
     id: string; // address in human readable format
     /**
-     * @generated from protobuf field: bool is_contract = 2;
+     * @generated from protobuf field: uint32 type = 2;
      */
-    isContract: boolean; // indicate if this is contract account
+    type: number; // account type, if known; can be flag mask for combinations
+}
+/**
+ * @generated from protobuf enum ubt.Account.AccountType
+ */
+export enum Account_AccountType {
     /**
-     * @generated from protobuf field: uint32 contract_type = 3;
+     * @generated from protobuf enum value: UNSPECIFIED = 0;
      */
-    contractType: number; // contract type, if known
+    UNSPECIFIED = 0,
+    /**
+     * standard address; usually can be used to initiate transactions
+     *
+     * @generated from protobuf enum value: STANDARD = 1;
+     */
+    STANDARD = 1,
+    /**
+     * contract address
+     *
+     * @generated from protobuf enum value: CONTRACT = 2;
+     */
+    CONTRACT = 2
 }
 /**
  *
@@ -383,12 +404,14 @@ export enum FinalityStatus {
      */
     UNSPECIFIED = 0,
     /**
-     * there is a chance that block will not be included
+     * there is a chance that block will not be included or reverted
      *
      * @generated from protobuf enum value: FINALITY_STATUS_UNSAFE = 1;
      */
     UNSAFE = 1,
     /**
+     * less chance
+     *
      * @generated from protobuf enum value: FINALITY_STATUS_SAFE = 2;
      */
     SAFE = 2,
@@ -476,11 +499,12 @@ export const Currency = new Currency$Type();
 class CurrencyMetadata$Type extends MessageType<CurrencyMetadata> {
     constructor() {
         super("ubt.CurrencyMetadata", [
-            { no: 1, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "icon_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<CurrencyMetadata>): CurrencyMetadata {
-        const message = { name: "" };
+        const message = { name: "", iconUrl: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<CurrencyMetadata>(this, message, value);
@@ -493,6 +517,9 @@ class CurrencyMetadata$Type extends MessageType<CurrencyMetadata> {
             switch (fieldNo) {
                 case /* string name */ 1:
                     message.name = reader.string();
+                    break;
+                case /* string icon_url */ 2:
+                    message.iconUrl = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -509,6 +536,9 @@ class CurrencyMetadata$Type extends MessageType<CurrencyMetadata> {
         /* string name = 1; */
         if (message.name !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.name);
+        /* string icon_url = 2; */
+        if (message.iconUrl !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.iconUrl);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -797,12 +827,11 @@ class Account$Type extends MessageType<Account> {
     constructor() {
         super("ubt.Account", [
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "is_contract", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 3, name: "contract_type", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
+            { no: 2, name: "type", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
         ]);
     }
     create(value?: PartialMessage<Account>): Account {
-        const message = { id: "", isContract: false, contractType: 0 };
+        const message = { id: "", type: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<Account>(this, message, value);
@@ -816,11 +845,8 @@ class Account$Type extends MessageType<Account> {
                 case /* string id */ 1:
                     message.id = reader.string();
                     break;
-                case /* bool is_contract */ 2:
-                    message.isContract = reader.bool();
-                    break;
-                case /* uint32 contract_type */ 3:
-                    message.contractType = reader.uint32();
+                case /* uint32 type */ 2:
+                    message.type = reader.uint32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -837,12 +863,9 @@ class Account$Type extends MessageType<Account> {
         /* string id = 1; */
         if (message.id !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.id);
-        /* bool is_contract = 2; */
-        if (message.isContract !== false)
-            writer.tag(2, WireType.Varint).bool(message.isContract);
-        /* uint32 contract_type = 3; */
-        if (message.contractType !== 0)
-            writer.tag(3, WireType.Varint).uint32(message.contractType);
+        /* uint32 type = 2; */
+        if (message.type !== 0)
+            writer.tag(2, WireType.Varint).uint32(message.type);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

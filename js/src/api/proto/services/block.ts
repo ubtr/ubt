@@ -102,10 +102,6 @@ export interface DeriveAccountRequest {
      * @generated from protobuf field: bytes public_key = 2;
      */
     publicKey: Uint8Array;
-    /**
-     * @generated from protobuf field: string derivation_path = 3;
-     */
-    derivationPath: string;
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class BlockRequest$Type extends MessageType<BlockRequest> {
@@ -295,12 +291,11 @@ class DeriveAccountRequest$Type extends MessageType<DeriveAccountRequest> {
     constructor() {
         super("ubt.services.DeriveAccountRequest", [
             { no: 1, name: "chain_id", kind: "message", T: () => ChainId },
-            { no: 2, name: "public_key", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
-            { no: 3, name: "derivation_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "public_key", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
         ]);
     }
     create(value?: PartialMessage<DeriveAccountRequest>): DeriveAccountRequest {
-        const message = { publicKey: new Uint8Array(0), derivationPath: "" };
+        const message = { publicKey: new Uint8Array(0) };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<DeriveAccountRequest>(this, message, value);
@@ -316,9 +311,6 @@ class DeriveAccountRequest$Type extends MessageType<DeriveAccountRequest> {
                     break;
                 case /* bytes public_key */ 2:
                     message.publicKey = reader.bytes();
-                    break;
-                case /* string derivation_path */ 3:
-                    message.derivationPath = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -338,9 +330,6 @@ class DeriveAccountRequest$Type extends MessageType<DeriveAccountRequest> {
         /* bytes public_key = 2; */
         if (message.publicKey.length)
             writer.tag(2, WireType.LengthDelimited).bytes(message.publicKey);
-        /* string derivation_path = 3; */
-        if (message.derivationPath !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.derivationPath);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

@@ -29,10 +29,16 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UbtAccountManagerClient interface {
-	// Create new account
+	// Creates a new random account or import existing private key
 	CreateAccount(ctx context.Context, in *CreateAccountRequest, opts ...grpc.CallOption) (*CreateAccountResponse, error)
+	// Retrieves an existing account.
+	// The request can specify either an address or a name for lookup.
 	GetAccount(ctx context.Context, in *GetStoredAccountRequest, opts ...grpc.CallOption) (*GetStoredAccountResponse, error)
+	// Lists all accounts that match the provided name filter.
+	// The name filter is used to return only accounts with names starting with the specified string.
 	ListAccounts(ctx context.Context, in *ListAccountsRequest, opts ...grpc.CallOption) (*ListAccountsResponse, error)
+	// Signs an arbitrary payload with the specified account.
+	// The response contains the signature.
 	SignPayload(ctx context.Context, in *SignPayloadRequest, opts ...grpc.CallOption) (*SignPayloadResponse, error)
 }
 
@@ -84,10 +90,16 @@ func (c *ubtAccountManagerClient) SignPayload(ctx context.Context, in *SignPaylo
 // All implementations must embed UnimplementedUbtAccountManagerServer
 // for forward compatibility
 type UbtAccountManagerServer interface {
-	// Create new account
+	// Creates a new random account or import existing private key
 	CreateAccount(context.Context, *CreateAccountRequest) (*CreateAccountResponse, error)
+	// Retrieves an existing account.
+	// The request can specify either an address or a name for lookup.
 	GetAccount(context.Context, *GetStoredAccountRequest) (*GetStoredAccountResponse, error)
+	// Lists all accounts that match the provided name filter.
+	// The name filter is used to return only accounts with names starting with the specified string.
 	ListAccounts(context.Context, *ListAccountsRequest) (*ListAccountsResponse, error)
+	// Signs an arbitrary payload with the specified account.
+	// The response contains the signature.
 	SignPayload(context.Context, *SignPayloadRequest) (*SignPayloadResponse, error)
 	mustEmbedUnimplementedUbtAccountManagerServer()
 }
