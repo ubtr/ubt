@@ -57,8 +57,22 @@ Parsing is bit more lenient:
 * `C:ETH:MAINNET:0x6b175474e89094c44da98b954eedeac495271d0f:` - same as above
 * `c:Eth:mainnet:0x6b175474e89094c44da98b954eedeac495271d0f:` - same as above
 
+### Transfers
+While most blockchains operate with blocks + transactions extracting actual money transfers delegated to client developer who need to extract native, contract based or other types of transfers from transaction data.
+This API provides unified view of transfers which is transfering owneship of some amount of some currency identified by Unified Currency ID from one account to another.
+
+**Simplified Transfer structure**
+* **id** - unique transfer id within the network, usually transaction hash + transfer index within tx
+ * **from** - source account
+  * **to** - destination account
+ * **amount** - uin256 amount  + currency id
+ 
 # Services
+* Network - information and status about connected blockchains
+* Blocks - read access to blocks, transactions and transfers
+* Construct - construct and broadcast transfers and transactions
 * Balances - indexed access to balances of any address in any currency
+* Currencies - currency introspection api
 * Account Manager - delegate account/private keys management to external service
 
 # Build
