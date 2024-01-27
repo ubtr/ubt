@@ -6,7 +6,7 @@ build:
   RUN cd /build && gradle -s --no-daemon build
 
 publish:
-  ARG dryrun=true
+  ARG dryrun=false
   ARG version
 
   ARG NEXUS_USERNAME
@@ -17,8 +17,8 @@ publish:
   FROM gradle:8.5.0-jdk17-alpine
   COPY . /build
   WORKDIR /build
-  IF [ "$dryrun" == "false" ]
-    RUN gradle -s --no-daemon -Pversion=${version} publish closeAndReleaseStagingRepository -PgpgKey="${GPG_SECRET_KEY}" -PgpgPassphrase="${GPG_PASSPHRASE}" -PnexusUsername="${NEXUS_USERNAME}" -PnexusPassword="${NEXUS_PASSWORD}"
+  IF [ "$dryrun" == "true" ]
+    RUN gradle -s --no-daemon -Pversion=${version} --dry-run publish closeAndReleaseStagingRepository -PgpgKey="${GPG_SECRET_KEY}" -PgpgPassphrase="${GPG_PASSPHRASE}" 
   ELSE
-    RUN gradle -s --no-daemon -Pversion=${version} --dry-run publish closeAndReleaseStagingRepository -PgpgKey="${GPG_SECRET_KEY}" -PgpgPassphrase="${GPG_PASSPHRASE}"
+    RUN gradle -s --no-daemon -Pversion=${version} publish closeAndReleaseStagingRepository -PgpgKey="${GPG_SECRET_KEY}" -PgpgPassphrase="${GPG_PASSPHRASE}" -PnexusUsername="${NEXUS_USERNAME}" -PnexusPassword="${NEXUS_PASSWORD}"
   END
