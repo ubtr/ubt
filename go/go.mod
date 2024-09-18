@@ -1,7 +1,7 @@
 module github.com/ubtr/ubt/go
 
 require (
-	google.golang.org/grpc v1.64.2
+	google.golang.org/grpc v1.66.2
 )
 
 require (
