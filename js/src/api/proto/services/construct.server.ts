@@ -21,14 +21,20 @@ export interface IUbtConstructService<T = ServerCallContext> {
      */
     createTransfer(request: CreateTransferRequest, context: T): Promise<TransactionIntent>;
     /**
+     * combine transaction with signatures
+     *
      * @generated from protobuf rpc: combineTransaction(ubt.services.TransactionCombineRequest) returns (ubt.services.SignedTransaction);
      */
     combineTransaction(request: TransactionCombineRequest, context: T): Promise<SignedTransaction>;
     /**
+     * sign transaction with private key; tx can also be signed offline and used directly in 'send'
+     *
      * @generated from protobuf rpc: signTransaction(ubt.services.TransactionSignRequest) returns (ubt.services.SignedTransaction);
      */
     signTransaction(request: TransactionSignRequest, context: T): Promise<SignedTransaction>;
     /**
+     * send signed transaction to the network
+     *
      * @generated from protobuf rpc: send(ubt.services.TransactionSendRequest) returns (ubt.services.TransactionSendResponse);
      */
     send(request: TransactionSendRequest, context: T): Promise<TransactionSendResponse>;

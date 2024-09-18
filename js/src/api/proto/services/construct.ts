@@ -63,6 +63,31 @@ export interface CreateBatchTransferRequest {
     to: TransferReceiver[];
 }
 /**
+ * *
+ * Payload which should be signed by keypair indicated by account_id
+ * It is applicable for multiple inputs or multisign.
+ *
+ * @generated from protobuf message ubt.services.Signable
+ */
+export interface Signable {
+    /**
+     * @generated from protobuf field: bytes data = 1;
+     */
+    data: Uint8Array;
+    /**
+     * @generated from protobuf field: bytes account_id = 2;
+     */
+    accountId: Uint8Array; // identifier of keypair (hd path, address, public key, etc.)
+    /**
+     * @generated from protobuf field: string signature_type = 3;
+     */
+    signatureType: string; // type of the signature client must use to sign the payload
+    /**
+     * @generated from protobuf field: string address = 4;
+     */
+    address: string; // address of the account
+}
+/**
  * @generated from protobuf message ubt.services.TransactionIntent
  */
 export interface TransactionIntent {
@@ -71,14 +96,12 @@ export interface TransactionIntent {
      */
     id: Uint8Array;
     /**
-     * @generated from protobuf field: bytes payload_to_sign = 2;
+     * @generated from protobuf field: repeated ubt.services.Signable signables = 2;
      */
-    payloadToSign: Uint8Array; // prepared byte payload to sign
+    signables: Signable[]; // prepared binary payloads to sign
     /**
-     * @generated from protobuf field: string signature_type = 3;
-     */
-    signatureType: string; // type of the signature client must use to sign the payload
-    /**
+     * string signature_type = 3;       //
+     *
      * @generated from protobuf field: ubt.uint256 estimated_fee = 4;
      */
     estimatedFee?: uint256; // estimated fee for the transaction TODO: drilldown by fee components and their price
@@ -337,18 +360,85 @@ class CreateBatchTransferRequest$Type extends MessageType<CreateBatchTransferReq
  */
 export const CreateBatchTransferRequest = new CreateBatchTransferRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class Signable$Type extends MessageType<Signable> {
+    constructor() {
+        super("ubt.services.Signable", [
+            { no: 1, name: "data", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
+            { no: 2, name: "account_id", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
+            { no: 3, name: "signature_type", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<Signable>): Signable {
+        const message = { data: new Uint8Array(0), accountId: new Uint8Array(0), signatureType: "", address: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<Signable>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Signable): Signable {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* bytes data */ 1:
+                    message.data = reader.bytes();
+                    break;
+                case /* bytes account_id */ 2:
+                    message.accountId = reader.bytes();
+                    break;
+                case /* string signature_type */ 3:
+                    message.signatureType = reader.string();
+                    break;
+                case /* string address */ 4:
+                    message.address = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: Signable, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* bytes data = 1; */
+        if (message.data.length)
+            writer.tag(1, WireType.LengthDelimited).bytes(message.data);
+        /* bytes account_id = 2; */
+        if (message.accountId.length)
+            writer.tag(2, WireType.LengthDelimited).bytes(message.accountId);
+        /* string signature_type = 3; */
+        if (message.signatureType !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.signatureType);
+        /* string address = 4; */
+        if (message.address !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.address);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message ubt.services.Signable
+ */
+export const Signable = new Signable$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class TransactionIntent$Type extends MessageType<TransactionIntent> {
     constructor() {
         super("ubt.services.TransactionIntent", [
             { no: 1, name: "id", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
-            { no: 2, name: "payload_to_sign", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
-            { no: 3, name: "signature_type", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "signables", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Signable },
             { no: 4, name: "estimated_fee", kind: "message", T: () => uint256 },
             { no: 5, name: "raw_data", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
         ]);
     }
     create(value?: PartialMessage<TransactionIntent>): TransactionIntent {
-        const message = { id: new Uint8Array(0), payloadToSign: new Uint8Array(0), signatureType: "", rawData: new Uint8Array(0) };
+        const message = { id: new Uint8Array(0), signables: [], rawData: new Uint8Array(0) };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<TransactionIntent>(this, message, value);
@@ -362,11 +452,8 @@ class TransactionIntent$Type extends MessageType<TransactionIntent> {
                 case /* bytes id */ 1:
                     message.id = reader.bytes();
                     break;
-                case /* bytes payload_to_sign */ 2:
-                    message.payloadToSign = reader.bytes();
-                    break;
-                case /* string signature_type */ 3:
-                    message.signatureType = reader.string();
+                case /* repeated ubt.services.Signable signables */ 2:
+                    message.signables.push(Signable.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 case /* ubt.uint256 estimated_fee */ 4:
                     message.estimatedFee = uint256.internalBinaryRead(reader, reader.uint32(), options, message.estimatedFee);
@@ -389,12 +476,9 @@ class TransactionIntent$Type extends MessageType<TransactionIntent> {
         /* bytes id = 1; */
         if (message.id.length)
             writer.tag(1, WireType.LengthDelimited).bytes(message.id);
-        /* bytes payload_to_sign = 2; */
-        if (message.payloadToSign.length)
-            writer.tag(2, WireType.LengthDelimited).bytes(message.payloadToSign);
-        /* string signature_type = 3; */
-        if (message.signatureType !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.signatureType);
+        /* repeated ubt.services.Signable signables = 2; */
+        for (let i = 0; i < message.signables.length; i++)
+            Signable.internalBinaryWrite(message.signables[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         /* ubt.uint256 estimated_fee = 4; */
         if (message.estimatedFee)
             uint256.internalBinaryWrite(message.estimatedFee, writer.tag(4, WireType.LengthDelimited).fork(), options).join();

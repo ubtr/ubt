@@ -26,14 +26,20 @@ export interface IUbtConstructServiceClient {
      */
     createTransfer(input: CreateTransferRequest, options?: RpcOptions): UnaryCall<CreateTransferRequest, TransactionIntent>;
     /**
+     * combine transaction with signatures
+     *
      * @generated from protobuf rpc: combineTransaction(ubt.services.TransactionCombineRequest) returns (ubt.services.SignedTransaction);
      */
     combineTransaction(input: TransactionCombineRequest, options?: RpcOptions): UnaryCall<TransactionCombineRequest, SignedTransaction>;
     /**
+     * sign transaction with private key; tx can also be signed offline and used directly in 'send'
+     *
      * @generated from protobuf rpc: signTransaction(ubt.services.TransactionSignRequest) returns (ubt.services.SignedTransaction);
      */
     signTransaction(input: TransactionSignRequest, options?: RpcOptions): UnaryCall<TransactionSignRequest, SignedTransaction>;
     /**
+     * send signed transaction to the network
+     *
      * @generated from protobuf rpc: send(ubt.services.TransactionSendRequest) returns (ubt.services.TransactionSendResponse);
      */
     send(input: TransactionSendRequest, options?: RpcOptions): UnaryCall<TransactionSendRequest, TransactionSendResponse>;
@@ -58,6 +64,8 @@ export class UbtConstructServiceClient implements IUbtConstructServiceClient, Se
         return stackIntercept<CreateTransferRequest, TransactionIntent>("unary", this._transport, method, opt, input);
     }
     /**
+     * combine transaction with signatures
+     *
      * @generated from protobuf rpc: combineTransaction(ubt.services.TransactionCombineRequest) returns (ubt.services.SignedTransaction);
      */
     combineTransaction(input: TransactionCombineRequest, options?: RpcOptions): UnaryCall<TransactionCombineRequest, SignedTransaction> {
@@ -65,6 +73,8 @@ export class UbtConstructServiceClient implements IUbtConstructServiceClient, Se
         return stackIntercept<TransactionCombineRequest, SignedTransaction>("unary", this._transport, method, opt, input);
     }
     /**
+     * sign transaction with private key; tx can also be signed offline and used directly in 'send'
+     *
      * @generated from protobuf rpc: signTransaction(ubt.services.TransactionSignRequest) returns (ubt.services.SignedTransaction);
      */
     signTransaction(input: TransactionSignRequest, options?: RpcOptions): UnaryCall<TransactionSignRequest, SignedTransaction> {
@@ -72,6 +82,8 @@ export class UbtConstructServiceClient implements IUbtConstructServiceClient, Se
         return stackIntercept<TransactionSignRequest, SignedTransaction>("unary", this._transport, method, opt, input);
     }
     /**
+     * send signed transaction to the network
+     *
      * @generated from protobuf rpc: send(ubt.services.TransactionSendRequest) returns (ubt.services.TransactionSendResponse);
      */
     send(input: TransactionSendRequest, options?: RpcOptions): UnaryCall<TransactionSendRequest, TransactionSendResponse> {

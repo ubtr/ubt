@@ -959,8 +959,8 @@ type Transfer struct {
 	unknownFields protoimpl.UnknownFields
 
 	Id     []byte          `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                  // id of the transfer, can be generated as tx id plus some index in transaction;
-	From   string          `protobuf:"bytes,2,opt,name=from,proto3" json:"from,omitempty"`              // transfer source account; might be different than tx.from; omitted for minting or UTXO input
-	To     string          `protobuf:"bytes,3,opt,name=to,proto3" json:"to,omitempty"`                  // transfer destination account; might be different than tx.to; omitted for burning or UTXO output
+	From   string          `protobuf:"bytes,2,opt,name=from,proto3" json:"from,omitempty"`              // transfer source account; might be different than tx.from; omitted for minting or UTXO output
+	To     string          `protobuf:"bytes,3,opt,name=to,proto3" json:"to,omitempty"`                  // transfer destination account; might be different than tx.to; omitted for burning or UTXO input
 	Amount *CurrencyAmount `protobuf:"bytes,4,opt,name=amount,proto3" json:"amount,omitempty"`          // transfer amount; required
 	Status uint32          `protobuf:"varint,5,opt,name=status,proto3" json:"status,omitempty"`         // transfer status; required
 	TxId   []byte          `protobuf:"bytes,10,opt,name=tx_id,json=txId,proto3" json:"tx_id,omitempty"` // transaction where this transfer happened; required

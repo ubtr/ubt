@@ -166,8 +166,8 @@ message Transaction {
  */
 message Transfer {
   bytes id = 1;              // id of the transfer, can be generated as tx id plus some index in transaction;
-  string from = 2;           // transfer source account; might be different than tx.from; omitted for minting or UTXO input
-  string to = 3;             // transfer destination account; might be different than tx.to; omitted for burning or UTXO output
+  string from = 2;           // transfer source account; might be different than tx.from; omitted for minting or UTXO output
+  string to = 3;             // transfer destination account; might be different than tx.to; omitted for burning or UTXO input
   CurrencyAmount amount = 4; // transfer amount; required
   uint32 status = 5;         // transfer status; required
 

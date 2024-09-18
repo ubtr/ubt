@@ -24,12 +24,23 @@ message CreateBatchTransferRequest {
   repeated TransferReceiver to = 2;
 }
 
+/**
+ * Payload which should be signed by keypair indicated by account_id
+ * It is applicable for multiple inputs or multisign.
+*/
+message Signable {
+  bytes data = 1;
+  bytes account_id = 2;       // identifier of keypair (hd path, address, public key, etc.)
+  string signature_type = 3;  // type of the signature client must use to sign the payload
+  string address = 4;         // address of the account
+}
+
 message TransactionIntent {
   bytes id = 1;
-  bytes payload_to_sign = 2; // prepared byte payload to sign
-  string signature_type = 3; // type of the signature client must use to sign the payload
-  uint256 estimated_fee = 4; // estimated fee for the transaction TODO: drilldown by fee components and their price
-  bytes raw_data = 5;        // raw transaction data
+  repeated Signable signables = 2; // prepared binary payloads to sign
+  //string signature_type = 3;       //
+  uint256 estimated_fee = 4;       // estimated fee for the transaction TODO: drilldown by fee components and their price
+  bytes raw_data = 5;              // raw transaction data
 
 }
 
@@ -65,7 +76,10 @@ message TransactionSendResponse {
   */
 service UbtConstructService {
   rpc createTransfer(CreateTransferRequest) returns (TransactionIntent);
+  // combine transaction with signatures
   rpc combineTransaction(TransactionCombineRequest) returns (SignedTransaction);
+  // sign transaction with private key; tx can also be signed offline and used directly in 'send'
   rpc signTransaction(TransactionSignRequest) returns (SignedTransaction);
+  // send signed transaction to the network
   rpc send(TransactionSendRequest) returns (TransactionSendResponse);
 }

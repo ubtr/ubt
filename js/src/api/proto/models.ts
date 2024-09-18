@@ -349,11 +349,11 @@ export interface Transfer {
     /**
      * @generated from protobuf field: string from = 2;
      */
-    from: string; // transfer source account; might be different than tx.from; omitted for minting or UTXO input
+    from: string; // transfer source account; might be different than tx.from; omitted for minting or UTXO output
     /**
      * @generated from protobuf field: string to = 3;
      */
-    to: string; // transfer destination account; might be different than tx.to; omitted for burning or UTXO output
+    to: string; // transfer destination account; might be different than tx.to; omitted for burning or UTXO input
     /**
      * @generated from protobuf field: ubt.CurrencyAmount amount = 4;
      */
